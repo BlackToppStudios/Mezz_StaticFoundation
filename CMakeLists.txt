@@ -45,30 +45,138 @@ endif(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 
 ###############################################################################
 # The name of our project is "MezzanineAndCatch".
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required(VERSION 3.2)
 project (StaticFoundation)
-message ("${PROJECT_NAME} - Starting Configuration.")
+message(STATUS "${PROJECT_NAME} - Starting Configuration.")
+
+message(STATUS "${CMAKE_MODULE_PATH} -asf")
 
 ####################################################################################################
 message(STATUS "Creating helper variables and functions")
 
 #######################################
-# Root folders
-set(${PROJECT_NAME}_ProjectRootDir ${${PROJECT_NAME}_SOURCE_DIR}/)
-message(STATUS "\tUsing Sources From: ${${PROJECT_NAME}_ProjectRootDir}")
+message(STATUS "\tRoot Folders")
 
-set(${PROJECT_NAME}_ProjectBinaryDir ${${PROJECT_NAME}_BINARY_DIR}/)
-message(STATUS "\tPutting all major output in: ${${PROJECT_NAME}_ProjectBinaryDir}")
+set(${PROJECT_NAME}RootDir ${${PROJECT_NAME}_SOURCE_DIR}/)
+message(STATUS "\t\tUsing Sources From: ${${PROJECT_NAME}RootDir}")
 
-
-
-
-
-Message (STATUS "ASDF: $ENV{asdf}")
-set(ENV{asdf} "FOO")
-Message (STATUS "ASDF: $ENV{asdf}")
+set(${PROJECT_NAME}BinaryDir ${${PROJECT_NAME}_BINARY_DIR}/)
+message(STATUS "\t\tPutting all major output in: ${${PROJECT_NAME}BinaryDir}")
 
 #######################################
+message(STATUS "\tDerived Output folders")
+
+set(${PROJECT_NAME}GeneratedHeadersDir ${${PROJECT_NAME}BinaryDir}config/)
+message(STATUS "\t\tPutting Generated Headers in: ${${PROJECT_NAME}GeneratedHeadersDir}")
+
+set(${PROJECT_NAME}GeneratedSourceFolder ${${PROJECT_NAME}BinaryDir}generated_source/)
+message(STATUS "\t\tPutting Generated Source files: ${${PROJECT_NAME}GeneratedSourceFolder}")
+
+#######################################
+message(STATUS "\tDerived Input folders")
+
+set(${PROJECT_NAME}DoxDir ${${PROJECT_NAME}RootDir}dox/)
+message(STATUS "\t\tUsing supplementary doxygen header files from: ${${PROJECT_NAME}DoxDir}")
+
+set(${PROJECT_NAME}IncludeDir ${${PROJECT_NAME}RootDir}include/)
+message(STATUS "\t\tUsing Header files from: ${${PROJECT_NAME}IncludeDir}")
+
+set(${PROJECT_NAME}LibDir ${${PROJECT_NAME}RootDir}lib/)
+message(STATUS "\t\tUsing source libraries from: ${${PROJECT_NAME}LibDir}")
+
+set(${PROJECT_NAME}SourceDir ${${PROJECT_NAME}RootDir}src/)
+message(STATUS "\t\tUsing Source files from: ${${PROJECT_NAME}SourceDir}")
+
+set(${PROJECT_NAME}SwigDir ${${PROJECT_NAME}RootDir}swig/)
+message(STATUS "\t\tUsing supplementary Swig Header files from: ${${PROJECT_NAME}SwigDir}")
+
+set(${PROJECT_NAME}TestDir ${${PROJECT_NAME}RootDir}test/)
+message(STATUS "\t\tUsing Test files from: ${${PROJECT_NAME}TestDir}")
+
+
+####################################################################################################
+message(STATUS "Determining Source Files.")
+
+set(HeaderFiles
+    "${${PROJECT_NAME}IncludeDir}crossplatformexport.h"
+    "${${PROJECT_NAME}IncludeDir}datatypes.h"
+    "${${PROJECT_NAME}IncludeDir}staticfoundation.h"
+    "${${PROJECT_NAME}IncludeDir}supresswarnings.h"
+)
+
+set(SourceFiles
+)
+
+set(TestSourceFiles
+    "${${PROJECT_NAME}TestDir}tests.cpp"
+)
+
+####################################################################################################
+message(STATUS "Determining platform specific details.")
+
+#######################################
+message(STATUS "\tDetecting OS")
+
+set(SystemIsLinux OFF)
+set(SystemIsWindows OFF)
+set(SystemIsMacOSX OFF)
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    message(STATUS "\t\tDetected OS as 'Linux'.")
+    set(SystemIsLinux ON)
+endif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+    message(STATUS "\t\tDetected OS as 'Windows'.")
+    set(SystemIsWindows ON)
+endif(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    message(STATUS "\t\tDetected OS as 'Mac OS X'.")
+    set(SystemIsMacOSX ON)
+endif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+
+message(STATUS "\t\tLinux: ${SystemIsLinux}")
+message(STATUS "\t\tWindows: ${SystemIsWindows}")
+message(STATUS "\t\tMacOSX: ${SystemIsMacOSX}")
+
+if(SystemIsLinux)
+    message(STATUS "\tSetting specific variables for 'Linux'.")
+    set(CatCommand "cat")
+    set(PlatformDefinition "LINUX")
+endif(SystemIsLinux)
+
+if(SystemIsWindows)
+    message(STATUS "\tSetting specific variables for 'Windows'.")
+    set(CatCommand "type")
+    set(PlatformDefinition "WINDOWS")
+endif(SystemIsWindows)
+
+if(SystemIsMacOSX)
+    message(STATUS "\tSetting specific variables for 'Mac OS X'.")
+    set(CatCommand "cat")
+    set(PlatformDefinition "MACOSX")
+endif(SystemIsMacOSX)
+
+####################################################################################################
+message(STATUS "Determining Jagati Package Manager Details.")
+
+#set(MezzPackageDir $ENV{MEZZ_PACKAGE_DIR})
+#if(MezzPackageDir)
+#    set(ENV{HUNTER_ROOT} ${MezzPackageDir})
+#else(MezzPackageDir)
+#    set(MezzPackageDir $ENV{HUNTER_ROOT})
+#endif(MezzPackageDir)
+
+#if(MezzPackageDir)
+#    message(STATUS "Using Mezzanine Packages from ${MezzPackageDir}")
+#else(MezzPackageDir)
+#    message(ERROR "\tCould not determine directory to look for or save Mezzanine Packages. \
+#            Set Environment Variable 'MezzPackageDir' to directory to place files or select \
+#            location from CMake-gui.")
+#endif(MezzPackageDir)
+
+####################################################################################################
 # Detect Compiler
 
 set(CompilerIsGCC OFF)
@@ -109,7 +217,7 @@ endif(${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
 
 if(CompilerDesignNix)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
-    -std=c++11 -fno-strict-aliasing -pthread -m64 \
+    -std=c++11 -fno-strict-aliasing -pthread -m64 -fPIC\
     -pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization \
     -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept \
     -Wold-style-cast -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo \
@@ -145,6 +253,15 @@ else(CompilerDesignNix)
 endif(CompilerDesignNix)
 message(STATUS "\tC++ compiler and linker flags: ${CMAKE_CXX_FLAGS}")
 
-include_directories()
+include_directories(
+    ${PROJECT_NAME}IncludeDir
+    ${PROJECT_NAME}GeneratedHeadersDir
+)
+
+###############################################################################
+# Set up compiler flags
+
+
+add_executable(${PROJECT_NAME}_Tester ${HeaderFiles} ${TestSourceFiles})
 
 message ("${PROJECT_NAME} - Ending Configuration.")
