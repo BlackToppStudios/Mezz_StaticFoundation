@@ -62,7 +62,7 @@
 // conditionally may not be compiled in. For example,
 
 #ifndef SWIG
-    #if defined( _MSC_VER )
+    #ifdef _MSC_VER
         #include "pstdint.h"
     #else
         #include <stdint.h> //Not available in all version of mscv
@@ -84,7 +84,7 @@
     #include <ostream>
 #endif
 
-#include "swig.h"
+//#include "swig.h"
 
 /// @internal
 /// @brief Forward declaration for SDL compatibilty
