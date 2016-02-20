@@ -254,8 +254,8 @@ endif(CompilerDesignNix)
 message(STATUS "\tC++ compiler and linker flags: ${CMAKE_CXX_FLAGS}")
 
 include_directories(
-    ${PROJECT_NAME}IncludeDir
-    ${PROJECT_NAME}GeneratedHeadersDir
+    ${${PROJECT_NAME}IncludeDir}
+    ${${PROJECT_NAME}GeneratedHeadersDir}
 )
 
 ###############################################################################
