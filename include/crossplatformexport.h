@@ -37,8 +37,8 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef crossplatformexports_h
-#define crossplatformexports_h
+#ifndef Mezz_StaticFoundation_crossplatformexports_h
+#define Mezz_StaticFoundation_crossplatformexports_h
 
 /**
     @file

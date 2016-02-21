@@ -37,8 +37,8 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef supresswarnings_h
-#define supresswarnings_h
+#ifndef Mezz_StaticFoundation_supresswarnings_h
+#define Mezz_StaticFoundation_supresswarnings_h
 
 /// @file
 /// @brief Sets up some macros for cross platform warning supression.

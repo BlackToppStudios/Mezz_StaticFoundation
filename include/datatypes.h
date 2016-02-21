@@ -37,8 +37,8 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef datatypes_h
-#define datatypes_h
+#ifndef Mezz_StaticFoundation_datatypes_h
+#define Mezz_StaticFoundation_datatypes_h
 
 ///////////////////////////////////////////////////////////////////////////////
 // Any Special data types that we need will get declared right here

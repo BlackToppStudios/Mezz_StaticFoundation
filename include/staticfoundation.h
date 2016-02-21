@@ -37,8 +37,8 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef staticfoundation_h
-#define staticfoundation_h
+#ifndef Mezz_StaticFoundation_staticfoundation_h
+#define Mezz_StaticFoundation_staticfoundation_h
 
 /// @file
 /// @brief The main header to include for this library
