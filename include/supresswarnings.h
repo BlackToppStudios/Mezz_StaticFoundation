@@ -37,8 +37,8 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef _supresswarnings_h
-#define _supresswarnings_h
+#ifndef supresswarnings_h
+#define supresswarnings_h
 
 /// @file
 /// @brief Sets up some macros for cross platform warning supression.

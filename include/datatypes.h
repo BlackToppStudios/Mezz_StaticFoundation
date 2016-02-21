@@ -37,8 +37,8 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef _datatypes_h
-#define _datatypes_h
+#ifndef datatypes_h
+#define datatypes_h
 
 ///////////////////////////////////////////////////////////////////////////////
 // Any Special data types that we need will get declared right here

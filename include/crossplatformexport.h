@@ -37,8 +37,8 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef _crossplatformexports_h
-#define _crossplatformexports_h
+#ifndef crossplatformexports_h
+#define crossplatformexports_h
 
 /**
     @file

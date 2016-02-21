@@ -37,8 +37,8 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef _staticfoundation_h
-#define _staticfoundation_h
+#ifndef staticfoundation_h
+#define staticfoundation_h
 
 /// @file
 /// @brief The main header to include for this library
