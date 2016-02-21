@@ -111,6 +111,10 @@ set(TestSourceFiles
     "${${PROJECT_NAME}TestDir}tests.cpp"
 )
 
+set(SwigFiles
+    "${${PROJECT_NAME}SwigDir}swigconfig.h"
+)
+
 ####################################################################################################
 message(STATUS "Determining platform specific details.")
 
@@ -259,9 +263,18 @@ include_directories(
 )
 
 ###############################################################################
-# Set up compiler flags
-
+# Set up Build targets
 
 add_executable(${PROJECT_NAME}_Tester ${HeaderFiles} ${TestSourceFiles})
+
+# A Project to do nothing but get All the Source files visible in IDEs
+add_custom_target(
+    ${PROJECT_NAME}
+    DEPENDS ${PROJECT_NAME}_Tester
+    SOURCES ${HeaderFiles}
+            ${SourceFiles}
+            ${TestSourceFiles}
+            ${SwigFiles}
+)
 
 message ("${PROJECT_NAME} - Ending Configuration.")
