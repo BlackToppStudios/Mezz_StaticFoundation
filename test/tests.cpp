@@ -38,15 +38,85 @@
    John Blackwood - makoenergy02@gmail.com
 */
 
-#include "crossplatformexport.h"
-#include "datatypes.h"
-#include "staticfoundation.h"
-#include "supresswarnings.h"
-
 #include <cstdlib>
+#include <iostream>
 
-int main(int arg_count, char** arg_vars)
+#include "tests.h"
+
+using std::cout;
+using std::cerr;
+using std::endl;
+using Mezzanine::String;
+using Mezzanine::NameValuePairMap;
+
+int main(int ArgCount, char** ArgVars)
 {
+    CheckUsage(ArgCount, ArgVars);
+    NameValuePairMap FromCommandLine{CreateMapFromArgs(ArgCount, ArgVars)};
+    DoComparisonTest(FromCommandLine, CheckableValues());
+    return EXIT_SUCCESS;
+}
 
-  return EXIT_SUCCESS;
+void CheckUsage(int ArgCount, char** ArgVars)
+{
+    if(ArgCount==1)
+    {
+        cerr << Usage(ArgVars[0]);
+        std::exit(EXIT_FAILURE);
+    }
+    if(ArgCount<1)
+    {
+        cerr << Usage("StaticFoundation_Tester");
+        std::exit(EXIT_FAILURE);
+    }
+}
+
+String Usage(String ExecutableName)
+{
+    return String("Usage:\n  ") + ExecutableName +
+           " Name:Value [Name2:Value2 [Name3:Value3 [...]]\n\n" +
+           "Currently Known Names and Values:\n" +
+           Stringify(CheckableValues())+ "\n";
+}
+
+Mezzanine::NameValuePairMap CreateMapFromArgs(int ArgCount, char** ArgVars)
+{
+    NameValuePairMap Results;
+    for(int Counter=1; Counter<ArgCount; Counter++)
+    {
+        String Current{ArgVars[Counter]};
+        String::size_type ColonAt{Current.find(':')};
+        if(0==ColonAt || String::npos==ColonAt)
+        {
+            cerr << "Colon not in expected place for '" << Current << "'" << endl;
+            std::exit(EXIT_FAILURE);
+        }
+        String Name{Current.substr(0,ColonAt)};
+        String Value{Current.substr(ColonAt+1,Current.size()-Name.size()-1)};
+        Results[Name] = Value;
+    }
+    return Results;
+}
+
+NameValuePairMap CheckableValues()
+{
+    NameValuePairMap Results;
+    Results["Linux"] = "1"; // temp replace with actual detection
+    return Results;
+}
+
+void DoComparisonTest(const Mezzanine::NameValuePairMap& Expected,
+                       const Mezzanine::NameValuePairMap& Compiled)
+{
+    cout << "Expected:\n" << Stringify(Expected)
+         << "Compiled in:\n" << Stringify(Compiled) << endl;
+    //do checks here
+}
+
+Mezzanine::String Stringify(const Mezzanine::NameValuePairMap& Mapping)
+{
+    String Results;
+    for(auto pair : Mapping)
+        { Results += "  " + pair.first + ":" + pair.second + "\n"; }
+    return Results;
 }

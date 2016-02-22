@@ -108,6 +108,7 @@ set(SourceFiles
 )
 
 set(TestSourceFiles
+    "${${PROJECT_NAME}TestDir}tests.h"
     "${${PROJECT_NAME}TestDir}tests.cpp"
 )
 
