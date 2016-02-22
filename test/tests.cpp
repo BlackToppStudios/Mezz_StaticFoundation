@@ -40,7 +40,7 @@
 
 #include <cstdlib>
 #include <iostream>
-
+#include <sstream>
 #include "tests.h"
 
 using std::cout;
@@ -48,6 +48,7 @@ using std::cerr;
 using std::endl;
 using Mezzanine::String;
 using Mezzanine::NameValuePairMap;
+using Mezzanine::Boole;
 
 int main(int ArgCount, char** ArgVars)
 {
@@ -101,16 +102,33 @@ Mezzanine::NameValuePairMap CreateMapFromArgs(int ArgCount, char** ArgVars)
 NameValuePairMap CheckableValues()
 {
     NameValuePairMap Results;
-    Results["Linux"] = "1"; // temp replace with actual detection
+    Results["MEZZ_LINUX"] = IntToString(1); // temp replace with actual detection
     return Results;
 }
 
-void DoComparisonTest(const Mezzanine::NameValuePairMap& Expected,
-                       const Mezzanine::NameValuePairMap& Compiled)
+void DoComparisonTest(  const Mezzanine::NameValuePairMap& Expected,
+                        const Mezzanine::NameValuePairMap& Compiled)
 {
     cout << "Expected:\n" << Stringify(Expected)
-         << "Compiled in:\n" << Stringify(Compiled) << endl;
-    //do checks here
+         << "\nCompiled in:\n" << Stringify(Compiled);
+
+    Boole failed = false;
+    String Other;
+    for(auto pair : Expected)
+    {
+        try
+            { Other = Compiled.at(pair.first); }
+        catch(...)
+            { Other = "Not set"; failed=true; }
+        cout << "\n" << pair.first << ": " << Other << " == " << pair.second;
+        if(Other == pair.second)
+            { cout <<  " \t[PASS]"; }
+        else
+            { cout <<  " \t[FAIL]"; failed=true; }
+    }
+    cout << endl;
+    if(failed)
+        { std::exit(EXIT_FAILURE); }
 }
 
 Mezzanine::String Stringify(const Mezzanine::NameValuePairMap& Mapping)
@@ -119,4 +137,11 @@ Mezzanine::String Stringify(const Mezzanine::NameValuePairMap& Mapping)
     for(auto pair : Mapping)
         { Results += "  " + pair.first + ":" + pair.second + "\n"; }
     return Results;
+}
+
+String IntToString(Mezzanine::Int32 SomeInt)
+{
+    std::stringstream Results;
+    Results << SomeInt;
+    return Results.str();
 }

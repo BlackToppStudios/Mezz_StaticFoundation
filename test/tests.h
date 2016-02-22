@@ -81,4 +81,8 @@ void DoComparisonTest(  const Mezzanine::NameValuePairMap& Expected,
 /// by two spaces.
 Mezzanine::String Stringify(const Mezzanine::NameValuePairMap& Mapping);
 
+/// @param SomeInt Any integer to be converted to a String, defaults to 0.
+/// @return A String contained the lexigraphically equivalent String to SomeInt.
+Mezzanine::String IntToString(Mezzanine::Int32 SomeInt = 0);
+
 #endif
