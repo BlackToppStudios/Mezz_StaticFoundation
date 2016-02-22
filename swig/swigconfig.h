@@ -42,6 +42,8 @@
 
 /// @file
 /// @brief The main Swig configuration header to include for this library
+/// @todo This is unimplemented at the moment and will remain that way until we have made more
+/// progress on how Swig will read Jagati Packages.
 
 #include "staticfoundation.h"
 
