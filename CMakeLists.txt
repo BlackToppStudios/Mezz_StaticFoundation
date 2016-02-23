@@ -37,11 +37,11 @@
 #   Joseph Toppi - toppij@gmail.com
 #   John Blackwood - makoenergy02@gmail.com
 
-if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
     message(FATAL_ERROR "Prevented in source tree build. Please create a "
                         "build directory outside of the Mezzanine source "
                         "code and have cmake build from there.")
-endif(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+endif("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
 
 ###############################################################################
 # The name of our project is "MezzanineAndCatch".
@@ -192,29 +192,29 @@ set(CompilerIsMsvc OFF)
 set(CompilerDesignNix OFF)
 set(CompilerDesignMS OFF)
 
-if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     message(STATUS "\tDetected compiler as 'GCC'.")
     set(CompilerIsGCC ON)
     set(CompilerDesignNix ON)
-endif(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
+endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
-if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     message(STATUS "\tDetected compiler as 'Clang'.")
     set(CompilerIsClang ON)
     set(CompilerDesignNix ON)
-endif(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
+endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 
-if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Intel")
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
     message(STATUS "\tDetected compiler as 'Intel'.")
     set(CompilerIsIntel ON)
     set(CompilerDesignNix ON)
-endif(${CMAKE_CXX_COMPILER_ID} STREQUAL "Intel")
+endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
 
-if(${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     message(STATUS "\tDetected compiler as 'MSVC'.")
     set(CompilerIsMsvc ON)
     set(CompilerDesignMS ON)
-endif(${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
+endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 
 
 ###############################################################################
@@ -264,6 +264,33 @@ include_directories(
 )
 
 ###############################################################################
+# Direct Download Experiments.
+
+# These should be usable instead of hunters
+
+set(ExpectedIndexHash "ffa5f2df93913e7d168021631a3564605b87dd2126afda779ba17\
+27ccf2be05e9c31882a42a731a7bb985cc1f265f98e5714ac4f791a3f8a0113fe6d86b1c476")
+
+file(DOWNLOAD
+    https://raw.githubusercontent.com/isocpp/CppCoreGuidelines/master/CONTRIBUTING.md
+    "${${PROJECT_NAME}BinaryDir}Guidelines.md"
+    EXPECTED_HASH SHA512=${ExpectedIndexHash}
+)
+
+include(ExternalProject)
+
+ExternalProject_Add(
+  ExternalProjectDownload
+  GIT_REPOSITORY git@github.com:isocpp/CppCoreGuidelines.git
+  GIT_TAG master
+  DOWNLOAD_COMMAND git clone git@github.com:isocpp/CppCoreGuidelines.git
+  UPDATE_COMMAND git pull
+  BUILD_COMMAND ""
+  TEST_COMMAND ""
+  INSTALL_COMMAND ""
+)
+
+###############################################################################
 # Set up Build targets
 
 add_executable(${PROJECT_NAME}_Tester ${HeaderFiles} ${TestSourceFiles})
@@ -272,6 +299,8 @@ add_executable(${PROJECT_NAME}_Tester ${HeaderFiles} ${TestSourceFiles})
 add_custom_target(
     ${PROJECT_NAME}
     DEPENDS ${PROJECT_NAME}_Tester
+            "${${PROJECT_NAME}BinaryDir}Guidelines.md"
+            ExternalProjectDownload
     SOURCES ${HeaderFiles}
             ${SourceFiles}
             ${TestSourceFiles}
