@@ -342,6 +342,20 @@ endfunction(ShowList)
 ####################################################################################################
 #message(STATUS "Determining Jagati Package Manager Details.")
 
+set(vara "zxcv")
+
+#include(CMake/CMakeLists.txt) # PARENT_SCOPE causes this to blow up.
+#add_subdirectory(CMake)
+#include(ExternalProject)
+#ExternalProject_Add (CmakeFolder SOURCE_DIR "Cmake/" DOWNLOAD_COMMAND "" BUILD_COMMAND "" UPDATE_COMMAND "" INSTALL_COMMAND "")
+
+                                    # Include   | subdir    | extern
+message(STATUS "var1: '${var1}'")   # set       | empty     | empty
+message(STATUS "var2: '${var2}'")   # error     | set       | empty
+
+
+
+
 #set(MezzPackageDir $ENV{MEZZ_PACKAGE_DIR})
 
 #if(MezzPackageDir)

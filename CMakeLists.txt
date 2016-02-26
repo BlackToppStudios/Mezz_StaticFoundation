@@ -79,6 +79,9 @@ include_directories(
     ${${PROJECT_NAME}GeneratedHeadersDir}
 )
 
+# Add API for setting this
+# Add API for adding library
+
 
 ####################################################################################################
 # Set up Build targets
