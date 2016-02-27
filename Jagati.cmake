@@ -51,6 +51,34 @@ if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
                         " the Mezzanine source code and have cmake build from there.")
 endif("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
 
+
+####################################################################################################
+# This is used to determine what the parentmost project is. Whichever project calls this first will
+# be the only one that doesn't set all of it's variables in its parent's scope.
+
+# Usage:
+#   # Be certain to call project before calling this.
+#   # Call this from the main project before calling anything else to insure your project is root.
+#   ClaimParentProject()
+#
+# Result:
+#   The following variables will all be set, made available and printed and other Jagati projects
+#   will know to pollute your namespace:
+#       ParentProject
+
+
+macro(ClaimParentProject)
+    if(ParentProject)
+        # It is already set so we must be a child.
+        message(STATUS
+            "Project '${PROJECT_NAME}' acknowledges '${ParentProject}' as the Parent Project."
+        )
+    else(ParentProject)
+        message(STATUS "Claiming '${PROJECT_NAME}' as the Parent Project.")
+        set(ParentProject "${PROJECT_NAME}")
+    endif(ParentProject)
+endmacro(ClaimParentProject)
+
 ####################################################################################################
 # This will create a number of variables in the Scope of the calling script that correspond to the
 # name of the Project so that they can readily be referenced from other project including the caller
@@ -76,45 +104,73 @@ endif("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
 #       ${PROJECT_NAME}TestDir
 
 macro(CreateLocations)
-    message(STATUS "Creating Location Variables")
+    message(STATUS "Creating Location Variables for '${PROJECT_NAME}'")
+    set(PROJECT_NAME "${PROJECT_NAME}")
+
+    if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+        #######################################
+        # Root
+        set(${PROJECT_NAME}RootDir ${${PROJECT_NAME}_SOURCE_DIR}/)
+        set(${PROJECT_NAME}BinaryDir ${${PROJECT_NAME}_BINARY_DIR}/)
+
+        #######################################
+        # Derived Output Folders
+        set(${PROJECT_NAME}GeneratedHeadersDir ${${PROJECT_NAME}BinaryDir}config/)
+        set(${PROJECT_NAME}GeneratedSourceFolder ${${PROJECT_NAME}BinaryDir}generated_source/)
+
+        #######################################
+        # Derived Input Folders
+        set(${PROJECT_NAME}DoxDir ${${PROJECT_NAME}RootDir}dox/)
+        set(${PROJECT_NAME}IncludeDir ${${PROJECT_NAME}RootDir}include/)
+        set(${PROJECT_NAME}LibDir ${${PROJECT_NAME}RootDir}lib/)
+        set(${PROJECT_NAME}SourceDir ${${PROJECT_NAME}RootDir}src/)
+        set(${PROJECT_NAME}SwigDir ${${PROJECT_NAME}RootDir}swig/)
+        set(${PROJECT_NAME}TestDir ${${PROJECT_NAME}RootDir}test/)
+    else("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+        #######################################
+        # Root as child
+        set(${PROJECT_NAME}RootDir ${${ParentProject}_SOURCE_DIR}/ PARENT_SCOPE)
+        set(${PROJECT_NAME}BinaryDir ${${ParentProject}_BINARY_DIR}/ PARENT_SCOPE)
+
+        #######################################
+        # Derived Output Folders  as child
+        set(${PROJECT_NAME}GeneratedHeadersDir ${${PROJECT_NAME}BinaryDir}config/ PARENT_SCOPE)
+        set(${PROJECT_NAME}GeneratedSourceFolder ${${PROJECT_NAME}BinaryDir}generated_source/
+            PARENT_SCOPE)
+
+        #######################################
+        # Derived Input Folders  as child
+        set(${PROJECT_NAME}DoxDir ${${PROJECT_NAME}RootDir}dox/ PARENT_SCOPE)
+        set(${PROJECT_NAME}IncludeDir ${${PROJECT_NAME}RootDir}include/ PARENT_SCOPE)
+        set(${PROJECT_NAME}LibDir ${${PROJECT_NAME}RootDir}lib/ PARENT_SCOPE)
+        set(${PROJECT_NAME}SourceDir ${${PROJECT_NAME}RootDir}src/ PARENT_SCOPE)
+        set(${PROJECT_NAME}SwigDir ${${PROJECT_NAME}RootDir}swig/ PARENT_SCOPE)
+        set(${PROJECT_NAME}TestDir ${${PROJECT_NAME}RootDir}test/ PARENT_SCOPE)
+    endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+
+    #######################################
+    message(STATUS "\tVariables for '${PROJECT_NAME}'")
 
     #######################################
     message(STATUS "\tRoot Folders")
 
-    set(${PROJECT_NAME}RootDir ${${PROJECT_NAME}_SOURCE_DIR}/)
-    message(STATUS "\t\tUsing Sources From: ${${PROJECT_NAME}RootDir}")
-
-    set(${PROJECT_NAME}BinaryDir ${${PROJECT_NAME}_BINARY_DIR}/)
+    message(STATUS "\t\tIn '${PROJECT_NAME}RootDir' Using Sources From: ${${PROJECT_NAME}RootDir}")
     message(STATUS "\t\tPutting all major output in: ${${PROJECT_NAME}BinaryDir}")
 
     #######################################
     message(STATUS "\tDerived Output folders")
 
-    set(${PROJECT_NAME}GeneratedHeadersDir ${${PROJECT_NAME}BinaryDir}config/)
     message(STATUS "\t\tPutting Generated Headers in: ${${PROJECT_NAME}GeneratedHeadersDir}")
-
-    set(${PROJECT_NAME}GeneratedSourceFolder ${${PROJECT_NAME}BinaryDir}generated_source/)
     message(STATUS "\t\tPutting Generated Source files: ${${PROJECT_NAME}GeneratedSourceFolder}")
 
     #######################################
     message(STATUS "\tDerived Input folders")
 
-    set(${PROJECT_NAME}DoxDir ${${PROJECT_NAME}RootDir}dox/)
     message(STATUS "\t\tUsing supplementary doxygen header files from: ${${PROJECT_NAME}DoxDir}")
-
-    set(${PROJECT_NAME}IncludeDir ${${PROJECT_NAME}RootDir}include/)
     message(STATUS "\t\tUsing Header files from: ${${PROJECT_NAME}IncludeDir}")
-
-    set(${PROJECT_NAME}LibDir ${${PROJECT_NAME}RootDir}lib/)
     message(STATUS "\t\tUsing source libraries from: ${${PROJECT_NAME}LibDir}")
-
-    set(${PROJECT_NAME}SourceDir ${${PROJECT_NAME}RootDir}src/)
     message(STATUS "\t\tUsing Source files from: ${${PROJECT_NAME}SourceDir}")
-
-    set(${PROJECT_NAME}SwigDir ${${PROJECT_NAME}RootDir}swig/)
     message(STATUS "\t\tUsing supplementary Swig Header files from: ${${PROJECT_NAME}SwigDir}")
-
-    set(${PROJECT_NAME}TestDir ${${PROJECT_NAME}RootDir}test/)
     message(STATUS "\t\tUsing Test files from: ${${PROJECT_NAME}TestDir}")
 endmacro(CreateLocations)
 
@@ -293,14 +349,16 @@ macro(SetCommonCompilerFlags)
 
         # Ignoring:
         # C4710 - Failing to inline things in std::string, well that is STL's fault, not mine.
-        # C4514 - An unused function was optimized out. Why is the optimizer doing its job a warning?!
+        # C4514 - An unused function was optimized out. Why is the optimizer doing its job a
+        # warning?!
         # C4251 - Is safe to ignore per STL
-    # http://stackoverflow.com/questions/24511376/how-to-dllexport-a-class-derived-from-stdruntime-error
+# http://stackoverflow.com/questions/24511376/how-to-dllexport-a-class-derived-from-stdruntime-error
         # C4820 - When padding is added for performance reasons.
     endif(CompilerDesignNix)
 
     message(STATUS "\tC++ compiler and linker flags: ${CMAKE_CXX_FLAGS}")
 endmacro(SetCommonCompilerFlags)
+
 
 ####################################################################################################
 # This does what the above macros do, but this does it all together.
@@ -314,12 +372,21 @@ endmacro(SetCommonCompilerFlags)
 #       Compiler Flags will be set.
 
 macro(StandardJagatiSetup)
+    ClaimParentProject()
     CreateLocations()
     message(STATUS "Determining platform specific details.")
     IdentifyOS()
     IdentifyCompiler()
     SetCommonCompilerFlags()
 endmacro(StandardJagatiSetup)
+
+
+
+
+
+
+
+
 
 ####################################################################################################
 # Basic Display Functionality
@@ -339,6 +406,17 @@ endfunction(ShowList)
 
 # These should be usable instead of hunters
 
+
+
+set(JagatiPackageNameArray)
+
+macro(AddJagatiPackage)
+    list(append JagatiPackageNameArray ${PROJECT_NAME})
+endmacro(AddJagatiPackage)
+
+
+
+
 ####################################################################################################
 #message(STATUS "Determining Jagati Package Manager Details.")
 
@@ -347,12 +425,13 @@ set(vara "zxcv")
 #include(CMake/CMakeLists.txt) # PARENT_SCOPE causes this to blow up.
 #add_subdirectory(CMake)
 #include(ExternalProject)
-#ExternalProject_Add (CmakeFolder SOURCE_DIR "Cmake/" DOWNLOAD_COMMAND "" BUILD_COMMAND "" UPDATE_COMMAND "" INSTALL_COMMAND "")
+#ExternalProject_Add (CmakeFolder SOURCE_DIR "Cmake/" DOWNLOAD_COMMAND ""
+#                        BUILD_COMMAND "" UPDATE_COMMAND "" INSTALL_COMMAND "")
 
-                                    # Include   | subdir    | extern
-message(STATUS "var1: '${var1}'")   # set       | empty     | empty
-message(STATUS "var2: '${var2}'")   # error     | set       | empty
-
+                                            # Include   | subdir    | extern
+message(STATUS "var1: '${var1}'")           # set       | empty     | empty
+message(STATUS "var2: '${var2}'")           # error     | set       | empty
+message(STATUS "Name: '${PROJECT_NAME}'")   # overwrite | in file   | in file
 
 
 

@@ -46,6 +46,10 @@ message(STATUS "${PROJECT_NAME} - Starting Configuration.")
 include(Jagati.cmake)
 
 StandardJagatiSetup()
+add_subdirectory(CMake)
+    message(STATUS "SUBPROjectRootDir: '${SUBPROjectRootDir}'")
+
+
 
 ####################################################################################################
 message(STATUS "Determining Source Files.")
@@ -100,4 +104,4 @@ add_custom_target(
             ${SwigFiles}
 )
 
-message ("${PROJECT_NAME} - Ending Configuration.")
+message(STATUS "${PROJECT_NAME} - Ending Configuration.")
