@@ -51,7 +51,13 @@ if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
                         " the Mezzanine source code and have cmake build from there.")
 endif("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
 
-
+####################################################################################################
+####################################################################################################
+# From Here to the next thick banner exist macros to set variables in the scope of the calling
+# CmakeList Project that all Jagati packages should set. The idea is that every variable needed to
+# link or inspect the source will be cleanly set and easily inspectable, from just the output of
+# cmake and a sample CMakeLists.txt.
+####################################################################################################
 ####################################################################################################
 # This is used to determine what the parentmost project is. Whichever project calls this first will
 # be the only one that doesn't set all of it's variables in its parent's scope.
@@ -115,7 +121,7 @@ macro(CreateLocations)
     #######################################
     # Derived Output Folders
     set(${PROJECT_NAME}GenHeadersDir "${${PROJECT_NAME}BinaryDir}config/")
-    set(${PROJECT_NAME}GenHeadersDir "${${PROJECT_NAME}BinaryDir}generated_source/")
+    set(${PROJECT_NAME}GenSourceFolder "${${PROJECT_NAME}BinaryDir}generated_source/")
 
     #######################################
     # Derived Input Folders
@@ -174,6 +180,7 @@ endmacro(CreateLocations)
 # tools are not as well identified as the could be. Hopefully this overcomes these minor shortfalls.
 
 # Usage:
+#   # Be the parentmost cmake scope or this ihas no effect
 #   IdentifyOS()
 #
 # Result:
@@ -187,48 +194,50 @@ endmacro(CreateLocations)
 #       PlatformDefinition - LINUX/WINDOWS/MACOSX
 
 macro(IdentifyOS)
-    message(STATUS "\tDetecting OS:")
+    if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+        message(STATUS "\tDetecting OS:")
 
-    set(SystemIsLinux OFF)
-    set(SystemIsWindows OFF)
-    set(SystemIsMacOSX OFF)
+        set(SystemIsLinux OFF)
+        set(SystemIsWindows OFF)
+        set(SystemIsMacOSX OFF)
 
-    if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
-        message(STATUS "\t\tDetected OS as 'Linux'.")
-        set(SystemIsLinux ON)
-    endif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+        if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+            message(STATUS "\t\tDetected OS as 'Linux'.")
+            set(SystemIsLinux ON)
+        endif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
 
-    if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-        message(STATUS "\t\tDetected OS as 'Windows'.")
-        set(SystemIsWindows ON)
-    endif("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+        if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+            message(STATUS "\t\tDetected OS as 'Windows'.")
+            set(SystemIsWindows ON)
+        endif("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 
-    if("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
-        message(STATUS "\t\tDetected OS as 'Mac OS X'.")
-        set(SystemIsMacOSX ON)
-    endif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
+        if("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
+            message(STATUS "\t\tDetected OS as 'Mac OS X'.")
+            set(SystemIsMacOSX ON)
+        endif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
 
-    message(STATUS "\t\tLinux: ${SystemIsLinux}")
-    message(STATUS "\t\tWindows: ${SystemIsWindows}")
-    message(STATUS "\t\tMacOSX: ${SystemIsMacOSX}")
+        message(STATUS "\t\tLinux: ${SystemIsLinux}")
+        message(STATUS "\t\tWindows: ${SystemIsWindows}")
+        message(STATUS "\t\tMacOSX: ${SystemIsMacOSX}")
 
-    if(SystemIsLinux)
-        message(STATUS "\t\tSetting specific variables for 'Linux'.")
-        set(CatCommand "cat")
-        set(PlatformDefinition "LINUX")
-    endif(SystemIsLinux)
+        if(SystemIsLinux)
+            message(STATUS "\t\tSetting specific variables for 'Linux'.")
+            set(CatCommand "cat")
+            set(PlatformDefinition "LINUX")
+        endif(SystemIsLinux)
 
-    if(SystemIsWindows)
-        message(STATUS "\t\tSetting specific variables for 'Windows'.")
-        set(CatCommand "type")
-        set(PlatformDefinition "WINDOWS")
-    endif(SystemIsWindows)
+        if(SystemIsWindows)
+            message(STATUS "\t\tSetting specific variables for 'Windows'.")
+            set(CatCommand "type")
+            set(PlatformDefinition "WINDOWS")
+        endif(SystemIsWindows)
 
-    if(SystemIsMacOSX)
-        message(STATUS "\t\tSetting specific variables for 'Mac OS X'.")
-        set(CatCommand "cat")
-        set(PlatformDefinition "MACOSX")
-    endif(SystemIsMacOSX)
+        if(SystemIsMacOSX)
+            message(STATUS "\t\tSetting specific variables for 'Mac OS X'.")
+            set(CatCommand "cat")
+            set(PlatformDefinition "MACOSX")
+        endif(SystemIsMacOSX)
+    endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
 endmacro(IdentifyOS)
 
 ####################################################################################################
@@ -237,6 +246,7 @@ endmacro(IdentifyOS)
 # this can roughly identify those.
 
 # Usage:
+#   # Be the parentmost cmake scope or this ihas no effect
 #   IdentifyOS()
 #
 # Result:
@@ -251,47 +261,49 @@ endmacro(IdentifyOS)
 #       CompilerDesignMS    - ON/OFF
 
 macro(IdentifyCompiler)
-    message(STATUS "\tDetecting Compiler:")
+    if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+        message(STATUS "\tDetecting Compiler:")
 
-    set(CompilerIsGCC OFF)
-    set(CompilerIsClang OFF)
-    set(CompilerIsIntel OFF)
-    set(CompilerIsMsvc OFF)
+        set(CompilerIsGCC OFF)
+        set(CompilerIsClang OFF)
+        set(CompilerIsIntel OFF)
+        set(CompilerIsMsvc OFF)
 
-    set(CompilerDesignNix OFF)
-    set(CompilerDesignMS OFF)
+        set(CompilerDesignNix OFF)
+        set(CompilerDesignMS OFF)
 
-    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        message(STATUS "\t\tDetected compiler as 'GCC'.")
-        set(CompilerIsGCC ON)
-        set(CompilerDesignNix ON)
-    endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+            message(STATUS "\t\tDetected compiler as 'GCC'.")
+            set(CompilerIsGCC ON)
+            set(CompilerDesignNix ON)
+        endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
-    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-        message(STATUS "\t\tDetected compiler as 'Clang'.")
-        set(CompilerIsClang ON)
-        set(CompilerDesignNix ON)
-    endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+        if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+            message(STATUS "\t\tDetected compiler as 'Clang'.")
+            set(CompilerIsClang ON)
+            set(CompilerDesignNix ON)
+        endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 
-    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
-        message(STATUS "\t\tDetected compiler as 'Intel'.")
-        set(CompilerIsIntel ON)
-        set(CompilerDesignNix ON)
-    endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
+        if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
+            message(STATUS "\t\tDetected compiler as 'Intel'.")
+            set(CompilerIsIntel ON)
+            set(CompilerDesignNix ON)
+        endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
 
-    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-        message(STATUS "\t\tDetected compiler as 'MSVC'.")
-        set(CompilerIsMsvc ON)
-        set(CompilerDesignMS ON)
-    endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+        if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+            message(STATUS "\t\tDetected compiler as 'MSVC'.")
+            set(CompilerIsMsvc ON)
+            set(CompilerDesignMS ON)
+        endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 
-    if(CompilerDesignNix)
-        message(STATUS "\t\tPresuming *nix style compiler.")
-    endif(CompilerDesignNix)
+        if(CompilerDesignNix)
+            message(STATUS "\t\tPresuming *nix style compiler.")
+        endif(CompilerDesignNix)
 
-    if(CompilerDesignMS)
-        message(STATUS "\t\tPresuming ms style compiler.")
-    endif(CompilerDesignMS)
+        if(CompilerDesignMS)
+            message(STATUS "\t\tPresuming ms style compiler.")
+        endif(CompilerDesignMS)
+    endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
 endmacro(IdentifyCompiler)
 
 ####################################################################################################
@@ -351,15 +363,21 @@ macro(SetCommonCompilerFlags)
         # C4820 - When padding is added for performance reasons.
     endif(CompilerDesignNix)
 
-    message(STATUS "\tC++ compiler and linker flags: ${CMAKE_CXX_FLAGS}")
+    if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+        message(STATUS "\tC++ compiler and linker flags: ${CMAKE_CXX_FLAGS}")
+    endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
 endmacro(SetCommonCompilerFlags)
 
 ####################################################################################################
 # A variable that contains an array of all the Jagati Packages
 
-
-
-
+# Usage:
+#   # Be certain to call project before calling this.
+#   AddJagatiPackage()
+#
+# Result:
+#   This package's name will be added to a list of packages currently loaded. This list can be
+#   Accessed through the variable: JagatiPackageNameArray
 
 macro(AddJagatiPackage)
     if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
@@ -386,15 +404,61 @@ endmacro(AddJagatiPackage)
 macro(StandardJagatiSetup)
     ClaimParentProject()
     CreateLocations()
-    message(STATUS "Determining platform specific details.")
-    IdentifyOS()
-    IdentifyCompiler()
-    SetCommonCompilerFlags()
     AddJagatiPackage()
+    if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+        message(STATUS "Determining platform specific details.")
+        IdentifyOS()
+        IdentifyCompiler()
+        SetCommonCompilerFlags()
+    endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+
 endmacro(StandardJagatiSetup)
 
 ####################################################################################################
+####################################################################################################
+# Optional Macros that not all Jagati packages will set, but culd be important for link or other
+# build time activities.
+####################################################################################################
+####################################################################################################
+# A variable that contains an array of all the Jagati Linkable Libraries provided by loaded
+# packages
+
+# Usage:
+#   # Be certain to call project before calling this.
+#   AddJagatiLibrary("filename.a")
+#
+# Result:
+#   The passed file weill  be added to a list of libaries. This list can be
+#   Accessed through the variable: JagatiLibraryArray
+#
+#   This will also create a variable call ${PROJECT_NAME}lib that will store the filename
+
+macro(AddJagatiLibary FileName)
+    set(${PROJECT_NAME}lib "${FileName}")
+    if("${ParentProject}" STREQUAL "${FileName}")
+        list(APPEND JagatiPackageNameArray ${FileName})
+    else("${ParentProject}" STREQUAL "${FileName}")
+        set(JagatiLibraryArray "${JagatiLibraryArray}")
+        list(APPEND JagatiLibraryArray ${FileName})
+        set(JagatiLibraryArray "${JagatiLibraryArray}" PARENT_SCOPE)
+        set(${PROJECT_NAME}lib "${FileName}" PARENT_SCOPE)
+    endif("${ParentProject}" STREQUAL "${FileName}")
+    message(STATUS "Lib variable: '${PROJECT_NAME}lib' - ${${PROJECT_NAME}lib}")
+endmacro(AddJagatiLibary)
+
+####################################################################################################
+####################################################################################################
 # Basic Display Functionality
+####################################################################################################
+####################################################################################################
+# Tabbed list Printing
+
+# Usage:
+#   ShowList("Header text" "\t" "${AnyArray}")
+#
+# Results:
+#   The header and array will be printed. Each line except the header will be indented/preceeded
+# by whatever is in Tabbing.
 
 function(ShowList Header Tabbing ToPrint)
     message(STATUS "${Tabbing}${Header}")
@@ -403,21 +467,34 @@ function(ShowList Header Tabbing ToPrint)
     endforeach(ListItem ${ToPrint})
 endfunction(ShowList)
 
+####################################################################################################
+####################################################################################################
+# Getting Jagati packages, What URLs and functions can we use to get Jagati Packages and know what
+# Exists?
+####################################################################################################
+####################################################################################################
 
-###############################################################################
-# Direct Download Experiments.
+# Package URLs
 
-# These should be usable instead of hunters
-
+set(StaticFoundation_GitURL "https://github.com/BlackToppStudios/Mezz_StaticFoundation")
 
 
-
+#ExternalProject_Add(
+#  ExternalProjectDownload
+#  GIT_REPOSITORY git@github.com:isocpp/CppCoreGuidelines.git
+#  GIT_TAG master
+#  DOWNLOAD_COMMAND git clone git@github.com:isocpp/CppCoreGuidelines.git
+#  UPDATE_COMMAND git pull
+#  BUILD_COMMAND ""
+#  TEST_COMMAND ""
+#  INSTALL_COMMAND ""
+#)
 
 
 ####################################################################################################
 #message(STATUS "Determining Jagati Package Manager Details.")
 
-set(vara "zxcv")
+#set(vara "zxcv")
 
 #include(CMake/CMakeLists.txt) # PARENT_SCOPE causes this to blow up.
 #add_subdirectory(CMake)
@@ -425,10 +502,10 @@ set(vara "zxcv")
 #ExternalProject_Add (CmakeFolder SOURCE_DIR "Cmake/" DOWNLOAD_COMMAND ""
 #                        BUILD_COMMAND "" UPDATE_COMMAND "" INSTALL_COMMAND "")
 
-                                            # Include   | subdir    | extern
-message(STATUS "var1: '${var1}'")           # set       | empty     | empty
-message(STATUS "var2: '${var2}'")           # error     | set       | empty
-message(STATUS "Name: '${PROJECT_NAME}'")   # overwrite | in file   | in file
+#                                            # Include   | subdir    | extern
+#message(STATUS "var1: '${var1}'")           # set       | empty     | empty
+#message(STATUS "var2: '${var2}'")           # error     | set       | empty
+#message(STATUS "Name: '${PROJECT_NAME}'")   # overwrite | in file   | in file
 
 
 

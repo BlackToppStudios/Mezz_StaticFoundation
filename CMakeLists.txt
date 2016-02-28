@@ -47,10 +47,8 @@ include(Jagati.cmake)
 
 StandardJagatiSetup()
 add_subdirectory(CMake)
-message(STATUS "SUBPROjectRootDir: '${SUBPROjectRootDir}'")
-message(STATUS "SUBPROjectBinaryDir: '${SUBPROjectBinaryDir}'")
-ShowList("Added Packages" "\t" "${JagatiPackageNameArray}")
 
+ShowList("Added Packages" "\t" "${JagatiPackageNameArray}")
 
 ####################################################################################################
 message(STATUS "Determining Source Files.")
@@ -83,10 +81,6 @@ include_directories(
     ${${PROJECT_NAME}IncludeDir}
     ${${PROJECT_NAME}GenHeadersDir}
 )
-
-# Add API for setting this
-# Add API for adding library
-
 
 ####################################################################################################
 # Set up Build targets
