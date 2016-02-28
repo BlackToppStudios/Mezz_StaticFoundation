@@ -47,7 +47,8 @@ include(Jagati.cmake)
 
 StandardJagatiSetup()
 add_subdirectory(CMake)
-    message(STATUS "SUBPROjectRootDir: '${SUBPROjectRootDir}'")
+message(STATUS "SUBPROjectRootDir: '${SUBPROjectRootDir}'")
+message(STATUS "SUBPROjectBinaryDir: '${SUBPROjectBinaryDir}'")
 
 
 
@@ -77,10 +78,10 @@ set(SwigFiles
 ####################################################################################################
 # Set up Include Directories
 
-file(MAKE_DIRECTORY ${${PROJECT_NAME}GeneratedHeadersDir})
+file(MAKE_DIRECTORY ${${PROJECT_NAME}GenHeadersDir})
 include_directories(
     ${${PROJECT_NAME}IncludeDir}
-    ${${PROJECT_NAME}GeneratedHeadersDir}
+    ${${PROJECT_NAME}GenHeadersDir}
 )
 
 # Add API for setting this

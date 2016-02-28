@@ -66,7 +66,6 @@ endif("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
 #   will know to pollute your namespace:
 #       ParentProject
 
-
 macro(ClaimParentProject)
     if(ParentProject)
         # It is already set so we must be a child.
@@ -93,8 +92,8 @@ endmacro(ClaimParentProject)
 #       ${PROJECT_NAME}RootDir
 #       ${PROJECT_NAME}BinaryDir
 #
-#       ${PROJECT_NAME}GeneratedHeadersDir
-#       ${PROJECT_NAME}GeneratedSourceFolder
+#       ${PROJECT_NAME}GenHeadersDir
+#       ${PROJECT_NAME}GenSourceFolder
 #
 #       ${PROJECT_NAME}DoxDir
 #       ${PROJECT_NAME}IncludeDir
@@ -107,71 +106,67 @@ macro(CreateLocations)
     message(STATUS "Creating Location Variables for '${PROJECT_NAME}'")
     set(PROJECT_NAME "${PROJECT_NAME}")
 
+
+    #######################################
+    # Root
+    set(${PROJECT_NAME}RootDir "${${PROJECT_NAME}_SOURCE_DIR}/")
+    set(${PROJECT_NAME}BinaryDir "${${PROJECT_NAME}_BINARY_DIR}/")
+
+    #######################################
+    # Derived Output Folders
+    set(${PROJECT_NAME}GenHeadersDir "${${PROJECT_NAME}BinaryDir}config/")
+    set(${PROJECT_NAME}GenHeadersDir "${${PROJECT_NAME}BinaryDir}generated_source/")
+
+    #######################################
+    # Derived Input Folders
+    set(${PROJECT_NAME}DoxDir "${${PROJECT_NAME}RootDir}dox/")
+    set(${PROJECT_NAME}IncludeDir "${${PROJECT_NAME}RootDir}include/")
+    set(${PROJECT_NAME}LibDir "${${PROJECT_NAME}RootDir}lib/")
+    set(${PROJECT_NAME}SourceDir "${${PROJECT_NAME}RootDir}src/")
+    set(${PROJECT_NAME}SwigDir "${${PROJECT_NAME}RootDir}swig/")
+    set(${PROJECT_NAME}TestDir "${${PROJECT_NAME}RootDir}test/")
+
     if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
-        #######################################
-        # Root
-        set(${PROJECT_NAME}RootDir ${${PROJECT_NAME}_SOURCE_DIR}/)
-        set(${PROJECT_NAME}BinaryDir ${${PROJECT_NAME}_BINARY_DIR}/)
-
-        #######################################
-        # Derived Output Folders
-        set(${PROJECT_NAME}GeneratedHeadersDir ${${PROJECT_NAME}BinaryDir}config/)
-        set(${PROJECT_NAME}GeneratedSourceFolder ${${PROJECT_NAME}BinaryDir}generated_source/)
-
-        #######################################
-        # Derived Input Folders
-        set(${PROJECT_NAME}DoxDir ${${PROJECT_NAME}RootDir}dox/)
-        set(${PROJECT_NAME}IncludeDir ${${PROJECT_NAME}RootDir}include/)
-        set(${PROJECT_NAME}LibDir ${${PROJECT_NAME}RootDir}lib/)
-        set(${PROJECT_NAME}SourceDir ${${PROJECT_NAME}RootDir}src/)
-        set(${PROJECT_NAME}SwigDir ${${PROJECT_NAME}RootDir}swig/)
-        set(${PROJECT_NAME}TestDir ${${PROJECT_NAME}RootDir}test/)
+        message(STATUS "This, ${PROJECT_NAME}, is the root project. Not setting PARENT_SCOPE vars.")
     else("${ParentProject}" STREQUAL "${PROJECT_NAME}")
         #######################################
         # Root as child
-        set(${PROJECT_NAME}RootDir ${${ParentProject}_SOURCE_DIR}/ PARENT_SCOPE)
-        set(${PROJECT_NAME}BinaryDir ${${ParentProject}_BINARY_DIR}/ PARENT_SCOPE)
+        set(${PROJECT_NAME}RootDir "${${PROJECT_NAME}RootDir}" PARENT_SCOPE)
+        set(${PROJECT_NAME}BinaryDir "${${PROJECT_NAME}BinaryDir}" PARENT_SCOPE)
 
         #######################################
-        # Derived Output Folders  as child
-        set(${PROJECT_NAME}GeneratedHeadersDir ${${PROJECT_NAME}BinaryDir}config/ PARENT_SCOPE)
-        set(${PROJECT_NAME}GeneratedSourceFolder ${${PROJECT_NAME}BinaryDir}generated_source/
-            PARENT_SCOPE)
+        # Derived Output Folders as child
+        set(${PROJECT_NAME}GenHeadersDir "${${PROJECT_NAME}GenHeadersDir}" PARENT_SCOPE)
+        set(${PROJECT_NAME}GenSourceFolder "${${PROJECT_NAME}GenSourceFolder}" PARENT_SCOPE)
 
         #######################################
-        # Derived Input Folders  as child
-        set(${PROJECT_NAME}DoxDir ${${PROJECT_NAME}RootDir}dox/ PARENT_SCOPE)
-        set(${PROJECT_NAME}IncludeDir ${${PROJECT_NAME}RootDir}include/ PARENT_SCOPE)
-        set(${PROJECT_NAME}LibDir ${${PROJECT_NAME}RootDir}lib/ PARENT_SCOPE)
-        set(${PROJECT_NAME}SourceDir ${${PROJECT_NAME}RootDir}src/ PARENT_SCOPE)
-        set(${PROJECT_NAME}SwigDir ${${PROJECT_NAME}RootDir}swig/ PARENT_SCOPE)
-        set(${PROJECT_NAME}TestDir ${${PROJECT_NAME}RootDir}test/ PARENT_SCOPE)
+        # Derived Input Folders as child
+        set(${PROJECT_NAME}DoxDir "${${PROJECT_NAME}DoxDir}" PARENT_SCOPE)
+        set(${PROJECT_NAME}IncludeDir "${${PROJECT_NAME}IncludeDir}" PARENT_SCOPE)
+        set(${PROJECT_NAME}LibDir "${${PROJECT_NAME}LibDir}" PARENT_SCOPE)
+        set(${PROJECT_NAME}SourceDir "${${PROJECT_NAME}SourceDir}" PARENT_SCOPE)
+        set(${PROJECT_NAME}SwigDir "${${PROJECT_NAME}SwigDir}" PARENT_SCOPE)
+        set(${PROJECT_NAME}TestDir "${${PROJECT_NAME}TestDir}" PARENT_SCOPE)
     endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
 
     #######################################
     message(STATUS "\tVariables for '${PROJECT_NAME}'")
 
-    #######################################
-    message(STATUS "\tRoot Folders")
+    message(STATUS "\t\tRoot Folders")
+    message(STATUS "\t\t\t'${PROJECT_NAME}RootDir' - ${${PROJECT_NAME}RootDir}")
+    message(STATUS "\t\t\t'${PROJECT_NAME}BinaryDir' - ${${PROJECT_NAME}BinaryDir}")
 
-    message(STATUS "\t\tIn '${PROJECT_NAME}RootDir' Using Sources From: ${${PROJECT_NAME}RootDir}")
-    message(STATUS "\t\tPutting all major output in: ${${PROJECT_NAME}BinaryDir}")
+    message(STATUS "\t\tDerived Output folders")
+    message(STATUS "\t\t\t'${PROJECT_NAME}GenHeadersDir' - ${${PROJECT_NAME}GenHeadersDir}")
+    message(STATUS "\t\t\t'${PROJECT_NAME}GenSourceFolder' - ${${PROJECT_NAME}GenSourceFolder}")
 
-    #######################################
-    message(STATUS "\tDerived Output folders")
-
-    message(STATUS "\t\tPutting Generated Headers in: ${${PROJECT_NAME}GeneratedHeadersDir}")
-    message(STATUS "\t\tPutting Generated Source files: ${${PROJECT_NAME}GeneratedSourceFolder}")
-
-    #######################################
-    message(STATUS "\tDerived Input folders")
-
-    message(STATUS "\t\tUsing supplementary doxygen header files from: ${${PROJECT_NAME}DoxDir}")
-    message(STATUS "\t\tUsing Header files from: ${${PROJECT_NAME}IncludeDir}")
-    message(STATUS "\t\tUsing source libraries from: ${${PROJECT_NAME}LibDir}")
-    message(STATUS "\t\tUsing Source files from: ${${PROJECT_NAME}SourceDir}")
-    message(STATUS "\t\tUsing supplementary Swig Header files from: ${${PROJECT_NAME}SwigDir}")
-    message(STATUS "\t\tUsing Test files from: ${${PROJECT_NAME}TestDir}")
+    message(STATUS "\t\tDerived Input folders")
+    message(STATUS "\t\t\t'${PROJECT_NAME}DoxDir' - ${${PROJECT_NAME}DoxDir}")
+    message(STATUS "\t\t\t'${PROJECT_NAME}IncludeDir' - ${${PROJECT_NAME}IncludeDir}")
+    message(STATUS "\t\t\t'${PROJECT_NAME}LibDir' - ${${PROJECT_NAME}LibDir}")
+    message(STATUS "\t\t\t'${PROJECT_NAME}SourceDir' - ${${PROJECT_NAME}SourceDir}")
+    message(STATUS "\t\t\t'${PROJECT_NAME}SwigDir' - ${${PROJECT_NAME}SwigDir}")
+    message(STATUS "\t\t\t'${PROJECT_NAME}TestDir' - ${${PROJECT_NAME}TestDir}")
 endmacro(CreateLocations)
 
 ####################################################################################################
@@ -368,8 +363,8 @@ endmacro(SetCommonCompilerFlags)
 #   StandardJagatiSetup()
 #
 # Result:
-#       Many variables for compiler, OS and locations will be set, see above.
-#       Compiler Flags will be set.
+#       The Parent scope will attempt to be claimed, many variables for compiler, OS and locations
+#       will be set, see above. Compiler Flags will be set.
 
 macro(StandardJagatiSetup)
     ClaimParentProject()
