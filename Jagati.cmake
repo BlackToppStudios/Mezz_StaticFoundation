@@ -354,6 +354,23 @@ macro(SetCommonCompilerFlags)
     message(STATUS "\tC++ compiler and linker flags: ${CMAKE_CXX_FLAGS}")
 endmacro(SetCommonCompilerFlags)
 
+####################################################################################################
+# A variable that contains an array of all the Jagati Packages
+
+
+
+
+
+macro(AddJagatiPackage)
+    if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+        list(APPEND JagatiPackageNameArray ${PROJECT_NAME})
+    else("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+        set(JagatiPackageNameArray "${JagatiPackageNameArray}")
+        list(APPEND JagatiPackageNameArray ${PROJECT_NAME})
+        set(JagatiPackageNameArray "${JagatiPackageNameArray}" PARENT_SCOPE)
+    endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+endmacro(AddJagatiPackage)
+
 
 ####################################################################################################
 # This does what the above macros do, but this does it all together.
@@ -373,15 +390,8 @@ macro(StandardJagatiSetup)
     IdentifyOS()
     IdentifyCompiler()
     SetCommonCompilerFlags()
+    AddJagatiPackage()
 endmacro(StandardJagatiSetup)
-
-
-
-
-
-
-
-
 
 ####################################################################################################
 # Basic Display Functionality
@@ -394,20 +404,12 @@ function(ShowList Header Tabbing ToPrint)
 endfunction(ShowList)
 
 
-
-
 ###############################################################################
 # Direct Download Experiments.
 
 # These should be usable instead of hunters
 
 
-
-set(JagatiPackageNameArray)
-
-macro(AddJagatiPackage)
-    list(append JagatiPackageNameArray ${PROJECT_NAME})
-endmacro(AddJagatiPackage)
 
 
 

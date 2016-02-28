@@ -49,7 +49,7 @@ StandardJagatiSetup()
 add_subdirectory(CMake)
 message(STATUS "SUBPROjectRootDir: '${SUBPROjectRootDir}'")
 message(STATUS "SUBPROjectBinaryDir: '${SUBPROjectBinaryDir}'")
-
+ShowList("Added Packages" "\t" "${JagatiPackageNameArray}")
 
 
 ####################################################################################################
