@@ -81,6 +81,7 @@ macro(ClaimParentProject)
     else(ParentProject)
         message(STATUS "Claiming '${PROJECT_NAME}' as the Parent Project.")
         set(ParentProject "${PROJECT_NAME}")
+        set(JagatiConfig "")
     endif(ParentProject)
 endmacro(ClaimParentProject)
 
@@ -435,16 +436,43 @@ endmacro(StandardJagatiSetup)
 
 macro(AddJagatiLibary FileName)
     set(${PROJECT_NAME}lib "${FileName}")
+    list(APPEND JagatiLibraryArray ${FileName})
+    set(${PROJECT_NAME}lib "${FileName}")
     if("${ParentProject}" STREQUAL "${FileName}")
-        list(APPEND JagatiPackageNameArray ${FileName})
     else("${ParentProject}" STREQUAL "${FileName}")
-        set(JagatiLibraryArray "${JagatiLibraryArray}")
-        list(APPEND JagatiLibraryArray ${FileName})
         set(JagatiLibraryArray "${JagatiLibraryArray}" PARENT_SCOPE)
         set(${PROJECT_NAME}lib "${FileName}" PARENT_SCOPE)
     endif("${ParentProject}" STREQUAL "${FileName}")
     message(STATUS "Lib variable: '${PROJECT_NAME}lib' - ${${PROJECT_NAME}lib}")
 endmacro(AddJagatiLibary)
+
+####################################################################################################
+# Some projects have many files that are created at compile time. This can cause the build system to
+# as complex as the source code. Most software developers want to spend their reasoning about the
+# code and not the code that makes the code. In general the Jagati or a specific package should
+# handle meta-programming where possible.
+
+# Usage:
+#   # Call any time after the parent scope is claimed. The first parameter is the name of a
+#   # preprocessor to create, and the second is the value, "" for no value.
+#       AddJagatiConfig("MEZZ_FOO" "BAR" "")
+#       AddJagatiConfig("MEZZ_EmptyOption" "" "")
+#       AddJagatiConfig("MEZZ_Remarked_FOO" "BAR" "//")
+#       AddJagatiConfig("MEZZ_EmptyOption_nope" "" "//")
+#
+# Result:
+#
+#
+
+What here to fix remarks
+
+macro(AddJagatiConfig Name Value JagatiConfigRemarks)
+    set(JagatiConfig "${JagatiConfig}\n${JagatiConfigRemarks}#define ${Name} ${Value}")
+    if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+    else("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+        set(JagatiConfig "${JagatiConfig}" PARENT_SCOPE)
+    endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+endmacro(AddJagatiConfig Name Value)
 
 ####################################################################################################
 ####################################################################################################
@@ -476,68 +504,42 @@ endfunction(ShowList)
 
 # Package URLs
 
-set(StaticFoundation_GitURL "https://github.com/BlackToppStudios/Mezz_StaticFoundation")
+set(StaticFoundation_GitURL "git@github.com:BlackToppStudios/Mezz_StaticFoundation.git")
 
+####################################################################################################
+# Package Download experiment
 
-#ExternalProject_Add(
-#  ExternalProjectDownload
-#  GIT_REPOSITORY git@github.com:isocpp/CppCoreGuidelines.git
-#  GIT_TAG master
-#  DOWNLOAD_COMMAND git clone git@github.com:isocpp/CppCoreGuidelines.git
-#  UPDATE_COMMAND git pull
-#  BUILD_COMMAND ""
-#  TEST_COMMAND ""
-#  INSTALL_COMMAND ""
-#)
+set(JagatiPackagerFolder "$ENV{JAGATI_DIR}" CACHE PATH "Folder for storing Jagati Packages.")
+
+# To insure that all the packages are downloaded this can be added as a dependencies to any target.
+
+if("${ParentProject}" STREQUAL "${FileName}")
+    add_custom_target(
+        Download
+        COMMENT "Checking for Jagati Packages to Download"
+    )
+endif("${ParentProject}" STREQUAL "${FileName}")
 
 
 ####################################################################################################
-#message(STATUS "Determining Jagati Package Manager Details.")
+# Any package wanting to use another can include it with this function
+function(IncludeJagatiPackage PackageName)
+    if("${PackageName}_GitURL" STREQUAL "")
+        message(FATAL_ERROR "Could not find Package named ${PackageName}")
+    else("${PackageName}_GitURL" STREQUAL "")
+        set(GitURL "${PackageName}_GitURL")
+    endif("${PackageName}_GitURL" STREQUAL "")
 
-#set(vara "zxcv")
+    ExternalProject_Add(
+      "${PackageName}"
+      PREFIX "${JagatiPackagerFolder}/${PackageName}"
+      GIT_REPOSITORY "${GitURL}"
+      GIT_TAG master
+      CONFIGURE_COMMAND ""
+      BUILD_COMMAND ""
+      TEST_COMMAND ""
+      INSTALL_COMMAND ""
+    )
 
-#include(CMake/CMakeLists.txt) # PARENT_SCOPE causes this to blow up.
-#add_subdirectory(CMake)
-#include(ExternalProject)
-#ExternalProject_Add (CmakeFolder SOURCE_DIR "Cmake/" DOWNLOAD_COMMAND ""
-#                        BUILD_COMMAND "" UPDATE_COMMAND "" INSTALL_COMMAND "")
-
-#                                            # Include   | subdir    | extern
-#message(STATUS "var1: '${var1}'")           # set       | empty     | empty
-#message(STATUS "var2: '${var2}'")           # error     | set       | empty
-#message(STATUS "Name: '${PROJECT_NAME}'")   # overwrite | in file   | in file
-
-
-
-#set(MezzPackageDir $ENV{MEZZ_PACKAGE_DIR})
-
-#if(MezzPackageDir)
-#    message(STATUS "Using Mezzanine Packages from ${MezzPackageDir}")
-#else(MezzPackageDir)
-#    message(ERROR "\tCould not determine directory to look for or save Mezzanine Packages. \
-#            Set Environment Variable 'MezzPackageDir' to directory to place files or select \
-#            location from CMake-gui.")
-#endif(MezzPackageDir)
-
-
-#set(ExpectedIndexHash "ffa5f2df93913e7d168021631a3564605b87dd2126afda779ba17\
-#27ccf2be05e9c31882a42a731a7bb985cc1f265f98e5714ac4f791a3f8a0113fe6d86b1c476")
-
-#file(DOWNLOAD
-#    https://raw.githubusercontent.com/isocpp/CppCoreGuidelines/master/CONTRIBUTING.md
-#    "${${PROJECT_NAME}BinaryDir}Guidelines.md"
-#    EXPECTED_HASH SHA512=${ExpectedIndexHash}
-#)
-
-#include(ExternalProject)
-
-#ExternalProject_Add(
-#  ExternalProjectDownload
-#  GIT_REPOSITORY git@github.com:isocpp/CppCoreGuidelines.git
-#  GIT_TAG master
-#  DOWNLOAD_COMMAND git clone git@github.com:isocpp/CppCoreGuidelines.git
-#  UPDATE_COMMAND git pull
-#  BUILD_COMMAND ""
-#  TEST_COMMAND ""
-#  INSTALL_COMMAND ""
-#)
+    add_dependencies(Download "${PackageName}")
+endfunction(IncludeJagatiPackage PackageName)

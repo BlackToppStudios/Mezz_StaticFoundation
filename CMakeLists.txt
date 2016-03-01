@@ -42,13 +42,20 @@ cmake_minimum_required(VERSION 3.2)
 project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration.")
 
-# Put downloader here
-include(Jagati.cmake)
+####################################################################################################
+#set(JagatiChecksum "96ffe3114ad5c5ea3961999d4740f11c42bbf46f6b6c11e5d547fc\
+#52de8f59bb7bac4c20ad315124b7b0cede57310dba4ba7a16f288a64c94ade822f8a94722e")
+#file(DOWNLOAD
+#    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/master/Jagati.cmake"
+#    "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
+#    EXPECTED_HASH SHA512=${JagatiChecksum}
+#)
 
+####################################################################################################
+#include("${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake")
+include("Jagati.cmake")
 StandardJagatiSetup()
 add_subdirectory(CMake)
-
-ShowList("Added Packages" "\t" "${JagatiPackageNameArray}")
 
 ####################################################################################################
 message(STATUS "Determining Source Files.")
@@ -81,6 +88,13 @@ include_directories(
     ${${PROJECT_NAME}IncludeDir}
     ${${PROJECT_NAME}GenHeadersDir}
 )
+
+####################################################################################################
+# Set up config file4
+
+AddJagatiConfig("MEZZ_IceCream" "Cone" "")
+message(STATUS "${JagatiConfig}")
+
 
 ####################################################################################################
 # Set up Build targets
