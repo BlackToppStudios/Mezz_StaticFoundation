@@ -92,7 +92,9 @@ include_directories(
 ####################################################################################################
 # Set up config file4
 
-AddJagatiConfig("MEZZ_IceCream" "Cone" Off)
+AddJagatiConfig("MEZZ_IceCream" "Cone" on)
+EmitConfig()
+
 message(STATUS "${StaticFoundationJagatiConfig}")
 message(STATUS "${SUBPROjectJagatiConfig}")
 
@@ -113,6 +115,7 @@ add_custom_target(
             ${SourceFiles}
             ${TestSourceFiles}
             ${SwigFiles}
+            ${StaticFoundationConfigFilename}
 )
 
 message(STATUS "${PROJECT_NAME} - Ending Configuration.")

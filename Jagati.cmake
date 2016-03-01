@@ -494,7 +494,74 @@ macro(AddJagatiConfig Name Value RemarkBool)
 endmacro(AddJagatiConfig Name Value RemarkBool)
 
 ####################################################################################################
-#
+# Emit a config file
+
+
+
+macro(EmitConfig)
+
+set(ConfigHeader
+"// © Copyright 2010 - 2016 BlackTopp Studios Inc.\n\
+/* This file is part of The Mezzanine Engine.\n\
+\n\
+    The Mezzanine Engine is free software: you can redistribute it and/or modify\n\
+    it under the terms of the GNU General Public License as published by\n\
+    the Free Software Foundation, either version 3 of the License, or\n\
+    (at your option) any later version.\n\
+\n\
+    The Mezzanine Engine is distributed in the hope that it will be useful,\n\
+    but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
+    GNU General Public License for more details.\n\
+\n\
+    You should have received a copy of the GNU General Public License\n\
+    along with The Mezzanine Engine.  If not, see <http://www.gnu.org/licenses/>.\n\
+*/\n\
+/* The original authors have included a copy of the license specified above in the\n\
+   'Docs' folder. See 'gpl.txt'\n\
+*/\n\
+/* We welcome the use of the Mezzanine engine to anyone, including companies who wish to\n\
+   Build professional software and charge for their product.\n\
+\n\
+   However there are some practical restrictions, so if your project involves\n\
+   any of the following you should contact us and we will try to work something\n\
+   out:\n\
+    - DRM or Copy Protection of any kind(except Copyrights)\n\
+    - Software Patents You Do Not Wish to Freely License\n\
+    - Any Kind of Linking to Non-GPL licensed Works\n\
+    - Are Currently In Violation of Another Copyright Holder's GPL License\n\
+    - If You want to change our code and not add a few hundred MB of stuff to\n\
+        your distribution\n\
+\n\
+   These and other limitations could cause serious legal problems if you ignore\n\
+   them, so it is best to simply contact us or the Free Software Foundation, if\n\
+   you have any questions.\n\
+\n\
+   Joseph Toppi - toppij@gmail.com\n\
+   John Blackwood - makoenergy02@gmail.com\n\
+*/\n\
+#ifndef Mezz_${PROJECT_NAME}_config_h\n\
+#define Mezz_${PROJECT_NAME}_config_h\n\
+\n\n")
+
+    set(ConfigFooter "\n\n#endif")
+
+    set(${PROJECT_NAME}ConfigFilename "${${PROJECT_NAME}GenHeadersDir}${PROJECT_NAME}Config.h")
+    if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+    else("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+        set(${PROJECT_NAME}ConfigFilename "${${PROJECT_NAME}ConfigFilename}" PARENT_SCOPE)
+    endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+
+    set(${PROJECT_NAME}ConfigContent "${ConfigHeader}${${PROJECT_NAME}JagatiConfig}${ConfigFooter}")
+    if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+    else("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+        set(${PROJECT_NAME}ConfigContent "${${PROJECT_NAME}ConfigContent}" PARENT_SCOPE)
+    endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+
+    file(WRITE "${${PROJECT_NAME}ConfigFilename}" "${${PROJECT_NAME}ConfigContent}")
+
+
+endmacro(EmitConfig)
 
 ####################################################################################################
 ####################################################################################################
