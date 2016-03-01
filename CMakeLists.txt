@@ -92,8 +92,10 @@ include_directories(
 ####################################################################################################
 # Set up config file4
 
-AddJagatiConfig("MEZZ_IceCream" "Cone" "")
-message(STATUS "${JagatiConfig}")
+AddJagatiConfig("MEZZ_IceCream" "Cone" Off)
+message(STATUS "${StaticFoundationJagatiConfig}")
+message(STATUS "${SUBPROjectJagatiConfig}")
+
 
 
 ####################################################################################################

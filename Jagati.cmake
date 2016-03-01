@@ -454,25 +454,47 @@ endmacro(AddJagatiLibary)
 
 # Usage:
 #   # Call any time after the parent scope is claimed. The first parameter is the name of a
-#   # preprocessor to create, and the second is the value, "" for no value.
-#       AddJagatiConfig("MEZZ_FOO" "BAR" "")
-#       AddJagatiConfig("MEZZ_EmptyOption" "" "")
-#       AddJagatiConfig("MEZZ_Remarked_FOO" "BAR" "//")
-#       AddJagatiConfig("MEZZ_EmptyOption_nope" "" "//")
+#   # preprocessor to create, and the second is the value, "" for no value and the third argument
+#   # is for determining if the remark should be enabled(true) or remarked out(false).
+#       AddJagatiConfig("MEZZ_FOO" "BAR" ON)
+#       AddJagatiConfig("MEZZ_EmptyOption" "" ON)
+#       AddJagatiConfig("MEZZ_Remarked_FOO" "BAR" OFF)
+#       AddJagatiConfig("MEZZ_EmptyOption_nope" "" OFF)
 #
 # Result:
+#   Adds a preprocessor macro to string that config headers can directly include. Here is the
+#   output from the sample above:
+#       #define MEZZ_FOO BAR
+#       #define MEZZ_EmptyOption
+#       //#define MEZZ_Remarked_FOO BAR
+#       //#define MEZZ_EmptyOption_nope
 #
+#   The set variable will be ${PROJECT_NAME}JagatiConfig
 #
+#   This also writes to the variable "JagatiConfigRemarks" in the parentmost scope as a temporary.
 
-What here to fix remarks
+# This is an implementaion Detail of AddJagatiConfig, This is needed because macro parameters are
+# neither variables, nor constants and cannot be used in if statements checking implicit
+# truthiness.
+function(Internal_SetRemarks HowToSet)
+    if(HowToSet)
+        set(JagatiConfigRemarks "" PARENT_SCOPE)
+    else(HowToSet)
+        set(JagatiConfigRemarks "//" PARENT_SCOPE)
+    endif(HowToSet)
+endfunction(Internal_SetRemarks HowToSet)
 
-macro(AddJagatiConfig Name Value JagatiConfigRemarks)
-    set(JagatiConfig "${JagatiConfig}\n${JagatiConfigRemarks}#define ${Name} ${Value}")
+macro(AddJagatiConfig Name Value RemarkBool)
+    Internal_SetRemarks("${RemarkBool}")
+    set(${PROJECT_NAME}JagatiConfig "${${PROJECT_NAME}JagatiConfig}\n${JagatiConfigRemarks}#define ${Name} ${Value}")
     if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
     else("${ParentProject}" STREQUAL "${PROJECT_NAME}")
-        set(JagatiConfig "${JagatiConfig}" PARENT_SCOPE)
+        set(${PROJECT_NAME}JagatiConfig "${${PROJECT_NAME}JagatiConfig}" PARENT_SCOPE)
     endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
-endmacro(AddJagatiConfig Name Value)
+endmacro(AddJagatiConfig Name Value RemarkBool)
+
+####################################################################################################
+#
 
 ####################################################################################################
 ####################################################################################################
