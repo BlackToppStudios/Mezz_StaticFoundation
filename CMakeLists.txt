@@ -90,9 +90,10 @@ include_directories(
 )
 
 ####################################################################################################
-# Set up config file4
+# Set up config file
 
-AddJagatiConfig("MEZZ_IceCream" "Cone" on)
+AddJagatiCompileOption("Mezz_BuildDoxygen" "Create HTML documentation with Doxygen." ON)
+
 EmitConfig()
 
 ####################################################################################################

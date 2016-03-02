@@ -585,7 +585,7 @@ endmacro(EmitConfig)
 #
 # Results:
 #   The header and array will be printed. Each line except the header will be indented/preceeded
-# by whatever is in Tabbing.
+#   by whatever is in Tabbing.
 
 function(ShowList Header Tabbing ToPrint)
     message(STATUS "${Tabbing}${Header}")
@@ -593,6 +593,28 @@ function(ShowList Header Tabbing ToPrint)
         message(STATUS "${Tabbing}\t${ListItem}")
     endforeach(ListItem ${ToPrint})
 endfunction(ShowList)
+
+####################################################################################################
+# Basic Option Tools
+
+# Usage:
+#   # Call after project to insure PROJECT_NAME is set.
+#   AddJagatiCompileOption("Mezz_BuildDoxygen" "Create HTML documentation with Doxygen." ON)
+#   AddJagatiCompileOption("VariableName" "Help text." TruthyDefaultValue)
+#
+# Results:
+#   This will create a variable named after thee string in the first parameter. This var(iable will
+#   be added to the config file for the current project and as a CMake Option in the GUI (or command
+#   prompt).
+
+macro(AddJagatiCompileOption VariableName HelpString DefaultSetting)
+    option(
+        ${VariableName}
+        "${HelpString}"
+        ${DefaultSetting}
+    )
+    AddJagatiConfig("${VariableName}" "" ${${VariableName}})
+endmacro(AddJagatiCompileOption VariableName HelpString DefaultSetting)
 
 ####################################################################################################
 ####################################################################################################
@@ -608,7 +630,7 @@ set(StaticFoundation_GitURL "git@github.com:BlackToppStudios/Mezz_StaticFoundati
 ####################################################################################################
 # Package Download experiment
 
-set(JagatiPackagerFolder "$ENV{JAGATI_DIR}" CACHE PATH "Folder for storing Jagati Packages.")
+set(Mezz_JagatiPackageDirectory "$ENV{JAGATI_DIR}" CACHE PATH "Folder for storing Jagati Packages.")
 
 # To insure that all the packages are downloaded this can be added as a dependencies to any target.
 
@@ -631,7 +653,7 @@ function(IncludeJagatiPackage PackageName)
 
     ExternalProject_Add(
       "${PackageName}"
-      PREFIX "${JagatiPackagerFolder}/${PackageName}"
+      PREFIX "${Mezz_JagatiPackageDirectory}/${PackageName}"
       GIT_REPOSITORY "${GitURL}"
       GIT_TAG master
       CONFIGURE_COMMAND ""
