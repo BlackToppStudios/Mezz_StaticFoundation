@@ -486,7 +486,8 @@ endfunction(Internal_SetRemarks HowToSet)
 
 macro(AddJagatiConfig Name Value RemarkBool)
     Internal_SetRemarks("${RemarkBool}")
-    set(${PROJECT_NAME}JagatiConfig "${${PROJECT_NAME}JagatiConfig}\n${JagatiConfigRemarks}#define ${Name} ${Value}")
+    set(${PROJECT_NAME}JagatiConfig
+        "${${PROJECT_NAME}JagatiConfig}\n${JagatiConfigRemarks}#define ${Name} ${Value}")
     if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
     else("${ParentProject}" STREQUAL "${PROJECT_NAME}")
         set(${PROJECT_NAME}JagatiConfig "${${PROJECT_NAME}JagatiConfig}" PARENT_SCOPE)
@@ -496,7 +497,17 @@ endmacro(AddJagatiConfig Name Value RemarkBool)
 ####################################################################################################
 # Emit a config file
 
-
+# Usage:
+#   # Call after 0 or more calls to AddJagatiConfig and the parentmost scope has been claimed.
+#   EmitConfig()
+#
+# Result:
+#   This will create a config file with all the config item added by AddJagatiConfig in this project
+#   and this will set two variables:
+#       ${PROJECT_NAME}ConfigFilename - The absolute path and filename of the file writtern, this
+#           derived from the variable ${PROJECT_NAME}GenHeadersDir and will contain the project name
+#       ${PROJECT_NAME}ConfigContent - The contents of what was emitted in the header file.
+#
 
 macro(EmitConfig)
 
@@ -559,7 +570,6 @@ set(ConfigHeader
     endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
 
     file(WRITE "${${PROJECT_NAME}ConfigFilename}" "${${PROJECT_NAME}ConfigContent}")
-
 
 endmacro(EmitConfig)
 

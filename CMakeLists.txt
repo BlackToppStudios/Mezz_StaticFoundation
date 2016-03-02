@@ -95,11 +95,6 @@ include_directories(
 AddJagatiConfig("MEZZ_IceCream" "Cone" on)
 EmitConfig()
 
-message(STATUS "${StaticFoundationJagatiConfig}")
-message(STATUS "${SUBPROjectJagatiConfig}")
-
-
-
 ####################################################################################################
 # Set up Build targets
 
