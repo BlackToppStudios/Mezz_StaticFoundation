@@ -114,4 +114,6 @@ add_custom_target(
             ${StaticFoundationConfigFilename}
 )
 
+
+
 message(STATUS "${PROJECT_NAME} - Ending Configuration.")

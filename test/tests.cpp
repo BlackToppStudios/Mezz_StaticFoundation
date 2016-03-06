@@ -103,6 +103,9 @@ NameValuePairMap CheckableValues()
 {
     NameValuePairMap Results;
     Results["MEZZ_LINUX"] = IntToString(1); // temp replace with actual detection
+    #ifdef Mezz_BuildDoxygen
+        Results["Mezz_BuildDoxygen"] = IntToString(1); // temp replace with actual detection
+    #endif
     return Results;
 }
 
