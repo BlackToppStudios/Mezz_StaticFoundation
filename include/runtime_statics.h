@@ -54,13 +54,26 @@
 
 namespace Mezzanine
 {
+    /// @brief A class for aggregating all the methods related to the Mezzanine preprocessor
+    /// directives
+    /// @details This is required because some SWIG languages cannot handle free functions.
     class RuntimeStatic
     {
         public:
-            static Int32 BuildDoxygen();
-            static Int32 BuildStaticLibraries();
+            /// @return If MEZZ_BuildDoxygen is define true, false otherwise.
+            static Boole BuildDoxygen();
 
+            /// @return If MEZZ_BuildStaticLibraries is define true, false otherwise.
+            static Boole BuildStaticLibraries();
 
+            /// @return If MEZZ_Linux is define true, false otherwise.
+            static Boole Linux();
+
+            /// @return If MEZZ_Windows is define true, false otherwise.
+            static Boole Windows();
+
+            /// @return If MEZZ_MacOSX is define true, false otherwise.
+            static Boole MacOSX();
     };
 
 }

@@ -104,10 +104,12 @@ Mezzanine::NameValuePairMap CreateMapFromArgs(int ArgCount, char** ArgVars)
 NameValuePairMap CheckableValues()
 {
     NameValuePairMap Results;
-    Results["MEZZ_LINUX"] = IntToString(1); // temp replace with actual detection
     Results["MEZZ_BuildDoxygen"] = IntToString(Mezzanine::RuntimeStatic::BuildDoxygen());
     Results["MEZZ_BuildStaticLibraries"] =
             IntToString(Mezzanine::RuntimeStatic::BuildStaticLibraries());
+    Results["MEZZ_Linux"] = IntToString(Mezzanine::RuntimeStatic::Linux());
+    Results["MEZZ_Windows"] = IntToString(Mezzanine::RuntimeStatic::Windows());
+    Results["MEZZ_MacOSX"] = IntToString(Mezzanine::RuntimeStatic::MacOSX());
     return Results;
 }
 

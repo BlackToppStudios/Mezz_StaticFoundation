@@ -42,24 +42,52 @@
 /// @brief The
 
 #include "runtime_statics.h"
+#include "StaticFoundationConfig.h"
 
 namespace Mezzanine
 {
-    Int32 RuntimeStatic::BuildDoxygen()
+    Boole RuntimeStatic::BuildDoxygen()
     {
         #ifdef MEZZ_BuildDoxygen
-            return 1;
+            return true;
         #else
-            return 0;
+            return false;
         #endif
     }
 
-    Int32 RuntimeStatic::BuildStaticLibraries()
+    Boole RuntimeStatic::BuildStaticLibraries()
     {
         #ifdef MEZZ_BuildStaticLibraries
-            return 1;
+            return true;
         #else
-            return 0;
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::Linux()
+    {
+        #ifdef MEZZ_Linux
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::Windows()
+    {
+        #ifdef MEZZ_Windows
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::MacOSX()
+    {
+        #ifdef MEZZ_MacOSX
+            return true;
+        #else
+            return false;
         #endif
     }
 

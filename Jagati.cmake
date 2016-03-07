@@ -597,7 +597,6 @@ set(ConfigHeader
     endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
 
     file(WRITE "${${PROJECT_NAME}ConfigFilename}" "${${PROJECT_NAME}ConfigContent}")
-
 endmacro(EmitConfig)
 
 ####################################################################################################

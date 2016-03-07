@@ -35,13 +35,6 @@
 #   you have any questions.
 #
 #   Joseph Toppi - toppij@gmail.com
-set(HeaderFiles
-    "${StaticFoundationIncludeDir}crossplatformexport.h"
-    "${StaticFoundationIncludeDir}datatypes.h"
-    "${StaticFoundationIncludeDir}runtime_statics.h"
-    "${StaticFoundationIncludeDir}staticfoundation.h"
-    "${StaticFoundationIncludeDir}supresswarnings.h"
-)
 #   John Blackwood - makoenergy02@gmail.com
 
 ####################################################################################################
@@ -107,6 +100,10 @@ AddJagatiCompileOption("MEZZ_BuildDoxygen"
     "Create HTML documentation with Doxygen. Requires Doxygen to be install in PATH." ON)
 AddJagatiCompileOption("MEZZ_BuildStaticLibraries"
     "If set the Mezzanine will be built as static libraries, shared if unset." ON)
+
+AddJagatiConfig("MEZZ_Linux" "" ${SystemIsLinux})
+AddJagatiConfig("MEZZ_Windows" "" ${SystemIsWindows})
+AddJagatiConfig("MEZZ_MacOSX" "" ${SystemIsMacOSX})
 
 ChooseLibraryType(${MEZZ_BuildStaticLibraries})
 message(STATUS "Libtype: ${MEZZ_LibraryBuildType}")
