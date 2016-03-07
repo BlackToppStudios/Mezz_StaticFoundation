@@ -91,4 +91,58 @@ namespace Mezzanine
         #endif
     }
 
+    Boole RuntimeStatic::CompilerIsGCC()
+    {
+        #ifdef MEZZ_CompilerIsGCC
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::CompilerIsClang()
+    {
+        #ifdef MEZZ_CompilerIsClang
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::CompilerIsIntel()
+    {
+        #ifdef MEZZ_CompilerIsIntel
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::CompilerIsMsvc()
+    {
+        #ifdef MEZZ_CompilerIsMsvc
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::CompilerDesignNix()
+    {
+        #ifdef MEZZ_CompilerDesignNix
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::CompilerDesignMS()
+    {
+        #ifdef MEZZ_CompilerDesignMS
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
 }

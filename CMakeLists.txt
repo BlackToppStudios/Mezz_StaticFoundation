@@ -105,9 +105,15 @@ AddJagatiConfig("MEZZ_Linux" "" ${SystemIsLinux})
 AddJagatiConfig("MEZZ_Windows" "" ${SystemIsWindows})
 AddJagatiConfig("MEZZ_MacOSX" "" ${SystemIsMacOSX})
 
-ChooseLibraryType(${MEZZ_BuildStaticLibraries})
-message(STATUS "Libtype: ${MEZZ_LibraryBuildType}")
+AddJagatiConfig("MEZZ_CompilerIsGCC" "" ${CompilerIsGCC})
+AddJagatiConfig("MEZZ_CompilerIsClang" "" ${CompilerIsClang})
+AddJagatiConfig("MEZZ_CompilerIsIntel" "" ${CompilerIsIntel})
+AddJagatiConfig("MEZZ_CompilerIsMsvc" "" ${CompilerIsMsvc})
 
+AddJagatiConfig("MEZZ_CompilerDesignNix" "" ${CompilerDesignNix})
+AddJagatiConfig("MEZZ_CompilerDesignMS" "" ${CompilerDesignMS})
+
+ChooseLibraryType(${MEZZ_BuildStaticLibraries})
 EmitConfig()
 
 ####################################################################################################

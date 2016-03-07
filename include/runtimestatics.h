@@ -60,20 +60,38 @@ namespace Mezzanine
     class RuntimeStatic
     {
         public:
-            /// @return If MEZZ_BuildDoxygen is define true, false otherwise.
+            /// @return If MEZZ_BuildDoxygen is defined true, false otherwise.
             static Boole BuildDoxygen();
 
-            /// @return If MEZZ_BuildStaticLibraries is define true, false otherwise.
+            /// @return If MEZZ_BuildStaticLibraries is defined true, false otherwise.
             static Boole BuildStaticLibraries();
 
-            /// @return If MEZZ_Linux is define true, false otherwise.
+            /// @return If MEZZ_Linux is defined true, false otherwise.
             static Boole Linux();
 
-            /// @return If MEZZ_Windows is define true, false otherwise.
+            /// @return If MEZZ_Windows is defined true, false otherwise.
             static Boole Windows();
 
-            /// @return If MEZZ_MacOSX is define true, false otherwise.
+            /// @return If MEZZ_MacOSX is defined true, false otherwise.
             static Boole MacOSX();
+
+            /// @return If MEZZ_CompilerIsGCC is defined true, false otherwise.
+            static Boole CompilerIsGCC();
+
+            /// @return If MEZZ_CompilerIsClang is defined true, false otherwise.
+            static Boole CompilerIsClang();
+
+            /// @return If MEZZ_CompilerIsIntel is definde true, false otherwise.
+            static Boole CompilerIsIntel();
+
+            /// @return If MEZZ_CompilerIsMsvc is defined true, false otherwise.
+            static Boole CompilerIsMsvc();
+
+            /// @return If MEZZ_CompilerDesignNix is defined true, false otherwise.
+            static Boole CompilerDesignNix();
+
+            /// @return If MEZZ_CompilerDesignMS is defined true, false otherwise.
+            static Boole CompilerDesignMS();
     };
 
 }
