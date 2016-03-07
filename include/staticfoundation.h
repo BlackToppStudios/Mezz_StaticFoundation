@@ -46,6 +46,6 @@
 #include "crossplatformexport.h"
 #include "datatypes.h"
 #include "supresswarnings.h"
-#include "runtime_statics.h"
+#include "runtimestatics.h"
 
 #endif

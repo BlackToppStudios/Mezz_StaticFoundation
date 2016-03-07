@@ -46,6 +46,6 @@
 /// progress on how Swig will read Jagati Packages.
 
 #include "../include/datatypes.h"
-#include "../include/runtime_statics.h"
+#include "../include/runtimestatics.h"
 
 #endif

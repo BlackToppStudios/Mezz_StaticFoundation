@@ -63,14 +63,14 @@ message(STATUS "Determining Source Files.")
 set(HeaderFiles
     "${StaticFoundationIncludeDir}crossplatformexport.h"
     "${StaticFoundationIncludeDir}datatypes.h"
-    "${StaticFoundationIncludeDir}runtime_statics.h"
+    "${StaticFoundationIncludeDir}runtimestatics.h"
     "${StaticFoundationIncludeDir}staticfoundation.h"
     "${StaticFoundationIncludeDir}supresswarnings.h"
 )
 ShowList("Header Files:" "\t" "${HeaderFiles}")
 
 set(SourceFiles
-    "${StaticFoundationSourceDir}runtime_statics.cpp"
+    "${StaticFoundationSourceDir}runtimestatics.cpp"
 
 )
 ShowList("Source Files:" "\t" "${SourceFiles}")

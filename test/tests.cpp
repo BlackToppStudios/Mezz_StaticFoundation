@@ -43,7 +43,7 @@
 #include <sstream>
 
 #include "tests.h"
-#include "runtime_statics.h"
+#include "runtimestatics.h"
 
 using std::cout;
 using std::cerr;
