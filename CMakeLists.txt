@@ -92,7 +92,7 @@ include_directories(
 ####################################################################################################
 # Set up config file
 
-AddJagatiCompileOption("Mezz_BuildDoxygen" "Create HTML documentation with Doxygen." ON)
+AddJagatiCompileOption("MEZZ_BuildDoxygen" "Create HTML documentation with Doxygen." ON)
 
 EmitConfig()
 
@@ -112,6 +112,8 @@ add_custom_target(
             ${TestSourceFiles}
             ${SwigFiles}
             ${StaticFoundationConfigFilename}
+            README.md
+            COPYING.md
 )
 
 
