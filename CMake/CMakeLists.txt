@@ -3,7 +3,7 @@ project(SUBPROject)
 include(Jagati.cmake)
 StandardJagatiSetup()
 
-AddJagatiLibary("${SUBPROjectBinaryDir}libSP.so")
+AddJagatiLibrary("${SUBPROjectBinaryDir}libSP.so")
 
 AddJagatiConfig("MEZZ_FOO" "BAR" ON)
 AddJagatiConfig("MEZZ_EmptyOption" "" ON)

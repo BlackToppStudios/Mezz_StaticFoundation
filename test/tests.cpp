@@ -41,7 +41,9 @@
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
+
 #include "tests.h"
+#include "runtime_statics.h"
 
 using std::cout;
 using std::cerr;
@@ -103,9 +105,9 @@ NameValuePairMap CheckableValues()
 {
     NameValuePairMap Results;
     Results["MEZZ_LINUX"] = IntToString(1); // temp replace with actual detection
-    #ifdef Mezz_BuildDoxygen
-        Results["Mezz_BuildDoxygen"] = IntToString(1); // temp replace with actual detection
-    #endif
+    Results["MEZZ_BuildDoxygen"] = IntToString(Mezzanine::RuntimeStatic::BuildDoxygen());
+    Results["MEZZ_BuildStaticLibraries"] =
+            IntToString(Mezzanine::RuntimeStatic::BuildStaticLibraries());
     return Results;
 }
 
@@ -138,7 +140,7 @@ Mezzanine::String Stringify(const Mezzanine::NameValuePairMap& Mapping)
 {
     String Results;
     for(auto pair : Mapping)
-        { Results += "  " + pair.first + ":" + pair.second + "\n"; }
+        { Results += "  " + pair.first + ": " + pair.second + "\n"; }
     return Results;
 }
 

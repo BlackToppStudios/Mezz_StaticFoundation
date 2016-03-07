@@ -37,15 +37,30 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef _staticfoundation_swigconfig_h
-#define _staticfoundation_swigconfig_h
 
 /// @file
-/// @brief The main Swig configuration header to include for this library
-/// @todo This is unimplemented at the moment and will remain that way until we have made more
-/// progress on how Swig will read Jagati Packages.
+/// @brief The
 
-#include "../include/datatypes.h"
-#include "../include/runtime_statics.h"
+#include "runtime_statics.h"
 
-#endif
+namespace Mezzanine
+{
+    Int32 RuntimeStatic::BuildDoxygen()
+    {
+        #ifdef MEZZ_BuildDoxygen
+            return 1;
+        #else
+            return 0;
+        #endif
+    }
+
+    Int32 RuntimeStatic::BuildStaticLibraries()
+    {
+        #ifdef MEZZ_BuildStaticLibraries
+            return 1;
+        #else
+            return 0;
+        #endif
+    }
+
+}

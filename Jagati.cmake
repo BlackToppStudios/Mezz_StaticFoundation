@@ -113,7 +113,6 @@ macro(CreateLocations)
     message(STATUS "Creating Location Variables for '${PROJECT_NAME}'")
     set(PROJECT_NAME "${PROJECT_NAME}")
 
-
     #######################################
     # Root
     set(${PROJECT_NAME}RootDir "${${PROJECT_NAME}_SOURCE_DIR}/")
@@ -412,8 +411,36 @@ macro(StandardJagatiSetup)
         IdentifyCompiler()
         SetCommonCompilerFlags()
     endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
-
 endmacro(StandardJagatiSetup)
+
+####################################################################################################
+# This set a single variable that all Mezzanine libraries will use when building libraries.
+
+# Usage:
+#   Don't. This can easily be controlled via the MEZZ_BuildStaticLibraries cache level option.
+#   ChooseLibraryType("ON")
+#   ChooseLibraryType("ON")
+#
+# Result:
+#   A variable called MEZZ_LibraryBuildType is set with either "STATIC" if true is passed or
+#   "SHARED" if false is passed.
+
+function(Internal_ChooseLibraryType TrueForStatic)
+    if(TrueForStatic)
+        set(MEZZ_LibraryBuildType "STATIC" PARENT_SCOPE)
+    else(TrueForStatic)
+        set(MEZZ_LibraryBuildType "SHARED" PARENT_SCOPE)
+    endif(TrueForStatic)
+endfunction(Internal_ChooseLibraryType HowToSet)
+
+macro(ChooseLibraryType TrueForStatic)
+    Internal_ChooseLibraryType(TrueForStatic)
+
+    if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+    else("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+        set(MEZZ_LibraryBuildType "${MEZZ_LibraryBuildType}" PARENT_SCOPE)
+    endif("${ParentProject}" STREQUAL "${PROJECT_NAME}")
+endmacro(ChooseLibraryType)
 
 ####################################################################################################
 ####################################################################################################
@@ -426,7 +453,7 @@ endmacro(StandardJagatiSetup)
 
 # Usage:
 #   # Be certain to call project before calling this.
-#   AddJagatiLibrary("filename.a")
+#   AddJagatiLibrary("LinkTarget")
 #
 # Result:
 #   The passed file weill  be added to a list of libaries. This list can be
@@ -434,17 +461,17 @@ endmacro(StandardJagatiSetup)
 #
 #   This will also create a variable call ${PROJECT_NAME}lib that will store the filename
 
-macro(AddJagatiLibary FileName)
-    set(${PROJECT_NAME}lib "${FileName}")
+macro(AddJagatiLibrary FileName)
+    set(${PROJECT_NAME}Lib "${FileName}")
     list(APPEND JagatiLibraryArray ${FileName})
-    set(${PROJECT_NAME}lib "${FileName}")
+    set(${PROJECT_NAME}Lib "${FileName}")
     if("${ParentProject}" STREQUAL "${FileName}")
     else("${ParentProject}" STREQUAL "${FileName}")
         set(JagatiLibraryArray "${JagatiLibraryArray}" PARENT_SCOPE)
-        set(${PROJECT_NAME}lib "${FileName}" PARENT_SCOPE)
+        set(${PROJECT_NAME}Lib "${FileName}" PARENT_SCOPE)
     endif("${ParentProject}" STREQUAL "${FileName}")
     message(STATUS "Lib variable: '${PROJECT_NAME}lib' - ${${PROJECT_NAME}lib}")
-endmacro(AddJagatiLibary)
+endmacro(AddJagatiLibrary)
 
 ####################################################################################################
 # Some projects have many files that are created at compile time. This can cause the build system to
@@ -630,7 +657,7 @@ set(StaticFoundation_GitURL "git@github.com:BlackToppStudios/Mezz_StaticFoundati
 ####################################################################################################
 # Package Download experiment
 
-set(Mezz_JagatiPackageDirectory "$ENV{JAGATI_DIR}" CACHE PATH "Folder for storing Jagati Packages.")
+set(MEZZ_JagatiPackageDirectory "$ENV{JAGATI_DIR}" CACHE PATH "Folder for storing Jagati Packages.")
 
 # To insure that all the packages are downloaded this can be added as a dependencies to any target.
 
@@ -640,7 +667,6 @@ if("${ParentProject}" STREQUAL "${FileName}")
         COMMENT "Checking for Jagati Packages to Download"
     )
 endif("${ParentProject}" STREQUAL "${FileName}")
-
 
 ####################################################################################################
 # Any package wanting to use another can include it with this function

@@ -37,15 +37,34 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef _staticfoundation_swigconfig_h
-#define _staticfoundation_swigconfig_h
+#ifndef Mezz_StaticFoundation_runtime_statics_h
+#define Mezz_StaticFoundation_runtime_statics_h
 
 /// @file
-/// @brief The main Swig configuration header to include for this library
-/// @todo This is unimplemented at the moment and will remain that way until we have made more
-/// progress on how Swig will read Jagati Packages.
+/// @brief This file is deeply confused, it tries to provide runtime versions of various compile
+/// time constants.
+/// @details This might seem useless, but languages like Lua and Ruby have no concept of compile
+/// time at all and languages like Like Java and C# do not have a robust equivelant to the C
+/// preprocessor. These and languages like these could use the Mezzanine via SWIG bindings.
+/// @n @n
+/// This might also be useful in situations where the absence of a preprocessor value needs to
+/// stored in a C++ container.
 
-#include "../include/datatypes.h"
-#include "../include/runtime_statics.h"
+#include "datatypes.h"
+
+namespace Mezzanine
+{
+    class RuntimeStatic
+    {
+        public:
+            static Int32 BuildDoxygen();
+            static Int32 BuildStaticLibraries();
+
+
+    };
+
+}
+
+
 
 #endif

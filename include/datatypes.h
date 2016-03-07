@@ -47,14 +47,14 @@
 /// here. Additionally, this is where all of the other singular header inclusions go as well.
 ///////////////////////////////////////
 
-#include "crossplatformexport.h"
-
 // Standard Headers are not included in SWIG preprocessing
 // Most std includes are centralized here to make modifying this list as simple as possible. Other
 // standard includes that are not included here are in places that they are required and
 // conditionally may not be compiled in.
 
 #ifndef SWIG
+    #include "crossplatformexport.h"
+
     #include <stdint.h>
     #include <cstddef>
 

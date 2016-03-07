@@ -35,6 +35,13 @@
 #   you have any questions.
 #
 #   Joseph Toppi - toppij@gmail.com
+set(HeaderFiles
+    "${StaticFoundationIncludeDir}crossplatformexport.h"
+    "${StaticFoundationIncludeDir}datatypes.h"
+    "${StaticFoundationIncludeDir}runtime_statics.h"
+    "${StaticFoundationIncludeDir}staticfoundation.h"
+    "${StaticFoundationIncludeDir}supresswarnings.h"
+)
 #   John Blackwood - makoenergy02@gmail.com
 
 ####################################################################################################
@@ -63,13 +70,17 @@ message(STATUS "Determining Source Files.")
 set(HeaderFiles
     "${StaticFoundationIncludeDir}crossplatformexport.h"
     "${StaticFoundationIncludeDir}datatypes.h"
+    "${StaticFoundationIncludeDir}runtime_statics.h"
     "${StaticFoundationIncludeDir}staticfoundation.h"
     "${StaticFoundationIncludeDir}supresswarnings.h"
 )
 ShowList("Header Files:" "\t" "${HeaderFiles}")
 
 set(SourceFiles
+    "${StaticFoundationSourceDir}runtime_statics.cpp"
+
 )
+ShowList("Source Files:" "\t" "${SourceFiles}")
 
 set(TestSourceFiles
     "${StaticFoundationTestDir}tests.h"
@@ -92,18 +103,27 @@ include_directories(
 ####################################################################################################
 # Set up config file
 
-AddJagatiCompileOption("MEZZ_BuildDoxygen" "Create HTML documentation with Doxygen." ON)
+AddJagatiCompileOption("MEZZ_BuildDoxygen"
+    "Create HTML documentation with Doxygen. Requires Doxygen to be install in PATH." ON)
+AddJagatiCompileOption("MEZZ_BuildStaticLibraries"
+    "If set the Mezzanine will be built as static libraries, shared if unset." ON)
+
+ChooseLibraryType(${MEZZ_BuildStaticLibraries})
+message(STATUS "Libtype: ${MEZZ_LibraryBuildType}")
 
 EmitConfig()
 
 ####################################################################################################
 # Set up Build targets
 
+AddJagatiLibrary("StaticFoundation")
+add_library(${StaticFoundationLib} ${MEZZ_LibraryBuildType} ${HeaderFiles} ${SourceFiles})
 add_executable(${PROJECT_NAME}_Tester ${HeaderFiles} ${TestSourceFiles})
+target_link_libraries(${PROJECT_NAME}_Tester ${StaticFoundationLib})
 
 # A Project to do nothing but get All the Source files visible in IDEs
 add_custom_target(
-    ${PROJECT_NAME}
+    ${PROJECT_NAME}_IDE_Visibility
     DEPENDS ${PROJECT_NAME}_Tester
             "${${PROJECT_NAME}BinaryDir}Guidelines.md"
             ExternalProjectDownload
@@ -115,7 +135,5 @@ add_custom_target(
             README.md
             COPYING.md
 )
-
-
 
 message(STATUS "${PROJECT_NAME} - Ending Configuration.")
