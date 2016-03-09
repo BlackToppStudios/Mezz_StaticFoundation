@@ -118,6 +118,19 @@ EmitConfig()
 
 ####################################################################################################
 # Set up Build targets
+if(MEZZ_BuildDoxygen)
+    find_program(DoxygenExecutable "doxygen")
+    if(DoxygenExecutable)
+        message(STATUS "Found doxygen Executable at '${DoxygenExecutable}'")
+        # Configure file here
+        # Creation Doxygen target here
+    else(DoxygenExecutable)
+        message(ERROR
+            "Could not find doxygen executable, is it installed and in your system Path?'")
+    endif(DoxygenExecutable)
+endif(MEZZ_BuildDoxygen)
+####################################################################################################
+# Set up Build targets
 
 AddJagatiLibrary("StaticFoundation")
 add_library(${StaticFoundationLib} ${MEZZ_LibraryBuildType} ${HeaderFiles} ${SourceFiles})
