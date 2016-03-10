@@ -1,0 +1,247 @@
+
+/*---------------- Search Box */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#FSearchBox {
+    float: left;
+}
+
+#MSearchBox {
+    white-space : nowrap;
+    position: absolute;
+    float: none;
+    display: inline;
+
+    margin-top: 8px;
+    right: 0px;
+    width: 170px;
+    z-index: 102;
+    background-color: white;
+    top: 1em;
+    right: 6%;
+}
+/*
+#MSearchBox .left
+{
+    display:block;
+    position:absolute;
+    left:10px;
+    width:20px;
+    height:19px;
+    background:url('search_l.png') no-repeat;
+    background-position:right;
+}
+*/
+/* The Magnifier itself */
+#MSearchSelect {
+    display:block;
+    position:absolute;
+    background: none;
+    top: 6px;
+}
+
+/* The X */
+#MSearchCloseImg {
+    background: none;
+    position: absolute;
+    right: -16px;
+    top: 3px;
+}
+
+#MSearchField {
+    display: block;
+    position: absolute;
+
+    border-top-left-radius: 0.7em;
+    border-bottom-right-radius: 0.7em;
+    border: 2px;
+    border-style: solid;
+    border-color: #8dd3ab;
+
+    width: 150px;
+    height: 26px;
+    margin-left: 20px;
+    padding-left: 0.5em;
+    outline: none;
+    font-size: 110%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#FSearchBox #MSearchField {
+    margin-left:15px;
+}
+
+/*
+#MSearchBox .right {
+    display:block;
+    position:absolute;
+    right:10px;
+    top:0px;
+    width:20px;
+    height:19px;
+    background:url('search_r.png') no-repeat;
+    background-position:left;
+}
+*/
+
+#MSearchClose {
+    display: none;
+    position: absolute;
+    top: 0px;
+    background : none;
+    border: none;
+    margin: 0px 6px 0px 0px;
+    padding: 0px 0px;
+    outline: none;
+}
+
+.left #MSearchClose {
+    left: 6px;
+}
+
+.right #MSearchClose {
+    right: 2px;
+}
+
+.MSearchBoxActive #MSearchField {
+    color: #DDDDDD;
+}
+
+/*---------------- Search filter selection */
+
+#MSearchSelectWindow {
+    display: none;
+    position: absolute;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #8dd3ab;
+    background-color: #111;
+    z-index: 1;
+    padding-top: 8px;
+    padding-bottom: 4px;
+}
+
+.SelectItem {
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left:  2px;
+    padding-right: 12px;
+    border: 0px;
+}
+
+span.SelectionMark {
+    margin-right: 4px;
+    font-family: monospace;
+    outline-style: none;
+    text-decoration: none;
+    background: none;
+}
+
+/* Magnifier Menu text entries*/
+a.SelectItem {
+    display: block;
+    outline-style: none;
+    color: #528f6c;
+    text-decoration: none;
+    padding-left:   6px;
+    padding-right: 1px;
+}
+
+a.SelectItem:hover span.SelectionMark {
+    background-color: #333;
+}
+
+a.SelectItem:focus, a.SelectItem:active {
+    color: #8dd3ab;
+    outline-style: none;
+    text-decoration: none;
+}
+
+a.SelectItem:hover {
+    color: #FFFFFF;
+    background-color: #333;
+    outline-style: none;
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+}
+
+/*---------------- Search results window */
+iframe#MSearchResults {
+    width: 80vw;
+    height: 80vh;
+    margin-top: 5px;
+}
+
+#MSearchResultsWindow {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 0px;
+    background-color: #111;
+    border-top-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+#SRIndex {
+    clear:both;
+    padding-bottom: 15px;
+}
+
+.SREntry {
+    font-size: 105%;
+    padding-left: 1ex;
+}
+
+.SRPage .SREntry {
+    font-size: 100%;
+    padding-left: 3ex;
+}
+
+body.SRPage {
+    margin: 0.5ex 2px;
+    background-color: #111;
+}
+
+.SRChildren {
+    padding-left: 3ex;
+    padding-bottom: .5em
+}
+
+.SRPage .SRChildren {
+    display: none;
+}
+
+.SRSymbol, .SRStatus {
+    padding-left: 0.5ex;
+    padding-right: 0.5ex;
+    font-weight: bold;
+    color: #EEE;
+    outline: none;
+    transition: border 1s, border-color 1s, border-top-left-radius 1s,
+        border-bottom-right-radius 1s, background-color 1s, text-decoration 1s, color 1s;
+}
+
+a.SRSymbol:hover {
+    border: 1px;
+    border-color: #8dd3ab;
+    border-top-left-radius: 0.25em;
+    border-bottom-right-radius: 0.25em;
+    background-color: #8dd3ab;
+    text-decoration: none;
+    color: #222;
+}
+
+.SRScope {
+    display: inline;
+    color: #BBB;
+    outline: none;
+}
+
+span.SRScope {
+    padding-left: 1ex;
+}
