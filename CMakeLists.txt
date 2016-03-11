@@ -117,17 +117,17 @@ ChooseLibraryType(${MEZZ_BuildStaticLibraries})
 EmitConfig()
 
 ####################################################################################################
-# Set up Build targets
+# Set up Doxygen Targets
 if(MEZZ_BuildDoxygen)
-    find_program(DoxygenExecutable "doxygen")
-    if(DoxygenExecutable)
-        message(STATUS "Found doxygen Executable at '${DoxygenExecutable}'")
-        # Configure file here
+    find_program(MEZZ_DoxygenExecutable "doxygen")
+    if(MEZZ_DoxygenExecutable)
+        message(STATUS "Found doxygen Executable at '${MEZZ_DoxygenExecutable}'")
+
         # Creation Doxygen target here
-    else(DoxygenExecutable)
+    else(MEZZ_DoxygenExecutable)
         message(ERROR
-            "Could not find doxygen executable, is it installed and in your system Path?'")
-    endif(DoxygenExecutable)
+            " Could not find doxygen executable, is it installed and in your system Path?'")
+    endif(MEZZ_DoxygenExecutable)
 endif(MEZZ_BuildDoxygen)
 ####################################################################################################
 # Set up Build targets
