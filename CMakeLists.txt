@@ -121,8 +121,77 @@ EmitConfig()
 if(MEZZ_BuildDoxygen)
     find_program(MEZZ_DoxygenExecutable "doxygen")
     if(MEZZ_DoxygenExecutable)
-        message(STATUS "Found doxygen Executable at '${MEZZ_DoxygenExecutable}'")
+        set(DoxygenConfigDir "${StaticFoundationDoxDir}doxyfiles/")
+        set(DoxygenResultsDir "${StaticFoundationBinaryDir}Doxygen/")
 
+        set(WarningsFile "${DoxygenResultsDir}html/DoxygenWarnings.txt")
+
+
+        if(EXISTS ${WarningsFile})
+        else(EXISTS ${WarningsFile})
+            file(MAKE_DIRECTORY ${DoxygenResultsDir})
+            file(WRITE ${WarningsFile} "")
+        endif(EXISTS ${WarningsFile})
+
+        # create output folder
+        # Touch this file ${DoxygenResultsDir}html/DoxygenWarnings.txt
+
+
+        message(STATUS "Found doxygen Executable at '${MEZZ_DoxygenExecutable}'")
+        add_custom_target(MezzanineDocumentation ALL
+            COMMAND ${DOXYGEN_EXECUTABLE} ${DoxygenConfigDir}Doxyfile
+            COMMAND ${CatCommand} ${DoxygenResultsDir}html/DoxygenWarnings.txt 1>&2
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    ${DoxygenConfigDir}/docs/doxygen/doxyfiles/img/closed.png
+                    ${DoxygenResultsDir}html/clclosed.png
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    ${DoxygenConfigDir}img/closed.png
+                    ${DoxygenResultsDir}html/closed.png
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    ${DoxygenConfigDir}img/open.png
+                    ${DoxygenResultsDir}html/clopen.png
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    ${DoxygenConfigDir}img/favicon.ico
+                    ${DoxygenResultsDir}html/favicon.ico
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    ${DoxygenConfigDir}img/open.png
+                    ${DoxygenResultsDir}html/open.png
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    ${DoxygenConfigDir}img/red_x.png
+                    ${DoxygenResultsDir}html/search/close.png
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    ${DoxygenConfigDir}img/Magnifier.png
+                    ${DoxygenResultsDir}html/search/mag_sel.png
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    ${DoxygenConfigDir}html/search.css
+                    ${DoxygenResultsDir}html/search/search.css
+
+            COMMAND ${CMAKE_COMMAND} -E remove
+                    ${DoxygenResultsDir}html/tab_a.png
+            COMMAND ${CMAKE_COMMAND} -E remove
+                    ${DoxygenResultsDir}html/tab_b.png
+            COMMAND ${CMAKE_COMMAND} -E remove
+                    ${DoxygenResultsDir}html/tab_h.png
+            COMMAND ${CMAKE_COMMAND} -E remove
+                    ${DoxygenResultsDir}html/tab_s.png
+            COMMAND ${CMAKE_COMMAND} -E remove
+                    ${DoxygenResultsDir}html/search/search_m.png
+            COMMAND ${CMAKE_COMMAND} -E remove
+                    ${DoxygenResultsDir}html/search/search_l.png
+            COMMAND ${CMAKE_COMMAND} -E remove
+                    ${DoxygenResultsDir}html/search/search_r.png
+            COMMAND ${CMAKE_COMMAND} -E remove
+                    ${DoxygenResultsDir}html/search_r.png
+            WORKING_DIRECTORY ${DoxygenConfigDir}
+            COMMENT "Generating API documentation with Doxygen" VERBATIM
+            SOURCES ${DoxygenConfigDir}Doxyfile
+                    ${DoxygenConfigDir}layout.xml
+                    ${DoxygenResultsDir}html/DoxygenWarnings.txt
+                    ${DoxygenConfigDir}html/DoxyStyle.css
+                    ${DoxygenConfigDir}html/search.css
+                    ${DoxygenConfigDir}html/DoxyFooter.html
+                    ${DoxygenConfigDir}html/DoxyHeader.html
+        )
         # Creation Doxygen target here
     else(MEZZ_DoxygenExecutable)
         message(ERROR
