@@ -5,10 +5,10 @@
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = MezzanineEngine
-#PROJECT_NUMBER         = "September 2, 2013"
+#PROJECT_NUMBER         = ""
 PROJECT_BRIEF          = A Game Engine Designed to ease the creation of cross platform games with 3d physics, 3d graphics and 3d Sound.
 PROJECT_LOGO           = img/logogreen100pxtall.png
-OUTPUT_DIRECTORY       = ../
+OUTPUT_DIRECTORY       = $ENV{OUTPUT_DIR}
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
@@ -89,12 +89,11 @@ WARN_IF_UNDOCUMENTED   = YES
 WARN_IF_DOC_ERROR      = YES
 WARN_NO_PARAMDOC       = YES
 WARN_FORMAT            = "$file:$line: $text"
-WARN_LOGFILE           = ../html/DoxygenWarnings.txt
+WARN_LOGFILE           = $ENV{OUTPUT_DIR}/html/DoxygenWarnings.txt
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = ../../../Mezzanine/src/ ../../../Mezzanine/src/dox ../../../Mezzanine/src/Audio ../../../Mezzanine/src/Graphics ../../../Mezzanine/src/Input ../../../Mezzanine/src/Network ../../../Mezzanine/src/Physics ../../../Mezzanine/src/Resource ../../../Mezzanine/src/Scripting ../../../Mezzanine/src/Scripting/Lua51 ../../../Mezzanine/src/Threading ../../../Mezzanine/src/UI ../../../Mezzanine/src/XML ../../../UnitTests/src ../../../Mezzanine/src/Graphics/Procedural/ ../../../Mezzanine/src/Graphics/Procedural/Mesh ../../../Mezzanine/src/Graphics/Procedural/Texture
-# ../../../Mezzanine/src/Internal
+INPUT                  = $ENV{JAGATI_DIR}*/dox/dox.h
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          =
 RECURSIVE              = NO
