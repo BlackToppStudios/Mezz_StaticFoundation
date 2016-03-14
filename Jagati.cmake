@@ -514,7 +514,7 @@ endfunction(Internal_SetRemarks HowToSet)
 macro(AddJagatiConfig Name Value RemarkBool)
     Internal_SetRemarks("${RemarkBool}")
     set(${PROJECT_NAME}JagatiConfig
-        "${${PROJECT_NAME}JagatiConfig}\n${JagatiConfigRemarks}#define ${Name} ${Value}")
+        "${${PROJ${MEZZ_JagatiPackageDirectory}ECT_NAME}JagatiConfig}\n${JagatiConfigRemarks}#define ${Name} ${Value}")
     if("${ParentProject}" STREQUAL "${PROJECT_NAME}")
     else("${ParentProject}" STREQUAL "${PROJECT_NAME}")
         set(${PROJECT_NAME}JagatiConfig "${${PROJECT_NAME}JagatiConfig}" PARENT_SCOPE)
@@ -657,6 +657,14 @@ set(StaticFoundation_GitURL "git@github.com:BlackToppStudios/Mezz_StaticFoundati
 # Package Download experiment
 
 set(MEZZ_JagatiPackageDirectory "$ENV{JAGATI_DIR}" CACHE PATH "Folder for storing Jagati Packages.")
+if(EXISTS "${MEZZ_JagatiPackageDirectory}")
+    message(ERROR "MEZZ_JagatiPackageDirectory is not set, this needs to be a vaild folder where \
+Mezzanine Libraries can be downloaded to. You set the Environment variable 'JAGATI_DIR' or set it \
+in CMake")
+endif(EXISTS "${MEZZ_JagatiPackageDirectory}")
+
+
+
 
 # To insure that all the packages are downloaded this can be added as a dependencies to any target.
 
