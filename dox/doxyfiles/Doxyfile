@@ -93,7 +93,7 @@ WARN_LOGFILE           = $(OUTPUT_DIR)/html/DoxygenWarnings.txt
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = $(JAGATI_DIR)/*/dox/dox.h
+INPUT                  = $(JAGATI_DIR)/dox/dox.h
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          =
 RECURSIVE              = NO
