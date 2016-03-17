@@ -139,7 +139,7 @@ if(MEZZ_BuildDoxygen)
 
         message(STATUS "Found doxygen Executable at '${MEZZ_DoxygenExecutable}'")
         add_custom_target(MezzanineDocumentation ALL
-            COMMAND env JAGATI_DIR=${MEZZ_JagatiPackageDirectory}Mezz_StaticFoundation/ OUTPUT_DIR=${DoxygenResultsDir} ${MEZZ_DoxygenExecutable} ${DoxygenConfigDir}Doxyfile
+            COMMAND env JagatiDoxArray="${JagatiDoxArray}" OUTPUT_DIR=${DoxygenResultsDir} ${MEZZ_DoxygenExecutable} ${DoxygenConfigDir}Doxyfile
             COMMAND ${CatCommand} ${DoxygenResultsDir}html/DoxygenWarnings.txt 1>&2
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
                     ${DoxygenConfigDir}img/closed.png

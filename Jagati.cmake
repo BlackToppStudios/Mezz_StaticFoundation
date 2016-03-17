@@ -474,6 +474,21 @@ macro(AddJagatiLibrary FileName)
 endmacro(AddJagatiLibrary)
 
 ####################################################################################################
+
+
+macro(AddJagatiDoxInput FileName)
+    set(${PROJECT_NAME}Dox "${FileName}")
+    list(APPEND JagatiDoxArray ${FileName})
+    set(${PROJECT_NAME}Dox "${FileName}")
+    if("${ParentProject}" STREQUAL "${FileName}")
+    else("${ParentProject}" STREQUAL "${FileName}")
+        set(JagatiDoxArray "${JagatiDoxArray}" PARENT_SCOPE)
+        set(${PROJECT_NAME}Dox "${FileName}" PARENT_SCOPE)
+    endif("${ParentProject}" STREQUAL "${FileName}")
+    message(STATUS "Dox Input: '${PROJECT_NAME}Dox' - ${${PROJECT_NAME}Dox}")
+endmacro(AddJagatiLibrary)
+
+####################################################################################################
 # Some projects have many files that are created at compile time. This can cause the build system to
 # as complex as the source code. Most software developers want to spend their reasoning about the
 # code and not the code that makes the code. In general the Jagati or a specific package should
