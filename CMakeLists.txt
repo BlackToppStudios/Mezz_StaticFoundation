@@ -126,6 +126,7 @@ if(MEZZ_BuildDoxygen)
 
         set(WarningsFile "${DoxygenResultsDir}html/DoxygenWarnings.txt")
 
+        configure_file(${DoxygenConfigDir}Doxyfile ${StaticFoundationBinaryDir})
 
         if(EXISTS ${WarningsFile})
         else(EXISTS ${WarningsFile})
@@ -139,8 +140,8 @@ if(MEZZ_BuildDoxygen)
 
         message(STATUS "Found doxygen Executable at '${MEZZ_DoxygenExecutable}'")
         add_custom_target(MezzanineDocumentation ALL
-            COMMAND env JagatiDoxArray="${JagatiDoxArray}" OUTPUT_DIR=${DoxygenResultsDir} ${MEZZ_DoxygenExecutable} ${DoxygenConfigDir}Doxyfile
-            COMMAND ${CatCommand} ${DoxygenResultsDir}html/DoxygenWarnings.txt 1>&2
+            #COMMAND env JagatiDoxArray="${JagatiDoxArray}" OUTPUT_DIR=${DoxygenResultsDir}html/ ${MEZZ_DoxygenExecutable} ${DoxygenConfigDir}Doxyfile
+            #COMMAND ${CatCommand} ${DoxygenResultsDir}html/DoxygenWarnings.txt 1>&2
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
                     ${DoxygenConfigDir}img/closed.png
                     ${DoxygenResultsDir}html/clclosed.png
