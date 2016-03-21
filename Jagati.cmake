@@ -471,7 +471,7 @@ macro(AddJagatiLibrary FileName)
         set(${PROJECT_NAME}Lib "${FileName}" PARENT_SCOPE)
     endif("${ParentProject}" STREQUAL "${FileName}")
     message(STATUS "Lib variable: '${PROJECT_NAME}lib' - ${${PROJECT_NAME}lib}")
-endmacro(AddJagatiLibrary)
+endmacro(AddJagatiLibrary FileName)
 
 ####################################################################################################
 
@@ -486,7 +486,7 @@ macro(AddJagatiDoxInput FileName)
         set(${PROJECT_NAME}Dox "${FileName}" PARENT_SCOPE)
     endif("${ParentProject}" STREQUAL "${FileName}")
     message(STATUS "Dox Input: '${PROJECT_NAME}Dox' - ${${PROJECT_NAME}Dox}")
-endmacro(AddJagatiLibrary)
+endmacro(AddJagatiDoxInput FileName)
 
 ####################################################################################################
 # Some projects have many files that are created at compile time. This can cause the build system to
