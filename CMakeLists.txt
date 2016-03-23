@@ -38,7 +38,7 @@
 #   John Blackwood - makoenergy02@gmail.com
 
 ####################################################################################################
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 2.8)
 project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration.")
 
@@ -220,6 +220,7 @@ add_custom_target(
             ${StaticFoundationConfigFilename}
             README.md
             COPYING.md
+            .travis.yml
 )
 
 message(STATUS "${PROJECT_NAME} - Ending Configuration.")
