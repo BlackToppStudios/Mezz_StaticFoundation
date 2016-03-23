@@ -1,0 +1,21 @@
+language: cpp
+
+compiler:
+  - clang
+  - gcc
+
+before_script:
+  - mkdir build
+  - cd build
+  - cmake .. -DMEZZ_BuildDoxygen=OFF
+
+install: cmake get-deps
+
+script: make && ./StaticFoundation_Tester MEZZ_BuildDoxygen:0 MEZZ_Linux:1 MEZZ_BuildStaticLibraries:1 MEZZ_MacOSX:0 MEZZ_Windows:0
+
+notifications:
+  email:
+    recipients:
+      - contact@blacktoppstudios.com
+    on_success: change
+    on_failure: always
