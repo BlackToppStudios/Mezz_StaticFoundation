@@ -119,20 +119,20 @@
         #endif      // \EXPORTINGMEZZANINEDLL
     #else
         #define MEZZ_LIB
-        /// @def _MEZZ_THREAD_POSIX_
+        /// @def MEZZ_THREAD_POSIX
         /// @brief Defined if this is running on Linux, Mac OS X, Android, or any other sane
         /// platform.
         /// @details if this is not defined, then most likely _MEZZ_THREAD_WIN32_ is.
-        #define _MEZZ_THREAD_POSIX_
+        #define MEZZ_THREAD_POSIX
         #if defined(__APPLE__) || defined(__MACH__) || defined(__OSX__)
             /// @def _MEZZ_THREAD_APPLE_
             /// @brief Sometimes specific workarounds are required for Mac OS this is how we detect
             /// it.
-            #define _MEZZ_THREAD_APPLE_
+            #define MEZZ_THREAD_APPLE
         #endif
     #endif  // \WINDOWS
 
-    #define _MEZZ_PLATFORM_DEFINED_
+    #define MEZZ_PLATFORM_DEFINED
 
     /// @def MEZZ_DEPRECATED
     /// @brief Used to mark old functionality that should not be used as such. In supported

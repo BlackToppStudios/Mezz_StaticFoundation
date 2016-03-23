@@ -4,6 +4,9 @@ The Mezzanine is a set of multi platform C++ libraries designed to help create h
 videos games. The Mezzanined is focused on games requiring 3d physics, 3d graphics, 3d sounds and
 common facilities that such games need. This is just one component of several.
 
+The Current build status
+[![Build Status](https://travis-ci.org/BlackToppStudios/Mezz_StaticFoundation.svg?branch=master)](https://travis-ci.org/BlackToppStudios/Mezz_StaticFoundation)
+
 ## About ##
 
 This library, the StaticFoundation, is responsible for detecting compilation options, compiler

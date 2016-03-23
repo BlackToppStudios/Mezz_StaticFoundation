@@ -13,7 +13,7 @@ before_script:
 
 install: yes
 
-script: make && ./StaticFoundation_Tester MEZZ_BuildDoxygen:0 MEZZ_Linux:1 MEZZ_BuildStaticLibraries:1 MEZZ_MacOSX:0 MEZZ_Windows:0
+script: make && ./StaticFoundation_Tester MEZZ_BuildDoxygen:0 MEZZ_Linux:1 MEZZ_BuildStaticLibraries:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1
 
 notifications:
   email:

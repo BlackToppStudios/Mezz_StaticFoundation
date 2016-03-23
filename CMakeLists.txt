@@ -42,9 +42,9 @@ cmake_minimum_required(VERSION 2.8)
 project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration.")
 
-####################################################################################################
-set(JagatiChecksum "6fa82914461398d0cad4744fd942553a9480b4cbfa274a15d29dd9\
-b7eea8dd83f067a2406dd3783e6cc8275cfa49eeacaeb770db6f91108bbcb07e7d66ce021a")
+##########################################################################|#########################
+set(JagatiChecksum "10b36fe75fd14bc6505c2baa8e24edc0f8fc1c38b14720ee0ab3ba\
+cc8523f15c9a13820d1d1c267fac9156a512300ae0840ad816cb34613f32b761b7684183d7")
 file(DOWNLOAD
     "https://raw.githubusercontent.com/BlackToppStudios/Jagati/master/Jagati.cmake"
     "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"

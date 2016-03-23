@@ -79,21 +79,12 @@ namespace Mezzanine
     // Datatypes
     ///////////////////////////////////////
 
-    #ifdef _MEZZ_CPP11_PARTIAL_
-        #ifndef SWIG
-            //#include <cstdint>
-        #endif
-        /// @brief A type that any pointer can be converted to and back from, and insures after the
-        /// conversion back it will be identical.
-        typedef std::intptr_t ConvertiblePointer;
-    #else
-        #ifndef SWIG
-            //#include <stdint.h>
-        #endif
-        /// @brief A type that any pointer can be converted to and back from, and insures after the
-        /// conversion back it will be identical.
-        typedef intptr_t ConvertiblePointer;
+    #ifndef SWIG
+        //#include <cstdint>
     #endif
+    /// @brief A type that any pointer can be converted to and back from, and insures after the
+    /// conversion back it will be identical.
+    typedef std::intptr_t ConvertiblePointer;
 
     /// @brief An 8-bit integer.
     typedef int8_t Int8;
@@ -169,11 +160,7 @@ namespace Mezzanine
     /// 292,277,000,000 years and the universe is only 14,600,000,000 years old. So this is good for
     /// any time between 20x the age of the universe before and after the beginning of any chosen
     /// epoch. Even if used to track nanoseconds it should be good for 292 years.
-    #ifdef _MEZZ_CPP11_PARTIAL_
-        typedef intmax_t MaxInt;
-    #else
-        typedef long long MaxInt;
-    #endif
+    typedef intmax_t MaxInt;
 
     /// @brief A datatype used to indicate a specific point in time, or a timestamp.
     /// @details This is made into it's own datatype for when we want to tweak the possible size for
