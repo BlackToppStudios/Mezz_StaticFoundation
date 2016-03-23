@@ -43,19 +43,16 @@ project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration.")
 
 ####################################################################################################
-#set(JagatiChecksum "ea5f6ad9531cdcb8e8914d497b1b68d3885d29beceb83c55fdd858\
-#2f2827276247869a17b6f8f2cb013a61e3d72540f5ab413f0a53be539c4ae339028acf656c")
-#file(DOWNLOAD
-#    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/master/Jagati.cmake"
-#    "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
-#    EXPECTED_HASH SHA512=${JagatiChecksum}
-#)
+set(JagatiChecksum "6fa82914461398d0cad4744fd942553a9480b4cbfa274a15d29dd9\
+b7eea8dd83f067a2406dd3783e6cc8275cfa49eeacaeb770db6f91108bbcb07e7d66ce021a")
+file(DOWNLOAD
+    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/master/Jagati.cmake"
+    "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
+    EXPECTED_HASH SHA512=${JagatiChecksum}
+)
+include("${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake")
 
-####################################################################################################
-#include("${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake")
-include("Jagati.cmake")
 StandardJagatiSetup()
-add_subdirectory(CMake)
 
 ####################################################################################################
 message(STATUS "Determining Source Files.")
