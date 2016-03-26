@@ -7,6 +7,9 @@ common facilities that such games need. This is just one component of several.
 The current Linux/Travis build status is: 
 [![Build Status](https://travis-ci.org/BlackToppStudios/Mezz_StaticFoundation.svg?branch=master)](https://travis-ci.org/BlackToppStudios/Mezz_StaticFoundation)
 
+The current Windows/Appveyor build status is:
+[![Build Status](https://ci.appveyor.com/api/projects/status/github/BlackToppStudios/Mezz_StaticFoundation?branch=master&svg=true)
+
 ## About ##
 
 This library, the StaticFoundation, is responsible for detecting compilation options, compiler
