@@ -129,10 +129,14 @@ void DoComparisonTest(  const Mezzanine::NameValuePairMap& Expected,
     String Other;
     for(auto pair : Expected)
     {
+        SAVE_WARNING_STATE
+        SUPPRESS_VC_WARNING(4571)
         try
             { Other = Compiled.at(pair.first); }
         catch(...)
             { Other = "Not set"; failed=true; }
+        RESTORE_WARNING_STATE
+
         cout << "\n" << pair.first << ": " << Other << " == " << pair.second;
         if(Other == pair.second)
             { cout <<  " \t[PASS]"; }
