@@ -4,7 +4,7 @@ clone_folder: C:\projects\Mezz_StaticFoundation
 os: Visual Studio 2015
 
 platform:
-  - Win32
+#  - Win32
   - x64
 
 # build Configuration, i.e. Debug, Release, etc.
@@ -23,7 +23,6 @@ before_build:
   - cmd: if "%platform%"=="Win32" set "CMAKE_GENERATOR_NAME=Visual Studio 14 2015"
   - cmd: if "%platform%"=="x64"   set "CMAKE_GENERATOR_NAME=Visual Studio 14 2015 Win64"
   - cmd: cmake -G "%CMAKE_GENERATOR_NAME%" -DCMAKE_BUILD_TYPE=%configuration% ..
-  - cmd: dir
 
 build:
   project: C:\projects\Mezz_StaticFoundation\build\StaticFoundation.sln
@@ -35,6 +34,8 @@ build:
   verbosity: normal
 
 test_script:
+  - cmd: cd C:\projects\Mezz_StaticFoundation\build
+  - cmd: dir
   - cmd: StaticFoundation_Tester MEZZ_BuildDoxygen:0 MEZZ_Linux:0 MEZZ_BuildStaticLibraries:1 MEZZ_MacOSX:0 MEZZ_Windows:1 MEZZ_CompilerDesignNix:0 MEZZ_CompilerDesignMS:1
 
 notifications:
