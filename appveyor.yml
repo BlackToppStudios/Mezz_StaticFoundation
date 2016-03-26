@@ -35,7 +35,9 @@ build:
 
 test_script:
   - cmd: cd C:\projects\Mezz_StaticFoundation\build
+  - cmd: cd %configuration%
   - cmd: dir
+  - cmd: cd bin
   - cmd: StaticFoundation_Tester MEZZ_BuildDoxygen:0 MEZZ_Linux:0 MEZZ_BuildStaticLibraries:1 MEZZ_MacOSX:0 MEZZ_Windows:1 MEZZ_CompilerDesignNix:0 MEZZ_CompilerDesignMS:1
 
 notifications:
