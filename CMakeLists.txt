@@ -218,6 +218,7 @@ add_custom_target(
             README.md
             COPYING.md
             .travis.yml
+            appveyor.yml
 )
 
 message(STATUS "${PROJECT_NAME} - Ending Configuration.")
