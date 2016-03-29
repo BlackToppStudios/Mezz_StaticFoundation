@@ -76,15 +76,17 @@ set(TestSourceFiles
     "${StaticFoundationTestDir}tests.h"
     "${StaticFoundationTestDir}tests.cpp"
 )
+ShowList("Test Source Files:" "\t" "${TestSourceFiles}")
 
 set(SwigFiles
     "${StaticFoundationSwigDir}swigconfig.h"
 )
+ShowList("Swig Input Files:" "\t" "${SwigFiles}")
 
 set(DoxFiles
     "${StaticFoundationDoxDir}dox.h"
 )
-
+ShowList("Doxygen Input Files:" "\t" "${DoxFiles}")
 AddJagatiDoxInput("${DoxFiles}")
 
 ####################################################################################################
@@ -225,6 +227,7 @@ add_custom_target(
             COPYING.md
             .travis.yml
             appveyor.yml
+            "${DoxFiles}"
 )
 
 message(STATUS "${PROJECT_NAME} - Ending Configuration.")
