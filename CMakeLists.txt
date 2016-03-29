@@ -81,6 +81,12 @@ set(SwigFiles
     "${StaticFoundationSwigDir}swigconfig.h"
 )
 
+set(DoxFiles
+    "${StaticFoundationDoxDir}dox.h"
+)
+
+AddJagatiDoxInput("${DoxFiles}")
+
 ####################################################################################################
 # Set up Include Directories
 
