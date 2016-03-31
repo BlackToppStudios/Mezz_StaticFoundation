@@ -65,6 +65,7 @@ set(HeaderFiles
     "${StaticFoundationIncludeDir}supresswarnings.h"
 )
 ShowList("Header Files:" "\t" "${HeaderFiles}")
+AddJagatiDoxInput("${HeaderFiles}")
 
 set(SourceFiles
     "${StaticFoundationSourceDir}runtimestatics.cpp"
@@ -128,9 +129,8 @@ if(MEZZ_BuildDoxygen)
     if(MEZZ_DoxygenExecutable)
         set(DoxygenConfigDir "${StaticFoundationDoxDir}doxyfiles/")
         set(DoxygenResultsDir "${StaticFoundationBinaryDir}Doxygen/")
-
         set(WarningsFile "${DoxygenResultsDir}html/DoxygenWarnings.txt")
-
+        set(JagatiDoxArray "/home/sqeaky/Code/Mezz_StaticFoundation/include/crossplatformexport.h /home/sqeaky/Code/Mezz_StaticFoundation/include/datatypes.h /home/sqeaky/Code/Mezz_StaticFoundation/include/runtimestatics.h /home/sqeaky/Code/Mezz_StaticFoundation/include/staticfoundation.h /home/sqeaky/Code/Mezz_StaticFoundation/include/supresswarnings.h /home/sqeaky/Code/Mezz_StaticFoundation/dox/dox.h")
         configure_file(${DoxygenConfigDir}Doxyfile ${StaticFoundationBinaryDir})
 
         if(EXISTS ${WarningsFile})
