@@ -37,12 +37,13 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef _staticfoundation_dox_h
-#define _staticfoundation_dox_h
+#ifndef staticfoundation_dox_h
+#define staticfoundation_dox_h
 
 /// @file
-/// @brief The main documetation header to include for this library
+/// @brief The main documentation header to include for this library
 
-#include "staticfoundation.h"
+/// @page StaticFoundation
+///
 
 #endif
