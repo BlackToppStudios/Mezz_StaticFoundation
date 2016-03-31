@@ -93,7 +93,7 @@ WARN_LOGFILE           = ${WarningsFile}
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = ${JagatiDoxArray}
+INPUT                  = ${DoxygenInputs}
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          =
 RECURSIVE              = NO

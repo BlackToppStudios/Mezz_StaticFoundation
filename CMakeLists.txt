@@ -130,7 +130,8 @@ if(MEZZ_BuildDoxygen)
         set(DoxygenConfigDir "${StaticFoundationDoxDir}doxyfiles/")
         set(DoxygenResultsDir "${StaticFoundationBinaryDir}Doxygen/")
         set(WarningsFile "${DoxygenResultsDir}html/DoxygenWarnings.txt")
-        set(JagatiDoxArray "/home/sqeaky/Code/Mezz_StaticFoundation/include/crossplatformexport.h /home/sqeaky/Code/Mezz_StaticFoundation/include/datatypes.h /home/sqeaky/Code/Mezz_StaticFoundation/include/runtimestatics.h /home/sqeaky/Code/Mezz_StaticFoundation/include/staticfoundation.h /home/sqeaky/Code/Mezz_StaticFoundation/include/supresswarnings.h /home/sqeaky/Code/Mezz_StaticFoundation/dox/dox.h")
+        string (REPLACE ";" " " DoxygenInputs "${JagatiDoxArray}")
+
         configure_file(${DoxygenConfigDir}Doxyfile ${StaticFoundationBinaryDir})
 
         if(EXISTS ${WarningsFile})
@@ -138,10 +139,6 @@ if(MEZZ_BuildDoxygen)
             file(MAKE_DIRECTORY ${DoxygenResultsDir})
             file(WRITE ${WarningsFile} "")
         endif(EXISTS ${WarningsFile})
-
-        # create output folder
-        # Touch this file ${DoxygenResultsDir}html/DoxygenWarnings.txt
-
 
         message(STATUS "Found doxygen Executable at '${MEZZ_DoxygenExecutable}'")
         add_custom_target(MezzanineDocumentation ALL
