@@ -132,6 +132,8 @@
         #endif
     #endif  // \WINDOWS
 
+    /// @def MEZZ_PLATFORM_DEFINED
+    /// @brief This is defined if the Mezzanine has detected, and false otherwise.
     #define MEZZ_PLATFORM_DEFINED
 
     /// @def MEZZ_DEPRECATED

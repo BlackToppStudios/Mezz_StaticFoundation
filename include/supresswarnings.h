@@ -62,6 +62,12 @@
 /// @note Part of the C++ API only.
 /// @sa SAVE_WARNING_STATE
 
+/// @def PRAGMA
+/// @internal
+/// @brief Used as an abstraction to insure the C++11 _Pragma keyword (or workalike when dealing
+/// with visual studio BS) can be called using a single symbol on any platform.
+/// @warning There is not reason to use this in client code, ever.
+
 #ifndef SWIG
     #ifdef _MSC_VER // The intel compiler might act up here
         #define SAVE_WARNING_STATE PRAGMA(warning(push))
