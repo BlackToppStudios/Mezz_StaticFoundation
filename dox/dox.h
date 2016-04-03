@@ -43,7 +43,36 @@
 /// @file
 /// @brief The main documentation header to include for this library
 
-/// @page StaticFoundation
+/// @page Mezz_StaticFoundation Jagati Library Static Foundation
+/// This is library provides basic OS feature detection facilities for C++ code and SWIG bound
+/// languages. This library can be used by adding it to your project as you would any other
+/// @ref Jagati library and include @ref staticfoundation.h. The class @ref RuntimeStatic descrbies
+/// all options detected that can be used by SWIG bound libraries or queried at runtime by C++ code.
+/// Here is a list of all Preprocessor definitions and what they do:
 ///
+///     - @ref MEZZ_BuildDoxygen - @ref StaticFoundationConfig.h - Set if the doxygen build option
+/// was set.
+///     - @ref MEZZ_BuildStaticLibraries - @ref StaticFoundationConfig.h - Set if the build option
+/// to build static libraries was set. This defaults to true. Dynamic libraries will be built
+/// otherwise.
+///     - @ref MEZZ_Linux  - @ref StaticFoundationConfig.h - Set if CMake dectects a Linux build
+/// environment.
+///     - @ref MEZZ_Windows  - @ref StaticFoundationConfig.h - Set if CMake dectects a Windows build
+/// environment.
+///     - @ref MEZZ_MacOSX  - @ref StaticFoundationConfig.h - Set if CMake dectects a Mac OS X build
+/// environment.
+///     - @ref MEZZ_CompilerIsGCC  - @ref StaticFoundationConfig.h - Set if the compiler is GCC,
+/// Mingw or TDM-GCC.
+///     - @ref MEZZ_CompilerIsClang  - @ref StaticFoundationConfig.h - Set if the compiler is Clang.
+///     - @ref MEZZ_CompilerIsIntel  - @ref StaticFoundationConfig.h - Set if the compiler Intel.
+///     - @ref MEZZ_CompilerIsMsvc  - @ref StaticFoundationConfig.h - Set only if the compiler is
+/// MSVC.
+///     - @ref MEZZ_CompilerDesignNix  - @ref StaticFoundationConfig.h - Set for pretty much all
+/// compilers except MSVC.
+///     - @ref MEZZ_CompilerDesignMS  - @ref StaticFoundationConfig.h - Set only when using MSVC
+
+
+/// @page Jagati Jagati
+/// @todo describe using Jagati
 
 #endif
