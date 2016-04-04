@@ -46,9 +46,9 @@
 /// @page Mezz_StaticFoundation Jagati Library Static Foundation
 /// This is library provides basic OS feature detection facilities for C++ code and SWIG bound
 /// languages. This library can be used by adding it to your project as you would any other
-/// @ref Jagati library and include @ref staticfoundation.h. The class @ref RuntimeStatic descrbies
-/// all options detected that can be used by SWIG bound libraries or queried at runtime by C++ code.
-/// Here is a list of all Preprocessor definitions and what they do:
+/// @ref Jagati library and include @ref staticfoundation.h. The class @ref Mezzanine::RuntimeStatic
+/// describes all options detected that can be used by SWIG bound libraries or queried at runtime by
+/// C++ code. Here is a list of all Preprocessor definitions and what they do:
 ///
 ///     - @ref MEZZ_BuildDoxygen - @ref StaticFoundationConfig.h - Set if the doxygen build option
 /// was set.
@@ -70,6 +70,17 @@
 ///     - @ref MEZZ_CompilerDesignNix  - @ref StaticFoundationConfig.h - Set for pretty much all
 /// compilers except MSVC.
 ///     - @ref MEZZ_CompilerDesignMS  - @ref StaticFoundationConfig.h - Set only when using MSVC
+
+/// @file StaticFoundationConfig.h
+/// @details This file is generated automatically by the CMake build process in the Static
+/// Foundation Jagati Package.
+
+/// @def MEZZ_Linux
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h detected
+
+/// @def MEZZ_Windows
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h detected
+
 
 
 /// @page Jagati Jagati

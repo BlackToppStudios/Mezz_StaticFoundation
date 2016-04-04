@@ -74,11 +74,11 @@
 */
 
     // Check for other nonwindows OS
-    #ifdef MEZZ_LINUX
+    #ifdef MEZZ_Linux
         #define NONWINDOWS
     #endif
 
-    #ifdef MEZZ_MACOSX
+    #ifdef MEZZ_Linux
         #define NONWINDOWS
     #endif
 

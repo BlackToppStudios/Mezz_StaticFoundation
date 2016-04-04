@@ -121,6 +121,9 @@ AddJagatiConfig("MEZZ_CompilerDesignMS" "" ${CompilerDesignMS})
 
 ChooseLibraryType(${MEZZ_BuildStaticLibraries})
 EmitConfig()
+ShowList("Config Files made by StaticFoundation:" "\t" "${StaticFoundationConfigFilename}")
+AddJagatiDoxInput("${StaticFoundationConfigFilename}")
+
 
 ####################################################################################################
 # Set up Doxygen Targets
