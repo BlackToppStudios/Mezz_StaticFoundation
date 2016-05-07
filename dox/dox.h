@@ -75,11 +75,53 @@
 /// @details This file is generated automatically by the CMake build process in the Static
 /// Foundation Jagati Package.
 
+/// @def MEZZ_BuildDoxygen
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is a CMake Option set in
+/// the StaticFoundation. If set an extra build step is added that adds a build target which runs
+/// doxygen against every Jagati package in the build.
+
+/// @def MEZZ_BuildStaticLibraries
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is set by cmake option
+/// and on supported platforms this will allow choosing between static libraries (.a/.lib) and
+/// dynamix libraries (.so/.dll).
+
 /// @def MEZZ_Linux
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h detected
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if Linux is the target
+/// platform, unset otherwise.
 
 /// @def MEZZ_Windows
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h detected
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if windows is the target
+/// platform, unset otherwise.
+
+/// @def MEZZ_MacOSX
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if Mac OS X is the target
+/// platform, unset otherwise.
+
+/// @def MEZZ_CompilerIsGCC
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is
+/// being done with GCC, false otherwise.
+
+/// @def MEZZ_CompilerIsClang
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is
+/// being done with Clang, false otherwise.
+
+/// @def MEZZ_CompilerIsIntel
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is
+/// being done with the Intel compiler, false otherwise.
+
+/// @def MEZZ_CompilerIsMsvc
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is
+/// being done with msvc, false otherwise.
+
+/// @def MEZZ_CompilerDesignNix
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler accepts
+/// arguments and pragmas generally like Unix style compilers.
+
+/// @def MEZZ_CompilerDesignMS
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler accepts
+/// arguments and pragmas generally like ms style compilers.
+
+
 
 
 

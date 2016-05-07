@@ -73,6 +73,8 @@
 
 */
 
+#include "StaticFoundationConfig.h"
+
     // Check for other nonwindows OS
     #ifdef MEZZ_Linux
         #define NONWINDOWS
