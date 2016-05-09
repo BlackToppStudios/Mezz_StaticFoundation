@@ -40,7 +40,7 @@
 ####################################################################################################
 cmake_minimum_required(VERSION 2.8)
 project(StaticFoundation)
-message(STATUS "${PROJECT_NAME} - Starting Configuration.")
+message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VERSION}.")
 
 ##########################################################################|#########################
 set(JagatiChecksum "454572d9a278479802303216896d9330908b7539b36e9a70884b4d\
