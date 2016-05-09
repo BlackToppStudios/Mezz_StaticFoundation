@@ -2,6 +2,10 @@ sudo: required
 dist: trusty
 language: cpp
 
+os:
+  - linux
+  - osx
+
 compiler:
   - clang
   - gcc
@@ -16,7 +20,9 @@ install: yes
 
 script: make
 
-after_success: ./StaticFoundation_Tester MEZZ_BuildDoxygen:0 MEZZ_Linux:1 MEZZ_BuildStaticLibraries:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
+after_success:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then  ./StaticFoundation_Tester MEZZ_BuildDoxygen:0 MEZZ_Linux:1 MEZZ_BuildStaticLibraries:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0 ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then  ./StaticFoundation_Tester MEZZ_BuildDoxygen:0 MEZZ_Linux:0 MEZZ_BuildStaticLibraries:1 MEZZ_MacOSX:1 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0 ; fi
 
 notifications:
   email:
