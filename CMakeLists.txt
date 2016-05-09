@@ -47,7 +47,7 @@ set(JagatiChecksum "454572d9a278479802303216896d9330908b7539b36e9a70884b4d\
 0e720702986076a3e5a89fc65dd237ca9acd3ef7e4cfc4c24bda84fe318016dc7f9f8259aa")
 
 file(DOWNLOAD
-    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/master/Jagati.cmake"
+    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.1/Jagati.cmake"
     "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
     EXPECTED_HASH SHA512=${JagatiChecksum}
 )
