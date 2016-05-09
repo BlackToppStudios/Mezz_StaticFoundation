@@ -43,11 +43,11 @@ project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VERSION}.")
 
 ##########################################################################|#########################
-set(JagatiChecksum "6660441dec5d424a006f62ba191c5c1b0a6e01d789d3069eadebfc\
-f2998d849dc6f87ad7d1c8bcd4444cbc041da5675159e18129861824a41a49445af2457e58")
+set(JagatiChecksum "da401b29af84a4b3c119a23b955e45534c4128d78baa14bf63a58d\
+8b4c11c10c1b85464dbaea68d180d2fd5f3ea43a4a2a960c7dfc3dfe0890696ee92480a280")
 
 file(DOWNLOAD
-    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.1.1/Jagati.cmake"
+    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.1.2/Jagati.cmake"
     "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
     EXPECTED_HASH SHA512=${JagatiChecksum}
 )
@@ -209,9 +209,12 @@ endif(MEZZ_BuildDoxygen)
 # Set up Build targets
 
 AddJagatiLibrary("StaticFoundation")
+
 add_library(${StaticFoundationLib} ${MEZZ_LibraryBuildType} ${HeaderFiles} ${SourceFiles})
+target_link_libraries(${StaticFoundationLib} ${JagatiLinkArray})
+
 add_executable(${PROJECT_NAME}_Tester ${HeaderFiles} ${TestSourceFiles})
-target_link_libraries(${PROJECT_NAME}_Tester ${StaticFoundationLib})
+target_link_libraries(${PROJECT_NAME}_Tester ${StaticFoundationLib} ${JagatiLinkArray})
 
 # A Project to do nothing but get All the Source files visible in IDEs
 add_custom_target(
