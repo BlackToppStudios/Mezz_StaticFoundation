@@ -43,8 +43,8 @@ project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration.")
 
 ##########################################################################|#########################
-set(JagatiChecksum "454572d9a278479802303216896d9330908b7539b36e9a70884b4d\
-0e720702986076a3e5a89fc65dd237ca9acd3ef7e4cfc4c24bda84fe318016dc7f9f8259aa")
+set(JagatiChecksum "9b715d483270eef8df5ab581bc136891c01faa0b9ee59f45150d6e\
+347eef6a0c1c57b3a0deb2d3bbb7e5bc20919010a56effc6b7733a38489ab5da26e636955c")
 
 file(DOWNLOAD
     "https://raw.githubusercontent.com/BlackToppStudios/Jagati/master/Jagati.cmake"
