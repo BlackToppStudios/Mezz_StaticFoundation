@@ -42,7 +42,7 @@ build_script:
   
 test_script:
   - cmd: cd C:\projects\Mezz_StaticFoundation\build
-  - cmd: cd %configuration%
+  - if ["%GENERATOR%"] != ["MinGW Makefiles"] ( cmd: cd %configuration% )
   - cmd: StaticFoundation_Tester MEZZ_BuildDoxygen:0 MEZZ_Linux:0 MEZZ_BuildStaticLibraries:1 MEZZ_MacOSX:0 MEZZ_Windows:1 MEZZ_CompilerDesignNix:%CompilerNix% MEZZ_CompilerDesignMS:%CompilerMS%
 
 notifications:
