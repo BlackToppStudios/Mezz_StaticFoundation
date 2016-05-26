@@ -44,83 +44,80 @@
 /// @brief The main documentation header to include for this library
 
 /// @page Mezz_StaticFoundation Jagati Library Static Foundation
-/// This is library provides basic OS feature detection facilities for C++ code and SWIG bound
-/// languages. This library can be used by adding it to your project as you would any other
-/// @ref Jagati library and include @ref staticfoundation.h. The class @ref Mezzanine::RuntimeStatic
-/// describes all options detected that can be used by SWIG bound libraries or queried at runtime by
-/// C++ code. Here is a list of all Preprocessor definitions and what they do:
+/// This is library provides basic OS feature detection facilities for C++ code and SWIG bound languages. This library
+/// can be used by adding it to your project as you would any other @ref Jagati library and include
+/// @ref staticfoundation.h. The class @ref Mezzanine::RuntimeStatic describes all options detected that can be used by
+/// SWIG bound libraries or queried at runtime by C++ code. Here is a list of all Preprocessor definitions and what they
+/// do:
 ///
-///     - @ref MEZZ_BuildDoxygen - @ref StaticFoundationConfig.h - Set if the doxygen build option
-/// was set.
-///     - @ref MEZZ_BuildStaticLibraries - @ref StaticFoundationConfig.h - Set if the build option
-/// to build static libraries was set. This defaults to true. Dynamic libraries will be built
-/// otherwise.
-///     - @ref MEZZ_Linux  - @ref StaticFoundationConfig.h - Set if CMake dectects a Linux build
-/// environment.
-///     - @ref MEZZ_Windows  - @ref StaticFoundationConfig.h - Set if CMake dectects a Windows build
-/// environment.
-///     - @ref MEZZ_MacOSX  - @ref StaticFoundationConfig.h - Set if CMake dectects a Mac OS X build
-/// environment.
-///     - @ref MEZZ_CompilerIsGCC  - @ref StaticFoundationConfig.h - Set if the compiler is GCC,
-/// Mingw or TDM-GCC.
+///     - @ref MEZZ_BuildDoxygen - @ref StaticFoundationConfig.h - Set if the doxygen build option was set.
+///     - @ref MEZZ_BuildStaticLibraries - @ref StaticFoundationConfig.h - Set if the build option to build static
+/// libraries was set. This defaults to true. Dynamic libraries will be built otherwise.
+///     - @ref MEZZ_Linux  - @ref StaticFoundationConfig.h - Set if CMake dectects a Linux build environment.
+///     - @ref MEZZ_Windows  - @ref StaticFoundationConfig.h - Set if CMake dectects a Windows build environment.
+///     - @ref MEZZ_MacOSX  - @ref StaticFoundationConfig.h - Set if CMake dectects a Mac OS X build environment.
+///     - @ref MEZZ_CompilerIsGCC  - @ref StaticFoundationConfig.h - Set if the compiler is GCC, Mingw or TDM-GCC.
 ///     - @ref MEZZ_CompilerIsClang  - @ref StaticFoundationConfig.h - Set if the compiler is Clang.
 ///     - @ref MEZZ_CompilerIsIntel  - @ref StaticFoundationConfig.h - Set if the compiler Intel.
-///     - @ref MEZZ_CompilerIsMsvc  - @ref StaticFoundationConfig.h - Set only if the compiler is
-/// MSVC.
-///     - @ref MEZZ_CompilerDesignNix  - @ref StaticFoundationConfig.h - Set for pretty much all
-/// compilers except MSVC.
+///     - @ref MEZZ_CompilerIsMsvc  - @ref StaticFoundationConfig.h - Set only if the compiler is MSVC.
+///     - @ref MEZZ_CompilerDesignNix  - @ref StaticFoundationConfig.h - Set for pretty much all compilers except MSVC.
 ///     - @ref MEZZ_CompilerDesignMS  - @ref StaticFoundationConfig.h - Set only when using MSVC
 
 /// @file StaticFoundationConfig.h
-/// @details This file is generated automatically by the CMake build process in the Static
-/// Foundation Jagati Package.
+/// @details This file is generated automatically by the CMake build process in the Static Foundation Jagati Package.
 
 /// @def MEZZ_BuildDoxygen
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is a CMake Option set in
-/// the StaticFoundation. If set an extra build step is added that adds a build target which runs
-/// doxygen against every Jagati package in the build.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is a CMake Option set in the
+/// StaticFoundation. If set an extra build step is added that adds a build target which runs doxygen against every
+/// Jagati package in the build.
 
 /// @def MEZZ_BuildStaticLibraries
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is set by cmake option
-/// and on supported platforms this will allow choosing between static libraries (.a/.lib) and
-/// dynamix libraries (.so/.dll).
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is set by cmake option and on supported
+/// platforms this will allow choosing between static libraries (.a/.lib) and dynamic libraries (.so/.dll).
 
 /// @def MEZZ_Linux
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if Linux is the target
-/// platform, unset otherwise.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if Linux is the target platform, unset
+/// otherwise.
 
 /// @def MEZZ_Windows
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if windows is the target
-/// platform, unset otherwise.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if windows is the target platform, unset
+/// otherwise.
 
 /// @def MEZZ_MacOSX
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if Mac OS X is the target
-/// platform, unset otherwise.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if Mac OS X is the target platform, unset
+/// otherwise.
 
 /// @def MEZZ_CompilerIsGCC
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is
-/// being done with GCC, false otherwise.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with GCC,
+/// false otherwise.
 
 /// @def MEZZ_CompilerIsClang
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is
-/// being done with Clang, false otherwise.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with Clang,
+///  false otherwise.
 
 /// @def MEZZ_CompilerIsIntel
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is
-/// being done with the Intel compiler, false otherwise.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with the
+/// Intel compiler, false otherwise.
 
 /// @def MEZZ_CompilerIsMsvc
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is
-/// being done with msvc, false otherwise.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with msvc,
+/// false otherwise.
 
 /// @def MEZZ_CompilerDesignNix
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler accepts
-/// arguments and pragmas generally like Unix style compilers.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler accepts arguments and pragmas
+/// generally like Unix style compilers.
 
 /// @def MEZZ_CompilerDesignMS
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler accepts
-/// arguments and pragmas generally like ms style compilers.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler accepts arguments and pragmas
+/// generally like ms style compilers.
 
+/// @def MEZZ_Arch64
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler thinks it is on a 64 bit
+/// platform.
+///
+/// @def MEZZ_Arch32
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler thinks it is on a 32 bit
+/// platform.
 
 
 

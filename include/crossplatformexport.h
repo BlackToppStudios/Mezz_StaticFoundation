@@ -75,6 +75,11 @@
 
 #include "StaticFoundationConfig.h"
 
+// This was remarked out on May 26, 2016 by Sqeaky to allow easier transition from old macros to new ones. With this a
+// Jagati package can be tested without reworking all of its macros first and potentially introducing new bugs before
+// those cause by its seperation into Jagati package are fixed.
+
+/*
     // Check for other nonwindows OS
     #ifdef MEZZ_Linux
         #define NONWINDOWS
@@ -167,6 +172,6 @@
     #else
         #define MEZZ_ARCH 32
     #endif
-
+*/
 
 #endif

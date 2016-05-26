@@ -145,4 +145,22 @@ namespace Mezzanine
         #endif
     }
 
+    Boole RuntimeStatic::Arch64()
+    {
+        #ifdef MEZZ_Arch64
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::Arch32()
+    {
+        #ifdef MEZZ_Arch32
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
 }

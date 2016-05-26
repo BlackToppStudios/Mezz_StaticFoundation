@@ -119,6 +119,8 @@ AddJagatiConfig("MEZZ_CompilerIsMsvc" "" ${CompilerIsMsvc})
 
 AddJagatiConfig("MEZZ_CompilerDesignNix" "" ${CompilerDesignNix})
 AddJagatiConfig("MEZZ_CompilerDesignMS" "" ${CompilerDesignMS})
+AddJagatiConfig("MEZZ_Arch64" "" ${Platform64Bit})
+AddJagatiConfig("MEZZ_Arch32" "" ${Platform32Bit})
 
 ChooseLibraryType(${MEZZ_BuildStaticLibraries})
 EmitConfig()
