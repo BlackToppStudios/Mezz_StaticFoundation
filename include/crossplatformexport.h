@@ -160,4 +160,13 @@
         #define WINAPI ErrorThisOnlyGoesInwin32Code
     #endif
 
+    /// @def MEZZ_ARCH
+    /// @brief Set to 64 on 64 bit CPU that is supported and 64 otherwise.
+    #if defined(_M_X64) || defined(__amd64__)
+        #define MEZZ_ARCH 64
+    #else
+        #define MEZZ_ARCH 32
+    #endif
+
+
 #endif
