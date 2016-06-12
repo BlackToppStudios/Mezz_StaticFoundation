@@ -57,6 +57,8 @@ int main(int ArgCount, char** ArgVars)
     CheckUsage(ArgCount, ArgVars);
     NameValuePairMap FromCommandLine{CreateMapFromArgs(ArgCount, ArgVars)};
     DoComparisonTest(FromCommandLine, CheckableValues());
+    // A leak to test valgrind fails!
+    new int();
     return EXIT_SUCCESS;
 }
 
