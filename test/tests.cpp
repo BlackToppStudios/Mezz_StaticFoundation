@@ -76,7 +76,7 @@ void CheckUsage(int ArgCount, char** ArgVars)
 
 String Usage(String ExecutableName)
 {
-    return String("Usage:\n  ") + ExecutableName +
+    return String("Usage:\n    ") + ExecutableName +
            " Name:Value [Name2:Value2 [Name3:Value3 [...]]\n\n" +
            "Currently Known Names and Values:\n" +
            Stringify(CheckableValues())+ "\n";
