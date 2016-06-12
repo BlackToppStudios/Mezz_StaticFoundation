@@ -13,7 +13,7 @@ compiler:
 before_script:
   - mkdir build
   - cd build
-  - cmake .. -DMEZZ_BuildDoxygen=OFF
+  - cmake .. -DMEZZ_BuildDoxygen=OFF -G"Ninja"
 
 # yes is just an application that returns true, this means perform no installation
 install:
