@@ -43,11 +43,11 @@ project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VERSION}.")
 
 ########################################################################################################################
-set(JagatiChecksum "f777be87de882500f29d3f38bc4f62bcd388ea2c49f08e12b55e03\
-aeb71788eff24a3def25ff4cd6caac76577c52939e24d41cc004ad2156184fd181dd0239e2")
+set(JagatiChecksum "45f7b92321032fe70da5a8c6c7a2c138edb124ecc6b069999747b\
+0e6b087d183d3d73de0deca5badcf828d343df8bee9a3d345e17021886c94fe25604a9af33f")
 
 file(DOWNLOAD
-    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.3.0/Jagati.cmake"
+    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.3.1/Jagati.cmake"
     "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
     EXPECTED_HASH SHA512=${JagatiChecksum}
 )
