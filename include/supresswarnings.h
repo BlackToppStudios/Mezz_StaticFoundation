@@ -68,7 +68,7 @@
 /// @internal
 /// @brief Used as an abstraction to insure the C++11 _Pragma keyword (or workalike when dealing
 /// with visual studio BS) can be called using a single symbol on any platform.
-/// @warning There is not reason to use this in client code, ever.
+/// @warning There is no reason to use this in client code, ever.
 
 #ifndef SWIG
     #ifdef _MSC_VER // The intel compiler might act up here
