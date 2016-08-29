@@ -49,12 +49,14 @@
 /// @sa RESTORE_WARNING_STATE
 
 /// @def SUPPRESS_VC_WARNING
-/// @brief If in visual studio this resolves to a pragma that supresses a warning, if not it
-/// resolves to nothing.
+/// @brief If in visual studio this resolves to a pragma that supresses a warning, if not it resolves to nothing.
 
 /// @def SUPPRESS_GCC_WARNING
-/// @brief If in or a compatible compiler this resolves to a pragma that supresses a warning, if
+/// @brief If in GCC or a compatible compiler this resolves to a pragma that supresses a warning, if
 /// not it resolves to nothing.
+
+/// @def SUPPRESS_CLANG_WARNING
+/// @brief If in CLANG this resolves to a pragma that supresses a warning, if not it resolves to nothing.
 
 /// @def RESTORE_WARNING_STATE
 /// @brief Restores the last warning state saved with @ref SAVE_WARNING_STATE. This cleans up after
@@ -73,15 +75,39 @@
         #define SAVE_WARNING_STATE PRAGMA(warning(push))
         #define SUPPRESS_VC_WARNING(suppress) PRAGMA(warning(disable: ## suppress ## ))
         #define SUPPRESS_GCC_WARNING(suppress)
+        #define SUPPRESS_CLANG_WARNING(suppress)
         #define RESTORE_WARNING_STATE PRAGMA(warning(pop))
         #define PRAGMA(x) __pragma(x)
-    #else
+    #endif
+
+    #ifdef __GNUG__
         #define SAVE_WARNING_STATE PRAGMA(GCC diagnostic push)
         #define SUPPRESS_VC_WARNING(X)
         #define SUPPRESS_GCC_WARNING(X) PRAGMA(GCC diagnostic ignored X)
+        #define SUPPRESS_CLANG_WARNING(X)
         #define RESTORE_WARNING_STATE PRAGMA(GCC diagnostic pop)
         #define PRAGMA(x) _Pragma(#x)
     #endif
+
+    #ifdef __clang__
+        #define SAVE_WARNING_STATE PRAGMA(GCC diagnostic push)
+        #define SUPPRESS_VC_WARNING(X)
+        #define SUPPRESS_GCC_WARNING(X) PRAGMA(GCC diagnostic ignored X)
+        #define SUPPRESS_CLANG_WARNING(X) PRAGMA(GCC diagnostic ignored X)
+        #define RESTORE_WARNING_STATE PRAGMA(GCC diagnostic pop)
+        #define PRAGMA(x) _Pragma(#x)
+    #endif
+
+    #ifdef DOXYGEN
+        #define SAVE_WARNING_STATE PRAGMA(GCC diagnostic push)
+        #define SUPPRESS_VC_WARNING(suppress) PRAGMA(warning(disable: ## suppress ## ))
+        #define SUPPRESS_GCC_WARNING(X) PRAGMA(GCC diagnostic ignored X)
+        #define SUPPRESS_CLANG_WARNING(X) PRAGMA(GCC diagnostic ignored X)
+        #define RESTORE_WARNING_STATE PRAGMA(GCC diagnostic pop)
+        #define PRAGMA(x) _Pragma(#x)
+    #endif
+
+
 #endif
 
 
