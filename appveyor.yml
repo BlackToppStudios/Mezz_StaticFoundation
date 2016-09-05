@@ -47,6 +47,7 @@ before_build:
   # Finalize build prep
   - mkdir build
   - cd build
+  - echo "Current Configuration is '%CONFIGURATION%'"
   - cmake -G "%GENERATOR%" -DCMAKE_BUILD_TYPE=%CONFIGURATION% .. -DMEZZ_BuildDoxygen=OFF
 
 build_script:
