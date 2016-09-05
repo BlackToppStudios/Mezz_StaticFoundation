@@ -87,13 +87,15 @@
         #define SUPPRESS_CLANG_WARNING(X) PRAGMA(clang diagnostic ignored X)
         #define RESTORE_WARNING_STATE PRAGMA(clang diagnostic pop)
         #define PRAGMA(x) _Pragma(#x)
-    #elif __GNUG__
-        #define SAVE_WARNING_STATE PRAGMA(GCC diagnostic push)
-        #define SUPPRESS_VC_WARNING(X)
-        #define SUPPRESS_GCC_WARNING(X) PRAGMA(GCC diagnostic ignored X)
-        #define SUPPRESS_CLANG_WARNING(X)
-        #define RESTORE_WARNING_STATE PRAGMA(GCC diagnostic pop)
-        #define PRAGMA(x) _Pragma(#x)
+    #else
+        #ifdef __GNUG__
+            #define SAVE_WARNING_STATE PRAGMA(GCC diagnostic push)
+            #define SUPPRESS_VC_WARNING(X)
+            #define SUPPRESS_GCC_WARNING(X) PRAGMA(GCC diagnostic ignored X)
+            #define SUPPRESS_CLANG_WARNING(X)
+            #define RESTORE_WARNING_STATE PRAGMA(GCC diagnostic pop)
+            #define PRAGMA(x) _Pragma(#x)
+        #endif
     #endif
 
     #ifdef DOXYGEN
