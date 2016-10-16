@@ -118,6 +118,7 @@ NameValuePairMap CheckableValues()
     Results["MEZZ_CompilerDesignMS"] = IntToString(Mezzanine::RuntimeStatic::CompilerDesignMS());
     Results["MEZZ_Arch64"] = IntToString(Mezzanine::RuntimeStatic::Arch64());
     Results["MEZZ_Arch32"] = IntToString(Mezzanine::RuntimeStatic::Arch32());
+    Results["MEZZ_Debug"] = IntToString(Mezzanine::RuntimeStatic::Debug());
     return Results;
 }
 

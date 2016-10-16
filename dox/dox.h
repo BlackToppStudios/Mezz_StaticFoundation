@@ -62,6 +62,9 @@
 ///     - @ref MEZZ_CompilerIsMsvc  - @ref StaticFoundationConfig.h - Set only if the compiler is MSVC.
 ///     - @ref MEZZ_CompilerDesignNix  - @ref StaticFoundationConfig.h - Set for pretty much all compilers except MSVC.
 ///     - @ref MEZZ_CompilerDesignMS  - @ref StaticFoundationConfig.h - Set only when using MSVC
+///     - @ref MEZZ_Arch64  - @ref StaticFoundationConfig.h - Set only if the build is 64 bit.
+///     - @ref MEZZ_Arch32  - @ref StaticFoundationConfig.h - Set only if the build is 64 bit.
+///     - @ref MEZZ_Debug  - @ref StaticFoundationConfig.h - Set if the build includes debug symbols.
 
 /// @file StaticFoundationConfig.h
 /// @details This file is generated automatically by the CMake build process in the Static Foundation Jagati Package.
@@ -114,12 +117,14 @@
 /// @def MEZZ_Arch64
 /// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler thinks it is on a 64 bit
 /// platform.
-///
+
 /// @def MEZZ_Arch32
 /// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler thinks it is on a 32 bit
 /// platform.
 
-
+/// @def MEZZ_Debug
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler includes debugging
+/// information.
 
 
 /// @page Jagati Jagati

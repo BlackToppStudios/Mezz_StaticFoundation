@@ -163,4 +163,13 @@ namespace Mezzanine
         #endif
     }
 
+    Boole RuntimeStatic::Debug()
+    {
+        #ifdef MEZZ_Debug
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
 }

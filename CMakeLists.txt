@@ -43,11 +43,11 @@ project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VERSION}.")
 
 ##########################################################################|#############################################
-set(JagatiChecksum "3bd8ddc6b66e9bb6c938bb6da682710f88057ae1f4f801ca9f1216\
-3024174fd56d373cc14f0382140dd590878356ad43f9693cff1740f695216f07c27e97f408")
+set(JagatiChecksum "067edcb59e007ab696333d146a7e7c5bc56b4ad9d6ec1326611bec\
+53df4d4fbc10ff1e80b6fc29c3fbdfdc258a3be25b9e36b0db88a9736338e10d86dd0c570c")
 
 file(DOWNLOAD
-    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.5.1/Jagati.cmake"
+    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.6.0/Jagati.cmake"
     "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
     EXPECTED_HASH SHA512=${JagatiChecksum}
 )
@@ -122,6 +122,8 @@ AddJagatiConfig("MEZZ_CompilerDesignNix" "" ${CompilerDesignNix})
 AddJagatiConfig("MEZZ_CompilerDesignMS" "" ${CompilerDesignMS})
 AddJagatiConfig("MEZZ_Arch64" "" ${Platform64Bit})
 AddJagatiConfig("MEZZ_Arch32" "" ${Platform32Bit})
+
+AddJagatiConfig("MEZZ_Debug" "" ${CompilerDebug})
 
 ChooseLibraryType(${MEZZ_BuildStaticLibraries})
 EmitConfig()

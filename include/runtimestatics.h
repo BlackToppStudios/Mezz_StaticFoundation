@@ -98,6 +98,9 @@ namespace Mezzanine
 
             /// @return If MEZZ_Arch32 is defined true, false otherwise.
             static Boole Arch32();
+
+            /// @return If MEZZ_Debug is defined true, false otherwise.
+            static Boole Debug();
     };
 
 }
