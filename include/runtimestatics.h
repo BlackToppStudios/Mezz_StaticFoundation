@@ -66,6 +66,9 @@ namespace Mezzanine
             /// @return If MEZZ_BuildStaticLibraries is defined true, false otherwise.
             static Boole BuildStaticLibraries();
 
+            /// @return If MEZZ_CodeCoverage is defined true, false otherwise.
+            static Boole CodeCoverage();
+
             /// @return If MEZZ_Linux is defined true, false otherwise.
             static Boole Linux();
 

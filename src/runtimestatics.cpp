@@ -64,6 +64,16 @@ namespace Mezzanine
         #endif
     }
 
+
+    Boole RuntimeStatic::CodeCoverage()
+    {
+        #ifdef MEZZ_CodeCoverage
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
     Boole RuntimeStatic::Linux()
     {
         #ifdef MEZZ_Linux

@@ -105,8 +105,8 @@ NameValuePairMap CheckableValues()
 {
     NameValuePairMap Results;
     Results["MEZZ_BuildDoxygen"] = IntToString(Mezzanine::RuntimeStatic::BuildDoxygen());
-    Results["MEZZ_BuildStaticLibraries"] =
-            IntToString(Mezzanine::RuntimeStatic::BuildStaticLibraries());
+    Results["MEZZ_BuildStaticLibraries"] = IntToString(Mezzanine::RuntimeStatic::BuildStaticLibraries());
+    Results["MEZZ_CodeCoverage"] = IntToString(Mezzanine::RuntimeStatic::CodeCoverage());
     Results["MEZZ_Linux"] = IntToString(Mezzanine::RuntimeStatic::Linux());
     Results["MEZZ_Windows"] = IntToString(Mezzanine::RuntimeStatic::Windows());
     Results["MEZZ_MacOSX"] = IntToString(Mezzanine::RuntimeStatic::MacOSX());
@@ -122,8 +122,7 @@ NameValuePairMap CheckableValues()
     return Results;
 }
 
-void DoComparisonTest(  const Mezzanine::NameValuePairMap& Expected,
-                        const Mezzanine::NameValuePairMap& Compiled)
+void DoComparisonTest(const Mezzanine::NameValuePairMap& Expected, const Mezzanine::NameValuePairMap& Compiled)
 {
     cout << "Expected:\n" << Stringify(Expected)
          << "\nCompiled in:\n" << Stringify(Compiled);

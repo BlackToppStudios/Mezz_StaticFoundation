@@ -126,6 +126,10 @@
 /// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler includes debugging
 /// information.
 
+/// @def MEZZ_CodeCoverage
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler includes code coverage
+/// information.
+
 
 /// @page Jagati Jagati
 /// @todo describe using Jagati

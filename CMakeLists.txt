@@ -43,11 +43,11 @@ project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VERSION}.")
 
 ##########################################################################|#############################################
-set(JagatiChecksum "067edcb59e007ab696333d146a7e7c5bc56b4ad9d6ec1326611bec\
-53df4d4fbc10ff1e80b6fc29c3fbdfdc258a3be25b9e36b0db88a9736338e10d86dd0c570c")
+set(JagatiChecksum "c9ed29f426616f0f24e7f73b5dc9677968b7686d4ec0a723152944\
+92310a5e753f13b83343089c9cfa70f54e0f13ddcc9eb8efff80a9d058eb2323e715a8e793")
 
 file(DOWNLOAD
-    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.6.0/Jagati.cmake"
+    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.7.0/Jagati.cmake"
     "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
     EXPECTED_HASH SHA512=${JagatiChecksum}
 )
@@ -108,6 +108,11 @@ AddJagatiCompileOption("MEZZ_BuildDoxygen"
     "Create HTML documentation with Doxygen. Requires Doxygen to be install in PATH." ON)
 AddJagatiCompileOption("MEZZ_BuildStaticLibraries"
     "If set the Mezzanine will be built as static libraries, shared if unset." ON)
+AddJagatiCompileOption("MEZZ_CodeCoverage"
+    "If set compiler flags will be set that gather code coverage data on build results." OFF)
+
+ChooseLibraryType(${MEZZ_BuildStaticLibraries})
+ChooseCodeCoverage(${MEZZ_CodeCoverage})
 
 AddJagatiConfig("MEZZ_Linux" "" ${SystemIsLinux})
 AddJagatiConfig("MEZZ_Windows" "" ${SystemIsWindows})
@@ -125,7 +130,6 @@ AddJagatiConfig("MEZZ_Arch32" "" ${Platform32Bit})
 
 AddJagatiConfig("MEZZ_Debug" "" ${CompilerDebug})
 
-ChooseLibraryType(${MEZZ_BuildStaticLibraries})
 EmitConfig()
 ShowList("Config Files made by StaticFoundation:" "\t" "${StaticFoundationConfigFilename}")
 AddJagatiDoxInput("${StaticFoundationConfigFilename}")
