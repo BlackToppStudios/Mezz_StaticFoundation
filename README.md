@@ -12,6 +12,8 @@ The current Linux/Travis build status is:
 The current Windows/Appveyor build status is:
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/BlackToppStudios/Mezz_StaticFoundation?branch=master&svg=true)](https://ci.appveyor.com/project/Sqeaky/mezz-staticfoundation)
 
+The current code coverage for tests is:
+[![codecov](https://codecov.io/gh/BlackToppStudios/Mezz_StaticFoundation/branch/master/graph/badge.svg)](https://codecov.io/gh/BlackToppStudios/Mezz_StaticFoundation)
 
 This library, the StaticFoundation, is responsible for detecting compilation options, compiler
 settings and other platform specific details.
