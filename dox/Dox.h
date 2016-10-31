@@ -46,7 +46,7 @@
 /// @page Mezz_StaticFoundation Jagati Library Static Foundation
 /// This is library provides basic OS feature detection facilities for C++ code and SWIG bound languages. This library
 /// can be used by adding it to your project as you would any other @ref Jagati library and include
-/// @ref staticfoundation.h. The class @ref Mezzanine::RuntimeStatic describes all options detected that can be used by
+/// @ref StaticFoundation.h. The class @ref Mezzanine::RuntimeStatic describes all options detected that can be used by
 /// SWIG bound libraries or queried at runtime by C++ code. Here is a list of all Preprocessor definitions and what they
 /// do:
 ///

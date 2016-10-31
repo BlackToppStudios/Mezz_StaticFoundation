@@ -40,7 +40,7 @@
 #ifndef Mezz_StaticFoundation_tests_h
 #define Mezz_StaticFoundation_tests_h
 
-#include "staticfoundation.h"
+#include "StaticFoundation.h"
 
 /// @file
 /// @brief Some declarations of functions for the tests Mezz_StaticFoundation.

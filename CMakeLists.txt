@@ -43,11 +43,11 @@ project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VERSION}.")
 
 ##########################################################################|#############################################
-set(JagatiChecksum "7eae56475154e1cbcdee6c7f677a3710ca7d24eacb523ea779d628\
-fc569ac9b6c48f42ba616070af0827704a9502c6591390a3d554b975f93998e8b6a72606da")
+set(JagatiChecksum "a6e8040746ebc1e3b17df43760872d937519ca3612069589483d83\
+827aceb80ef17b473e5dac0df3f0ecda285cb3be23461ab05e6a7feff0e8431bd9cd1a9673")
 
 file(DOWNLOAD
-    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.10.0/Jagati.cmake"
+    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.11.1/Jagati.cmake"
     "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
     EXPECTED_HASH SHA512=${JagatiChecksum}
 )
@@ -60,34 +60,34 @@ StandardJagatiSetup()
 message(STATUS "Determining Source Files.")
 
 set(HeaderFiles
-    "${StaticFoundationIncludeDir}crossplatformexport.h"
-    "${StaticFoundationIncludeDir}datatypes.h"
-    "${StaticFoundationIncludeDir}runtimestatics.h"
-    "${StaticFoundationIncludeDir}staticfoundation.h"
-    "${StaticFoundationIncludeDir}supresswarnings.h"
+    "${StaticFoundationIncludeDir}CrossPlatformExport.h"
+    "${StaticFoundationIncludeDir}DataTypes.h"
+    "${StaticFoundationIncludeDir}RuntimeStatics.h"
+    "${StaticFoundationIncludeDir}StaticFoundation.h"
+    "${StaticFoundationIncludeDir}SuppressWarnings.h"
 )
 ShowList("Header Files:" "\t" "${HeaderFiles}")
 AddJagatiDoxInput("${HeaderFiles}")
 
 set(SourceFiles
-    "${StaticFoundationSourceDir}runtimestatics.cpp"
+    "${StaticFoundationSourceDir}RuntimeStatics.cpp"
 
 )
 ShowList("Source Files:" "\t" "${SourceFiles}")
 
 set(TestSourceFiles
-    "${StaticFoundationTestDir}tests.h"
-    "${StaticFoundationTestDir}tests.cpp"
+    "${StaticFoundationTestDir}Tests.h"
+    "${StaticFoundationTestDir}Tests.cpp"
 )
 ShowList("Test Source Files:" "\t" "${TestSourceFiles}")
 
 set(SwigFiles
-    "${StaticFoundationSwigDir}swigconfig.h"
+    "${StaticFoundationSwigDir}SwigConfig.h"
 )
 ShowList("Swig Input Files:" "\t" "${SwigFiles}")
 
 set(DoxFiles
-    "${StaticFoundationDoxDir}dox.h"
+    "${StaticFoundationDoxDir}Dox.h"
 )
 ShowList("Doxygen Input Files:" "\t" "${DoxFiles}")
 AddJagatiDoxInput("${DoxFiles}")

@@ -53,7 +53,7 @@
 // conditionally may not be compiled in.
 
 #ifndef SWIG
-    #include "crossplatformexport.h"
+    #include "CrossPlatformExport.h"
 
     #include <stdint.h>
     #include <cstddef>

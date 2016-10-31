@@ -50,7 +50,7 @@
 /// This might also be useful in situations where the absence of a preprocessor value needs to
 /// stored in a C++ container.
 
-#include "datatypes.h"
+#include "DataTypes.h"
 
 namespace Mezzanine
 {

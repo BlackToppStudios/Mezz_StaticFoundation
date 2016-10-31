@@ -42,8 +42,8 @@
 #include <iostream>
 #include <sstream>
 
-#include "tests.h"
-#include "runtimestatics.h"
+#include "Tests.h"
+#include "RuntimeStatics.h"
 
 using std::cout;
 using std::cerr;

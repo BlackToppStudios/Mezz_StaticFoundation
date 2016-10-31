@@ -41,7 +41,7 @@
 /// @file
 /// @brief The
 
-#include "runtimestatics.h"
+#include "RuntimeStatics.h"
 #include "StaticFoundationConfig.h"
 
 namespace Mezzanine

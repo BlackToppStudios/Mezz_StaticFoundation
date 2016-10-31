@@ -37,15 +37,15 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef Mezz_StaticFoundation_staticfoundation_h
-#define Mezz_StaticFoundation_staticfoundation_h
+#ifndef _staticfoundation_swigconfig_h
+#define _staticfoundation_swigconfig_h
 
 /// @file
-/// @brief The main header to include for this library
+/// @brief The main Swig configuration header to include for this library
+/// @todo This is unimplemented at the moment and will remain that way until we have made more
+/// progress on how Swig will read Jagati Packages.
 
-#include "crossplatformexport.h"
-#include "datatypes.h"
-#include "supresswarnings.h"
-#include "runtimestatics.h"
+#include "../include/DataTypes.h"
+#include "../include/RuntimeStatics.h"
 
 #endif
