@@ -28,19 +28,19 @@ install:
 script:
   - ninja
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ;
-        then ./StaticFoundation_Tester \
-        MEZZ_CompilerIsEmscripten:0     MEZZ_CompilerIsIntel:0  CompilerIsMsvc:0 \
-        MEZZ_BuildStaticLibraries:1     MEZZ_BuildDoxygen:0     MEZZ_Debug:0    MEZZ_CodeCoverage:1 \
-        MEZZ_Linux:1        MEZZ_MacOSX:0       MEZZ_Windows:0 \
-        MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0 \
+        then ./StaticFoundation_Tester
+        MEZZ_CompilerIsEmscripten:0     MEZZ_CompilerIsIntel:0  MEZZ_CompilerIsMsvc:0
+        MEZZ_BuildStaticLibraries:1     MEZZ_BuildDoxygen:0     MEZZ_Debug:0    MEZZ_CodeCoverage:1
+        MEZZ_Linux:1        MEZZ_MacOSX:0       MEZZ_Windows:0
+        MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0
         MEZZ_Arch64:1       MEZZ_Arch32:0 ;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]] ;
-        then ./StaticFoundation_Tester \
-        MEZZ_CompilerIsEmscripten:0     MEZZ_CompilerIsIntel:0  CompilerIsMsvc:0 \
-        MEZZ_BuildStaticLibraries:1     MEZZ_BuildDoxygen:0     MEZZ_Debug:0    MEZZ_CodeCoverage:1 \
-        MEZZ_Linux:0        MEZZ_MacOSX:1       MEZZ_Windows:0 \
-        MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0 \
+        then ./StaticFoundation_Tester
+        MEZZ_CompilerIsEmscripten:0     MEZZ_CompilerIsIntel:0  MEZZ_CompilerIsMsvc:0
+        MEZZ_BuildStaticLibraries:1     MEZZ_BuildDoxygen:0     MEZZ_Debug:0    MEZZ_CodeCoverage:1
+        MEZZ_Linux:0        MEZZ_MacOSX:1       MEZZ_Windows:0
+        MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0
         MEZZ_Arch64:1       MEZZ_Arch32:0 ;
     fi
   - if [[ "$CXX" == "clang++" ]] ;
@@ -49,13 +49,13 @@ script:
         cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON ;
         ninja ;
         nodejs StaticFoundation_Tester MEZZ_CompilerIsEmscripten:1
-        MEZZ_CompilerIsGCC:0    MEZZ_CompilerIsClang:0      MEZZ_CompilerIsIntel:0      CompilerIsMsvc:0 \
-        MEZZ_BuildDoxygen:0     MEZZ_Debug:0    MEZZ_CodeCoverage:1 \
-        MEZZ_Linux:0        MEZZ_MacOSX:0       MEZZ_Windows:0 \
+        MEZZ_CompilerIsGCC:0    MEZZ_CompilerIsClang:0      MEZZ_CompilerIsIntel:0      CompilerIsMsvc:0
+        MEZZ_BuildDoxygen:0     MEZZ_Debug:0    MEZZ_CodeCoverage:1
+        MEZZ_Linux:0        MEZZ_MacOSX:0       MEZZ_Windows:0
         MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0 ;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ;
-        then valgrind --tool=memcheck --leak-check=full --error-exitcode=1 \
+        then valgrind --tool=memcheck --leak-check=full --error-exitcode=1
             ./StaticFoundation_Tester MEZZ_BuildDoxygen:0;
     fi
 
