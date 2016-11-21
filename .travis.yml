@@ -27,35 +27,37 @@ install:
 
 script:
   - ninja
-  - if [[ "$TRAVIS_OS_NAME" -eq "linux" ]] ;
-        then ./StaticFoundation_Tester
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ; then
+        ./StaticFoundation_Tester
         MEZZ_CompilerIsEmscripten:0     MEZZ_CompilerIsIntel:0  MEZZ_CompilerIsMsvc:0
         MEZZ_BuildStaticLibraries:1     MEZZ_BuildDoxygen:0     MEZZ_Debug:0    MEZZ_CodeCoverage:1
         MEZZ_Linux:1        MEZZ_MacOSX:0       MEZZ_Windows:0
         MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0
         MEZZ_Arch64:1       MEZZ_Arch32:0 ;
     fi
-  - if [[ "$TRAVIS_OS_NAME" -eq "osx" ]] ;
-        then ./StaticFoundation_Tester
+  - if [[ "$TRAVIS_OS_NAME" -== "osx" ]] ; then
+        ./StaticFoundation_Tester
         MEZZ_CompilerIsEmscripten:0     MEZZ_CompilerIsIntel:0  MEZZ_CompilerIsMsvc:0
         MEZZ_BuildStaticLibraries:1     MEZZ_BuildDoxygen:0     MEZZ_Debug:0    MEZZ_CodeCoverage:1
         MEZZ_Linux:0        MEZZ_MacOSX:1       MEZZ_Windows:0
         MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0
         MEZZ_Arch64:1       MEZZ_Arch32:0 ;
     fi
-  - if [[ "$CXX" -eq "clang++" && "$TRAVIS_OS_NAME" -eq "osx" ]] ;
-        then export CC=emcc; export CXX=em++;
-        rm -rf *;
-        em++ -v;
-        em++ -v;
-        ls;
-        cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON ;
-        ninja ;
-        node StaticFoundation_Tester.js MEZZ_CompilerIsEmscripten:1
-        MEZZ_CompilerIsGCC:0    MEZZ_CompilerIsClang:0      MEZZ_CompilerIsIntel:0      CompilerIsMsvc:0
-        MEZZ_BuildDoxygen:0     MEZZ_Debug:0    MEZZ_CodeCoverage:1
-        MEZZ_Linux:0        MEZZ_MacOSX:0       MEZZ_Windows:0
-        MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0 ;
+  - if [[ "$CXX" == "clang++" ]] ; then
+        if [[ "$CXX" == "clang++" && "$TRAVIS_OS_NAME" -eq "osx" ]] ; then
+            export CC=emcc; export CXX=em++;
+            rm -rf *;
+            em++ -v;
+            em++ -v;
+            ls;
+            cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON ;
+            ninja ;
+            node StaticFoundation_Tester.js MEZZ_CompilerIsEmscripten:1
+            MEZZ_CompilerIsGCC:0    MEZZ_CompilerIsClang:0      MEZZ_CompilerIsIntel:0      CompilerIsMsvc:0
+            MEZZ_BuildDoxygen:0     MEZZ_Debug:0    MEZZ_CodeCoverage:1
+            MEZZ_Linux:0        MEZZ_MacOSX:0       MEZZ_Windows:0
+            MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0 ;
+         fi ;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ;
         then valgrind --tool=memcheck --leak-check=full --error-exitcode=1
