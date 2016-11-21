@@ -101,6 +101,15 @@ namespace Mezzanine
         #endif
     }
 
+    Boole RuntimeStatic::CompilerIsClang()
+    {
+        #ifdef MEZZ_CompilerIsClang
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
     Boole RuntimeStatic::CompilerIsGCC()
     {
         #ifdef MEZZ_CompilerIsGCC
@@ -110,9 +119,9 @@ namespace Mezzanine
         #endif
     }
 
-    Boole RuntimeStatic::CompilerIsClang()
+    Boole RuntimeStatic::CompilerIsEmscripten()
     {
-        #ifdef MEZZ_CompilerIsClang
+        #ifdef MEZZ_CompilerIsEmscripten
             return true;
         #else
             return false;

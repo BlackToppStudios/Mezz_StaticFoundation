@@ -18,8 +18,8 @@ before_script:
   - cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON
 
 install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ; then sudo apt-get install valgrind ninja-build -q -y; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]   ; then brew install valgrind ninja; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ; then sudo apt-get install valgrind ninja-build emscripten -q -y; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]   ; then brew install valgrind ninja emscripten; fi
 
 script:
   - ninja

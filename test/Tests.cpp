@@ -110,8 +110,9 @@ NameValuePairMap CheckableValues()
     Results["MEZZ_Linux"] = IntToString(Mezzanine::RuntimeStatic::Linux());
     Results["MEZZ_Windows"] = IntToString(Mezzanine::RuntimeStatic::Windows());
     Results["MEZZ_MacOSX"] = IntToString(Mezzanine::RuntimeStatic::MacOSX());
-    Results["MEZZ_CompilerIsGCC"] = IntToString(Mezzanine::RuntimeStatic::CompilerIsGCC());
     Results["MEZZ_CompilerIsClang"] = IntToString(Mezzanine::RuntimeStatic::CompilerIsClang());
+    Results["MEZZ_CompilerIsGCC"] = IntToString(Mezzanine::RuntimeStatic::CompilerIsGCC());
+    Results["MEZZ_CompilerIsEmscripten"] = IntToString(Mezzanine::RuntimeStatic::CompilerIsEmscripten());
     Results["MEZZ_CompilerIsIntel"] = IntToString(Mezzanine::RuntimeStatic::CompilerIsIntel());
     Results["MEZZ_CompilerIsMsvc"] = IntToString(Mezzanine::RuntimeStatic::CompilerIsMsvc());
     Results["MEZZ_CompilerDesignNix"] = IntToString(Mezzanine::RuntimeStatic::CompilerDesignNix());

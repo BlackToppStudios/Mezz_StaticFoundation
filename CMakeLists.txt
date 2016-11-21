@@ -118,8 +118,9 @@ AddJagatiConfig("MEZZ_Linux" "" ${SystemIsLinux})
 AddJagatiConfig("MEZZ_Windows" "" ${SystemIsWindows})
 AddJagatiConfig("MEZZ_MacOSX" "" ${SystemIsMacOSX})
 
-AddJagatiConfig("MEZZ_CompilerIsGCC" "" ${CompilerIsGCC})
 AddJagatiConfig("MEZZ_CompilerIsClang" "" ${CompilerIsClang})
+AddJagatiConfig("MEZZ_CompilerIsEmscripten" "" ${CompilerIsEmscripten})
+AddJagatiConfig("MEZZ_CompilerIsGCC" "" ${CompilerIsGCC})
 AddJagatiConfig("MEZZ_CompilerIsIntel" "" ${CompilerIsIntel})
 AddJagatiConfig("MEZZ_CompilerIsMsvc" "" ${CompilerIsMsvc})
 

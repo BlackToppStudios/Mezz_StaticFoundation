@@ -78,11 +78,14 @@ namespace Mezzanine
             /// @return If MEZZ_MacOSX is defined true, false otherwise.
             static Boole MacOSX();
 
-            /// @return If MEZZ_CompilerIsGCC is defined true, false otherwise.
-            static Boole CompilerIsGCC();
-
             /// @return If MEZZ_CompilerIsClang is defined true, false otherwise.
             static Boole CompilerIsClang();
+
+            /// @return If MEZZ_CompilerIsEmscripten is defined true, false otherwise.
+            static Boole CompilerIsEmscripten();
+
+            /// @return If MEZZ_CompilerIsGCC is defined true, false otherwise.
+            static Boole CompilerIsGCC();
 
             /// @return If MEZZ_CompilerIsIntel is definde true, false otherwise.
             static Boole CompilerIsIntel();

@@ -1,4 +1,4 @@
-// © Copyright 2010 - 2016 BlackTopp Studios Inc.
+ // © Copyright 2010 - 2016 BlackTopp Studios Inc.
 /* This file is part of The Mezzanine Engine.
 
     The Mezzanine Engine is free software: you can redistribute it and/or modify
@@ -56,8 +56,9 @@
 ///     - @ref MEZZ_Linux  - @ref StaticFoundationConfig.h - Set if CMake dectects a Linux build environment.
 ///     - @ref MEZZ_Windows  - @ref StaticFoundationConfig.h - Set if CMake dectects a Windows build environment.
 ///     - @ref MEZZ_MacOSX  - @ref StaticFoundationConfig.h - Set if CMake dectects a Mac OS X build environment.
-///     - @ref MEZZ_CompilerIsGCC  - @ref StaticFoundationConfig.h - Set if the compiler is GCC, Mingw or TDM-GCC.
 ///     - @ref MEZZ_CompilerIsClang  - @ref StaticFoundationConfig.h - Set if the compiler is Clang.
+///     - @ref MEZZ_CompilerIsEmscripten  - @ref StaticFoundationConfig.h - Set if the compiler is Emscripten.
+///     - @ref MEZZ_CompilerIsGCC  - @ref StaticFoundationConfig.h - Set if the compiler is GCC, Mingw or TDM-GCC.
 ///     - @ref MEZZ_CompilerIsIntel  - @ref StaticFoundationConfig.h - Set if the compiler Intel.
 ///     - @ref MEZZ_CompilerIsMsvc  - @ref StaticFoundationConfig.h - Set only if the compiler is MSVC.
 ///     - @ref MEZZ_CompilerDesignNix  - @ref StaticFoundationConfig.h - Set for pretty much all compilers except MSVC.
@@ -89,14 +90,18 @@
 /// @def MEZZ_MacOSX
 /// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if Mac OS X is the target platform, unset
 /// otherwise.
+///
+/// @def MEZZ_CompilerIsClang
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with Clang,
+///  false otherwise.
 
 /// @def MEZZ_CompilerIsGCC
 /// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with GCC,
 /// false otherwise.
 
-/// @def MEZZ_CompilerIsClang
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with Clang,
-///  false otherwise.
+/// @def MEZZ_CompilerIsEmscripten
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with
+/// Emscripten, false otherwise.
 
 /// @def MEZZ_CompilerIsIntel
 /// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with the
