@@ -9,6 +9,7 @@ os:
 compiler:
   - clang
   - gcc
+  - emcc
 
 before_script:
   - mkdir build
