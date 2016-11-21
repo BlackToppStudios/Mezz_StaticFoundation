@@ -44,7 +44,7 @@ script:
         MEZZ_Arch64:1       MEZZ_Arch32:0 ;
     fi
   - if [[ "$CXX" == "clang++" ]] ;
-        then export CC=emcc; export CC=em++;
+        then export CC=emcc; export CXX=em++;
         rm * -rf;
         cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON ;
         ninja ;
