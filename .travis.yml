@@ -22,7 +22,7 @@ install:
         then sudo apt-get install valgrind ninja-build emscripten -q -y;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]] ;
-        then brew install valgrind ninja emscripten;
+        then brew install valgrind ninja llvm emscripten;
     fi
 
 script:
@@ -44,7 +44,7 @@ script:
         MEZZ_Arch64:1       MEZZ_Arch32:0 ;
     fi
   - if [[ "$CXX" == "clang++" ]] ; then
-        if [[ "$CXX" == "clang++" && "$TRAVIS_OS_NAME" -eq "osx" ]] ; then
+        if [[ "$TRAVIS_OS_NAME" == "osx" ]] ; then
             export CC=emcc; export CXX=em++;
             rm -rf *;
             em++ -v;
