@@ -1,4 +1,4 @@
-# © Copyright 2010 - 2016 BlackTopp Studios Inc.
+# © Copyright 2010 - 2017 BlackTopp Studios Inc.
 # This file is part of The Mezzanine Engine.
 #
 #    The Mezzanine Engine is free software: you can redistribute it and/or modify
@@ -43,15 +43,14 @@ project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VERSION}.")
 
 ##########################################################################|#############################################
-set(JagatiChecksum "ae061311fcc4ecca287e7e7df38f9f52fbacc2060946f92bdece21\
-d86584f1de152c59a7181992a30365c07bb58772f3dadef38adbb4b15c305429a1b966f314")
-
+# Dowload, Verify and setup the Jagati
+set(JagatiChecksum "e5282c8924cff5a620b50f8ca5fb84023d27a24f9302dbfaac055b\
+022a3a3883f4f541e071e2618edfd2f6b148b9e12823a98ca5b736e57ecf983bf6ece96de2")
 file(DOWNLOAD
-    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.12.1/Jagati.cmake"
+    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.13.1/Jagati.cmake"
     "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
     EXPECTED_HASH SHA512=${JagatiChecksum}
 )
-
 include("${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake")
 
 StandardJagatiSetup()
@@ -59,47 +58,38 @@ StandardJagatiSetup()
 ########################################################################################################################
 message(STATUS "Determining Source Files.")
 
-set(HeaderFiles
+set(StaticFoundationHeaderFiles
     "${StaticFoundationIncludeDir}CrossPlatformExport.h"
     "${StaticFoundationIncludeDir}DataTypes.h"
     "${StaticFoundationIncludeDir}RuntimeStatics.h"
     "${StaticFoundationIncludeDir}StaticFoundation.h"
     "${StaticFoundationIncludeDir}SuppressWarnings.h"
 )
-ShowList("Header Files:" "\t" "${HeaderFiles}")
-AddJagatiDoxInput("${HeaderFiles}")
+ShowList("Header Files:" "\t" "${StaticFoundationHeaderFiles}")
+AddJagatiDoxInput("${StaticFoundationHeaderFiles}")
 
-set(SourceFiles
+set(StaticFoundationSourceFiles
     "${StaticFoundationSourceDir}RuntimeStatics.cpp"
 
 )
-ShowList("Source Files:" "\t" "${SourceFiles}")
+ShowList("Source Files:" "\t" "${StaticFoundationSourceFiles}")
 
-set(TestSourceFiles
+set(StaticFoundationTestSourceFiles
     "${StaticFoundationTestDir}Tests.h"
     "${StaticFoundationTestDir}Tests.cpp"
 )
-ShowList("Test Source Files:" "\t" "${TestSourceFiles}")
+ShowList("Test Source Files:" "\t" "${StaticFoundationTestSourceFiles}")
 
-set(SwigFiles
+set(StaticFoundationSwigFiles
     "${StaticFoundationSwigDir}SwigConfig.h"
 )
-ShowList("Swig Input Files:" "\t" "${SwigFiles}")
+ShowList("Swig Input Files:" "\t" "${StaticFoundationSwigFiles}")
 
-set(DoxFiles
+set(StaticFoundationDoxFiles
     "${StaticFoundationDoxDir}Dox.h"
 )
-ShowList("Doxygen Input Files:" "\t" "${DoxFiles}")
-AddJagatiDoxInput("${DoxFiles}")
-
-########################################################################################################################
-# Set up Include Directories
-
-file(MAKE_DIRECTORY ${${PROJECT_NAME}GenHeadersDir})
-include_directories(
-    ${${PROJECT_NAME}IncludeDir}
-    ${${PROJECT_NAME}GenHeadersDir}
-)
+ShowList("Doxygen Input Files:" "\t" "${StaticFoundationDoxFiles}")
+AddJagatiDoxInput("${StaticFoundationDoxFiles}")
 
 ########################################################################################################################
 # Set up config file
@@ -134,7 +124,6 @@ AddJagatiConfig("MEZZ_Debug" "" ${CompilerDebug})
 EmitConfig()
 ShowList("Config Files made by StaticFoundation:" "\t" "${StaticFoundationConfigFilename}")
 AddJagatiDoxInput("${StaticFoundationConfigFilename}")
-
 
 ########################################################################################################################
 # Set up Doxygen Targets
@@ -219,35 +208,15 @@ endif(MEZZ_BuildDoxygen)
 # Set up Build targets
 
 # Add this as a library to the list of available libraries.
-AddJagatiLibrary("StaticFoundation")
+AddJagatiLibrary()
+CreateCoverageTarget(${StaticFoundationLib} ${StaticFoundationSourceFiles})
 
-# Shouldn't have to do this part manually after the Test library
-add_library(${StaticFoundationLib} ${MEZZ_LibraryBuildType} ${HeaderFiles} ${SourceFiles})
-CreateCoverageTarget(${StaticFoundationLib} ${SourceFiles})
-target_link_libraries(${StaticFoundationLib} ${JagatiLinkArray})
+# This manually makes its own tester because this cannot rely on Mezz_Test.
+add_executable(${${PROJECT_NAME}TestTarget} ${StaticFoundationHeaderFiles} ${StaticFoundationTestSourceFiles})
+target_link_libraries(${${PROJECT_NAME}TestTarget} ${StaticFoundationLib} ${JagatiLinkArray})
 
-add_executable(${PROJECT_NAME}_Tester ${HeaderFiles} ${TestSourceFiles})
-target_link_libraries(${PROJECT_NAME}_Tester ${StaticFoundationLib} ${JagatiLinkArray})
-
-# A Project to do nothing but get All the Source files visible in IDEs
-add_custom_target(
-    ${PROJECT_NAME}_IDE_Visibility
-    DEPENDS ${PROJECT_NAME}_Tester
-            "${${PROJECT_NAME}BinaryDir}Guidelines.md"
-            ExternalProjectDownload
-    SOURCES ${HeaderFiles}
-            ${SourceFiles}
-            ${TestSourceFiles}
-            ${SwigFiles}
-            ${StaticFoundationConfigFilename}
-            README.md
-            COPYING.md
-            .travis.yml
-            appveyor.yml
-            codecov.yml
-            "${DoxFiles}"
-)
-
+# Some extra creating of targets for other development related tasks
+AddIDEVisibility("${StaticFoundationTestSourceFiles}")
 SetCodeCoverage()
 
 message(STATUS "${PROJECT_NAME} - Ending Configuration.")

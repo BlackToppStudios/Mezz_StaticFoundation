@@ -1,4 +1,4 @@
-// © Copyright 2010 - 2016 BlackTopp Studios Inc.
+// © Copyright 2010 - 2017 BlackTopp Studios Inc.
 /* This file is part of The Mezzanine Engine.
 
     The Mezzanine Engine is free software: you can redistribute it and/or modify
@@ -111,11 +111,11 @@
             #endif
         #endif // MEZZ_WINDOWS
     #endif // \NONWINDOWS
-
+*/
     /// @def MEZZ_LIB
     /// @brief Some platforms require special decorations to denote what is exported/imported in a
     /// share library. This is that decoration if when it is needed.
-    #ifdef MEZZ_WINDOWS
+    #ifdef MEZZ_Windows
         /// @def _MEZZ_THREAD_WIN32_
         /// @brief Defined if this is running on windows.
         #define _MEZZ_THREAD_WIN32_
@@ -140,7 +140,7 @@
             #define MEZZ_THREAD_APPLE
         #endif
     #endif  // \WINDOWS
-
+/*
     /// @def MEZZ_PLATFORM_DEFINED
     /// @brief This is defined if the Mezzanine has detected, and false otherwise.
     #define MEZZ_PLATFORM_DEFINED
