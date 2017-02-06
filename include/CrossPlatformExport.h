@@ -121,7 +121,7 @@
         #define _MEZZ_THREAD_WIN32_
 
         /// @details if this is not defined, then most likely _MEZZ_THREAD_POSIX_ is.
-        #ifdef EXPORTINGMEZZANINEDLL
+        #ifdef MEZZ_EXPORT_LIB
             #define MEZZ_LIB __declspec(dllexport)
         #else
             #define MEZZ_LIB __declspec(dllimport)
