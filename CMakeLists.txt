@@ -44,10 +44,10 @@ message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VER
 
 ##########################################################################|#############################################
 # Download, Verify and setup the Jagati
-set(JagatiChecksum "fd6a4665e0b7c778431777103ab772af0a16309e9ed9c67767b1fb\
-a5cfe3eb43923af5a2bce87b93af5d3ed4b97a0de5b07af92a69aea74213d1ac35a65ef67f")
+set(JagatiChecksum "689598c1ba015913cee51c13fa0399e902400e54458b323c406c9b\
+29c4eef0a16754a5619e871bb859044d21f52bccae5fc43379eed1190b7cdeb83769262430")
 file(DOWNLOAD
-    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.14.0/Jagati.cmake"
+    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.15.0/Jagati.cmake"
     "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
     EXPECTED_HASH SHA512=${JagatiChecksum}
 )
