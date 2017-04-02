@@ -120,12 +120,16 @@
         /// @brief Defined if this is running on windows.
         #define _MEZZ_THREAD_WIN32_
 
-        /// @details if this is not defined, then most likely _MEZZ_THREAD_POSIX_ is.
-        #ifdef MEZZ_EXPORT_LIB
-            #define MEZZ_LIB __declspec(dllexport)
+        #ifdef MEZZ_BuildStaticLibraries
+            // No special logic required
+            #define MEZZ_LIB
         #else
-            #define MEZZ_LIB __declspec(dllimport)
-        #endif      // \EXPORTINGMEZZANINEDLL
+            #ifdef MEZZ_EXPORT_LIB
+                #define MEZZ_LIB __declspec(dllexport)
+            #else
+                #define MEZZ_LIB __declspec(dllimport)
+            #endif      // \EXPORTINGMEZZANINEDLL
+        #endif
     #else
         #define MEZZ_LIB
         /// @def MEZZ_THREAD_POSIX
