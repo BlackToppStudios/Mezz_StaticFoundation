@@ -2,7 +2,7 @@
 
 The Mezzanine is a set of multi platform C++ libraries designed to help create high performance
 videos games. The Mezzanine is focused on games requiring 3d physics, 3d graphics, 3d sounds and
-common facilities that such games need. This is just one component of several.
+common facilities that such games need. This is just one component of many.
 
 ## About this Library ##
 
