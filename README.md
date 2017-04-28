@@ -15,8 +15,8 @@ The current Windows/Appveyor build status is:
 The current code coverage for tests is:
 [![codecov](https://codecov.io/gh/BlackToppStudios/Mezz_StaticFoundation/branch/master/graph/badge.svg)](https://codecov.io/gh/BlackToppStudios/Mezz_StaticFoundation)
 
-This library, the StaticFoundation, is responsible for detecting compilation options, compiler
-settings and other platform specific details.
+This library, the StaticFoundation, is responsible for providing common data types as well as 
+detecting compilation options, compiler settings and other platform specific details.
 
 It does this by a mix a of use of preprocessor macros and configuration time/CMake scripting
 techniques.
