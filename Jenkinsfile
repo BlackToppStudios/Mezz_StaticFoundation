@@ -19,7 +19,7 @@ try {
             node('UbuntuEmscripten') {
                 // The first group of variables simulates running source ~/emsdk-portable/emsdk_env.sh as the emscripten
                 // portable sdkrequires to work. The next few sets CC and CXX which CMake will use to know to use
-                // the emscripten compiler. The last one sets Mezzanine specific variables so pacakges are found.
+                // the emscripten compiler. The last one sets Mezzanine specific variables so packages are found.
                 sh """ export PATH=$PATH:/home/cisadmin/emsdk-portable/clang/e1.37.9_64bit                            &&       
                        export PATH=$PATH:/home/cisadmin/emsdk-portable/node/4.1.1_64bit/bin                           &&
                        export PATH=$PATH:/home/cisadmin/emsdk-portable/emscripten/1.37.9                              &&
@@ -51,11 +51,11 @@ try {
     }
 
     stage('SendMail') {
-        notifyMail("Success!", "Build of Mezz_StaticFoundation Successful.")
+        notifyMail("Success!", "Build of ${env.JOB_NAME} Successful.")
     }
 }
 catch(buildException) {
-    notifyMail("Failure!", "Build of Mezz_StaticFoundation Failed!\nException: ${buildException}")
+    notifyMail("Failure!", "Build of ${env.JOB_NAME} Failed!\nException: ${buildException}")
     throw buildException
 }
 

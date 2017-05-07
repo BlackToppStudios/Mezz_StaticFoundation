@@ -40,6 +40,8 @@
 #ifndef staticfoundation_dox_h
 #define staticfoundation_dox_h
 
+#include "ExceptionPage.h"
+
 /// @file
 /// @brief The main documentation header to include for this library
 
