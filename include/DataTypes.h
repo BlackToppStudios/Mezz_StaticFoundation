@@ -43,8 +43,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Any Special data types that we need will get declared right here
 /// @file
-/// @brief All the definitions for datatypes as well as some basic conversion functions are defined
-/// here. Additionally, this is where all of the other singular header inclusions go as well.
+/// @brief All the definitions for datatypes as well as some basic conversion functions are defined here. Additionally,
+/// this is where all of the other standard header inclusions go as well.
 ///////////////////////////////////////
 
 // Standard Headers are not included in SWIG preprocessing
@@ -76,83 +76,66 @@
 namespace Mezzanine
 {
     ///////////////////////////////////////////////////////////////////////////////
-    // Datatypes
+    // Pointer math
     ///////////////////////////////////////
 
-    #ifndef SWIG
-        //#include <cstdint>
-    #endif
-    /// @brief A type that any pointer can be converted to and back from, and insures after the
-    /// conversion back it will be identical.
+    /// @brief A type that any pointer can be converted to and back from.
+    /// @details This insures after the conversion back it will be identical.
     typedef std::intptr_t ConvertiblePointer;
 
-    /// @brief An 8-bit integer.
+    /// @brief A number large enough to hold every integer from 0 to the amount of bytes of addressable space.
+    /// @details This is intended to be of use when using buffer/size pairs or otherwise keeping track of data like
+    /// that.
+    typedef uintptr_t DataSize;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Efficient and At Least this size.
+    ///////////////////////////////////////
+
+    /// @brief An 8-bit integer (or more).
     typedef int8_t Int8;
-    /// @brief An 8-bit unsigned integer.
+    /// @brief An 8-bit unsigned integer (or more).
     typedef uint8_t UInt8;
-    /// @brief An 16-bit integer.
+    /// @brief An 16-bit integer (or more).
     typedef int16_t Int16;
-    /// @brief An 16-bit unsigned integer.
+    /// @brief An 16-bit unsigned integer (or more).
     typedef uint16_t UInt16;
-    /// @brief An 32-bit integer.
+    /// @brief An 32-bit integer (or more).
     typedef int32_t Int32;
-    /// @brief An 32-bit unsigned integer.
+    /// @brief An 32-bit unsigned integer (or more).
     typedef uint32_t UInt32;
-    /// @brief An 64-bit integer.
+    /// @brief An 64-bit integer (or more).
     typedef int64_t Int64;
-    /// @brief An 64-bit unsigned integer.
+    /// @brief An 64-bit unsigned integer (or more).
     typedef uint64_t UInt64;
 
-    /// @brief A Datatype used to represent a real floating point number.
-    /// @details This Datatype is currently a typedef to a float, This is to match
-    /// our compilations of Ogre (rendering subsystem ogre::Real), and Bullet (physics
-    /// subsystem, btScalar). With a recompilation of all the subsystems and  this
-    /// there is no theoretical reason why this could not be changed to a
-    /// double, or even something more extreme like a GMP datatype. Most likely this
-    /// switch would require atleast some troubleshooting.
+    ///////////////////////////////////////////////////////////////////////////////
+    // General Purpose
+    ///////////////////////////////////////
+
+    /// @brief A Datatype used to represent a commaon real floating point number of average precision.
+    /// @details This Datatype is currently a typedef to a float, This is to match our compilations of Ogre (rendering
+    /// subsystem ogre::Real), and Bullet (physics subsystem, btScalar). With a recompilation of all the subsystems and
+    /// this there is no theoretical reason why this could not be changed to a double, or even something more extreme
+    /// like a GMP datatype. Most likely this switch would require atleast some troubleshooting.
     /// @n @n
-    /// This type will be word aligned and the fastest type for GPU math and the fastest type for
-    /// floating point CPU math.
+    /// This type will be word aligned and the fastest type for GPU math and the fastest type for floating point CPU
+    /// math.
     typedef float Real;
-    /// @brief A Real number that is at least as precise as the Real and could be considerably
-    /// moreso, perhaps Doubly precise.
+    /// @brief This is real number that is at least as precise as the Real and could be considerably moreso.
+    /// @details Perhaps doubly precise.
     /// @n @n
     /// This type might be poorly aligned and slower on GPUs than the Real.
     typedef double PreciseReal;
 
-    /// @brief Whole is an unsigned integer, it will be at least 32bits in size.
-    /// @details This is a typedef to unsigned Long. but could be smaller in some situations.  In
-    /// general it will be the most efficient unsigned type for CPU bound math.
+    /// @brief Whole is an unsigned integer, it will be at least 32bits in size and suitable for common counting tasks.
+    /// @details This is a typedef to unsigned Long. but could be smaller in some situations. In general it will be the
+    /// most efficient unsigned type for CPU bound math.
     typedef unsigned long Whole;
-    /// @brief A datatype used to represent any integer close to.
-    /// @details This is a typedef to int, but could int16 or smaller to improve performance in some
-    /// situtations, In general it will be the most efficient signed type for CPU Bound math.
+    /// @brief A datatype used to represent any integer in an efficient way for general purposes.
+    /// @details This is a typedef to int, but could int16 or smaller to improve performance in some situtations, in
+    /// general it will be the most efficient signed type for CPU Bound math.
     typedef int Integer;
-
-    /// @brief A datatype used to a series of characters.
-    /// @details This is a typedef to std::string, but could change particularly if UTF16 or UTF32
-    /// support is desired. If this is
-    /// changed, The Character typedef should be adjusted accordingly.
-    typedef std::string String;
-
-    /// @brief A datatype to represent one character.
-    /// @details The character type of String
-    typedef char Char8;
-
-    /// @brief Generally acts a single bit, true or false
-    /// @details Normally just a bool, but on some platform alignment matters more than size, so
-    /// this could be as large as one CPU word in size.
-    typedef bool Boole;
-
-    /// @brief A Datatype used for streaming operations with strings.
-    typedef std::stringstream StringStream;
-
-    /// @brief In case we ever replace the stringstream with another class, this will allow us to
-    /// swap it out.
-    /// @details This will always support <<, str() but may lose support for formatting functions
-    /// like std::hex.
-    typedef std::stringstream Logger;
-
     /// @brief A large integer type suitable for compile time math and long term microsecond time
     /// keeping.
     /// @details For reference when this is a 64 bit integer, it can store a number between
@@ -162,25 +145,55 @@ namespace Mezzanine
     /// epoch. Even if used to track nanoseconds it should be good for 292 years.
     typedef intmax_t MaxInt;
 
+    /// @brief A datatype used to a series of characters that has most of the interface of std::string.
+    /// @details This is a typedef to std::string, but could change particularly if UTF16 or UTF32 support is desired.
+    /// If this is changed, The Character typedef should be adjusted accordingly.
+    typedef std::string String;
+
+    /// @brief A datatype to represent one character.
+    /// @details The character type of String
+    typedef char Char8;
+
+    /// @brief Generally acts a single bit, true or false
+    /// @details Normally just a bool, but on some platform alignment matters more than size for performance, so this
+    /// could be as large as one CPU word in size ro as small as a single bit.
+    typedef bool Boole;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Complex standardized types.
+    ///////////////////////////////////////
+
+    /// @todo See which of thiese can be gotten rid of. These do not provide strong or particularly use guarantees or
+    /// abstractions and cement suboptimal decisions at the basis or
+
+
+    /// @brief A Datatype used for streaming operations with strings.
+    /// @todo see if this can be removed entirely.
+    typedef std::stringstream StringStream;
+
+    /// @brief In case we ever replace the stringstream with another class, this will allow us to swap it out.
+    /// @details This will always support <<, str() but may lose support for formatting functions like std::hex.
+    /// @todo Replace with foundation location
+    typedef std::stringstream Logger;
+
     /// @brief A datatype used to indicate a specific point in time, or a timestamp.
-    /// @details This is made into it's own datatype for when we want to tweak the possible size for
-    /// a timestamp.
+    /// @details This is made into it's own datatype for when we want to tweak the possible size for a timestamp.
+    /// @todo replace with something from std::chrono
     typedef UInt32 TimeMarker;
 
     ///////////////////////////////////////////////////////////////////////////////
-    // Complex Data types
+    // Compound String types
     ///////////////////////////////////////
 
     /// @brief This is a pair for the generic storage of a value and it's associated name.
     typedef std::pair< String, String > NameValuePair;
-
-    /// @brief This is a datatype mostly used for describing settings or parameters that can't be
-    /// declared in advance.
+    /// @brief This is a datatype mostly used for describing settings or parameters that can't be declared in advance.
     /// @details This datatype uses the std::map container for it's storage.
     typedef std::map< String, String > NameValuePairMap;
 
     /// @brief This is a simple datatype for a vector container of strings.
     typedef std::vector< String > StringVector;
+
     /// @brief This is a simple datatype for a set container of strings.
     typedef std::set< String > StringSet;
 

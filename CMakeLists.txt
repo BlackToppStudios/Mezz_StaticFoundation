@@ -63,6 +63,7 @@ set(StaticFoundationHeaderFiles
     "${StaticFoundationIncludeDir}DataTypes.h"
     "${StaticFoundationIncludeDir}RuntimeStatics.h"
     "${StaticFoundationIncludeDir}StaticFoundation.h"
+    "${StaticFoundationIncludeDir}StaticString.h"
     "${StaticFoundationIncludeDir}SuppressWarnings.h"
 )
 ShowList("Header Files:" "\t" "${StaticFoundationHeaderFiles}")
@@ -70,7 +71,7 @@ AddJagatiDoxInput("${StaticFoundationHeaderFiles}")
 
 set(StaticFoundationSourceFiles
     "${StaticFoundationSourceDir}RuntimeStatics.cpp"
-
+    "${StaticFoundationSourceDir}StaticString.cpp"
 )
 ShowList("Source Files:" "\t" "${StaticFoundationSourceFiles}")
 

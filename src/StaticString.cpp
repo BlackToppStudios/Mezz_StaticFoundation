@@ -37,16 +37,13 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef Mezz_StaticFoundation_staticfoundation_h
-#define Mezz_StaticFoundation_staticfoundation_h
 
 /// @file
-/// @brief The main header to include for this library
+/// @brief The
 
-#include "CrossPlatformExport.h"
-#include "DataTypes.h"
-#include "RuntimeStatics.h"
-#include "SuppressWarnings.h"
 #include "StaticString.h"
 
-#endif
+namespace Mezzanine
+{
+
+}

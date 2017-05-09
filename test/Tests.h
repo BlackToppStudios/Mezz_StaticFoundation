@@ -85,4 +85,8 @@ Mezzanine::String Stringify(const Mezzanine::NameValuePairMap& Mapping);
 /// @return A String contained the lexigraphically equivalent String to SomeInt.
 Mezzanine::String IntToString(Mezzanine::Int32 SomeInt = 0);
 
+/// @brief Check the StaticString class.
+/// @return True if the class works, false if there was an issue.
+Mezzanine::Boole CheckStaticString();
+
 #endif
