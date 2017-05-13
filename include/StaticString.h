@@ -55,120 +55,122 @@ namespace Mezzanine
     template <DataSize ByteCount>
     class StaticString
     {
-        public:
-            /// @brief the type used for sizes in this class
-            typedef DataSize size_t;
+    public:
+        /// @brief the type used for sizes in this class
+        typedef DataSize size_t;
 
-        //private:
-            /// @brief The data in the string, except its null terminator
-            std::array<Char8, ByteCount> StringData;
+    private:
+        /// @brief The data in the string, except its null terminator
+        std::array<Char8, ByteCount> StringData;
 
-        public:
+    public:
 
-            /// @brief Initializing Constructor
-            /// @param OtherString an std::array of chars, which can implicitly be constructed from a string literal.
-            constexpr StaticString(const std::array<Char8, ByteCount>& OtherString)
-                : StringData(OtherString)
-                { }
+        /// @brief Initializing Constructor
+        /// @param OtherString an std::array of chars, which can implicitly be constructed from a string literal.
+        constexpr StaticString(const std::array<Char8, ByteCount>& OtherString)
+            : StringData(OtherString)
+            { }
 
-            /// @brief How big is the contained string, including the null terminator
-            /// @return A DataSize with this size of the important data+1, so 'foo'.size() would be 4.
-            constexpr DataSize size() const
-                { return ByteCount; }
+        /// @brief How big is the contained string, including the null terminator
+        /// @return A DataSize with this size of the important data+1, so 'foo'.size() would be 4.
+        constexpr DataSize size() const
+            { return ByteCount; }
 
-            /// @brief Indexing operator, get a char
-            constexpr char operator[](DataSize Index) const
-                { return (Index < ByteCount-1 ? StringData[Index] : '\0'); }
+        /// @brief Indexing operator, get a Char8 from a specific place
+        /// @param Index indicates the char to get, does compile times bounds checking.
+        /// @return If with the bounds of the string get the requested Char8, otherwise get a null terminator.
+        constexpr Char8 operator[](DataSize Index) const
+            { return (Index < ByteCount-1 ? StringData[Index] : '\0'); }
 
-        private:
+    private:
 
-            /// @brief Compare equality of two strings recursively
-            /// @tparam OtherByteCount The size of the other character array, because it is part of the type.
-            /// @param OtherString The char array to compare this too.
-            /// @param Index The first/current index to compare. Default to 0 so the calls itself with the index +1.
-            /// @return True if they match and false if they don't.
-            /// @warning This does no length checking on the other string so check the length before calling this.
-            template <DataSize OtherByteCount>
-            constexpr bool CompareEqualityContents(const Char8(&OtherString)[OtherByteCount], DataSize Index = 0) const
-            {
-                return  operator[](Index) == OtherString[Index] &&
-                        ( ByteCount>Index || CompareEqualityContents(OtherString, Index+1) );
-            }
+        /// @brief Compare equality of two strings recursively
+        /// @tparam OtherByteCount The size of the other character array, because it is part of the type.
+        /// @param OtherString The char array to compare this too.
+        /// @param Index The first/current index to compare. Default to 0 so the calls itself with the index +1.
+        /// @return True if they match and false if they don't.
+        /// @warning This does no length checking on the other string so check the length before calling this.
+        template <DataSize OtherByteCount>
+        constexpr bool CompareEqualityContents(const Char8(&OtherString)[OtherByteCount], DataSize Index = 0) const
+        {
+            return  operator[](Index) == OtherString[Index] &&
+                    ( ByteCount>Index || CompareEqualityContents(OtherString, Index+1) );
+        }
 
-            /// @brief Compare equality of two StaticString instances recursively
-            /// @tparam OtherByteCount The size of the other StaticString, because it is part of the type.
-            /// @param OtherString The StaticString to compare this too.
-            /// @param Index The first/current index to compare. Default to 0 so the calls itself with the index +1.
-            /// @return True if they match and false if they don't.
-            /// @warning This does no length checking on the other string so check the length before calling this.
-            template <DataSize OtherByteCount>
-            constexpr bool CompareEqualityContents(const StaticString<OtherByteCount>& OtherString,
-                                                   DataSize Index = 0) const
-            {
-                return  operator[](Index) == OtherString[Index] &&
-                        ( ByteCount>Index || CompareEqualityContents(OtherString, Index+1) );
-            }
+        /// @brief Compare equality of two StaticString instances recursively
+        /// @tparam OtherByteCount The size of the other StaticString, because it is part of the type.
+        /// @param OtherString The StaticString to compare this too.
+        /// @param Index The first/current index to compare. Default to 0 so the calls itself with the index +1.
+        /// @return True if they match and false if they don't.
+        /// @warning This does no length checking on the other string so check the length before calling this.
+        template <DataSize OtherByteCount>
+        constexpr bool CompareEqualityContents(const StaticString<OtherByteCount>& OtherString,
+                                               DataSize Index = 0) const
+        {
+            return  operator[](Index) == OtherString[Index] &&
+                    ( ByteCount>Index || CompareEqualityContents(OtherString, Index+1) );
+        }
 
-        public:
-            /// @brief Compare equality of two strings.
-            /// @tparam OtherByteCount The size of the other character array, because it is part of the type.
-            /// @param OtherString The char array to compare this too.
-            /// @return True if they match and false if they don't.
-            /// @note This does not stop at internal null terminators so beware of strings that attempt to internally
-            /// terminate prematurely.
-            template <DataSize OtherByteCount>
-            constexpr bool operator==(const Char8(&OtherString)[OtherByteCount]) const
-            {
-                return  ByteCount == OtherByteCount &&
-                        ( 0==ByteCount || CompareEqualityContents(OtherString) );
-            }
-            /// @brief Compare equality of two StaticString instances.
-            /// @tparam OtherByteCount The size of the other StaticString instance, because it is part of the type.
-            /// @param OtherString The StaticString instance to compare this too.
-            /// @return True if they match and false if they don't.
-            /// @note This does not stop at internal null terminators so beware of strings that attempt to internally
-            /// terminate prematurely.
-            template <DataSize OtherByteCount>
-            constexpr bool operator==(const StaticString<OtherByteCount>& OtherString) const
-            {
-                return  ByteCount == OtherByteCount &&
-                        ( 0==ByteCount || CompareEqualityContents(OtherString) );
-            }
+    public:
+        /// @brief Compare equality of two strings.
+        /// @tparam OtherByteCount The size of the other character array, because it is part of the type.
+        /// @param OtherString The char array to compare this too.
+        /// @return True if they match and false if they don't.
+        /// @note This does not stop at internal null terminators so beware of strings that attempt to internally
+        /// terminate prematurely.
+        template <DataSize OtherByteCount>
+        constexpr bool operator==(const Char8(&OtherString)[OtherByteCount]) const
+        {
+            return  ByteCount == OtherByteCount &&
+                    ( 0==ByteCount || CompareEqualityContents(OtherString) );
+        }
+        /// @brief Compare equality of two StaticString instances.
+        /// @tparam OtherByteCount The size of the other StaticString instance, because it is part of the type.
+        /// @param OtherString The StaticString instance to compare this too.
+        /// @return True if they match and false if they don't.
+        /// @note This does not stop at internal null terminators so beware of strings that attempt to internally
+        /// terminate prematurely.
+        template <DataSize OtherByteCount>
+        constexpr bool operator==(const StaticString<OtherByteCount>& OtherString) const
+        {
+            return  ByteCount == OtherByteCount &&
+                    ( 0==ByteCount || CompareEqualityContents(OtherString) );
+        }
 
-            /// @brief Check two string for inequality.
-            /// @tparam OtherByteCount The size of the other character array, because it is part of the type.
-            /// @param OtherString The char array to compare this too.
-            /// @return True if they are different and false if they match.
-            /// @note This does not stop at internal null terminators so beware of strings that attempt to internally
-            /// terminate prematurely.
-            template <DataSize OtherByteCount>
-            constexpr bool operator!=(const Char8(&OtherString)[OtherByteCount]) const
-                { return !( *this==OtherString ); }
-            /// @brief Check two StatocString instances for inequality.
-            /// @tparam OtherByteCount The size of the other StatocString instance, because it is part of the type.
-            /// @param OtherString The StatocString instance to compare this too.
-            /// @return True if they are different and false if they match.
-            /// @note This does not stop at internal null terminators so beware of strings that attempt to internally
-            /// terminate prematurely.
-            template <DataSize OtherByteCount>
-            constexpr bool operator!=(const StaticString<OtherByteCount>& OtherString) const
-                { return !( *this==OtherString ); }
+        /// @brief Check two string for inequality.
+        /// @tparam OtherByteCount The size of the other character array, because it is part of the type.
+        /// @param OtherString The char array to compare this too.
+        /// @return True if they are different and false if they match.
+        /// @note This does not stop at internal null terminators so beware of strings that attempt to internally
+        /// terminate prematurely.
+        template <DataSize OtherByteCount>
+        constexpr bool operator!=(const Char8(&OtherString)[OtherByteCount]) const
+            { return !( *this==OtherString ); }
+        /// @brief Check two StatocString instances for inequality.
+        /// @tparam OtherByteCount The size of the other StatocString instance, because it is part of the type.
+        /// @param OtherString The StatocString instance to compare this too.
+        /// @return True if they are different and false if they match.
+        /// @note This does not stop at internal null terminators so beware of strings that attempt to internally
+        /// terminate prematurely.
+        template <DataSize OtherByteCount>
+        constexpr bool operator!=(const StaticString<OtherByteCount>& OtherString) const
+            { return !( *this==OtherString ); }
 
-            /// @brief Get the raw data backing this string in its native form
-            /// @return A std::array of Char8.
-            constexpr const std::array<Char8, ByteCount>& GetData() const
-                { return StringData; }
+        /// @brief Get the raw data backing this string in its native form
+        /// @return A std::array of Char8.
+        constexpr const std::array<Char8, ByteCount>& GetData() const
+            { return StringData; }
 
-            /// @brief Convert this to a const char* for runtime use.
-            /// @return A c-string with this the same contents as this.
-            /// @warning This method executes at run time.
-            const Char8* c_str() const
-                { return StringData.data(); }
-            /// @brief Convert this to a Mezzanine::String for runtime use
-            /// @return A string with this the same contents as this.
-            /// @warning This method executes at run time.
-            String str() const
-                { return std::string(StringData.data()); }
+        /// @brief Convert this to a const char* for runtime use.
+        /// @return A c-string with this the same contents as this.
+        /// @warning This method executes at run time.
+        const Char8* c_str() const
+            { return StringData.data(); }
+        /// @brief Convert this to a Mezzanine::String for runtime use
+        /// @return A string with this the same contents as this.
+        /// @warning This method executes at run time.
+        String str() const
+            { return std::string(StringData.data()); }
     };
 
     /// @brief Check for equality of strings when the character array is on the left.

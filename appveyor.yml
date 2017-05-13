@@ -23,7 +23,7 @@ environment:
 #    CompilerNix: "0"
 #    Arch64: "0"
 #    Arch32: "1"
-  - GENERATOR: Visual Studio 14 2015 Win64
+  - GENERATOR: Visual Studio 15 2017 Win64
     TestPath: "./%configuration%"
     CompilerMS: "1"
     CompilerNix: "0"
@@ -69,4 +69,3 @@ notifications:
   on_build_success: false
   on_build_failure: true
   on_build_status_changed: true
-  
