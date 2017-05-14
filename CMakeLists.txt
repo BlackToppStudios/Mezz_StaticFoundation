@@ -44,10 +44,17 @@ message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VER
 
 ##########################################################################|#############################################
 # Download, Verify and setup the Jagati
+<<<<<<< HEAD
 set(JagatiChecksum "b88796567c6d79e039c65bf3eb7642b4788b1efb14d0ff42ec65cc\
 e34eaa92daca0717a07a8badcb1779d305e4e1a8211a494746d499feaa2ff31155a38d56e9")
 file(DOWNLOAD
     "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.17.1/Jagati.cmake"
+=======
+set(JagatiChecksum "e0ccafc0dff997313872574df16547d809b32b9770a9e93864c9e9\
+63061816a3b02855ce0258149cefc04915ecb89eaeefc36bbf609618be86ec5b3202b98fa3")
+file(DOWNLOAD
+    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.16.0/Jagati.cmake"
+>>>>>>> origin/master
     "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
     EXPECTED_HASH SHA512=${JagatiChecksum}
 )
@@ -71,7 +78,6 @@ AddJagatiDoxInput("${StaticFoundationHeaderFiles}")
 
 set(StaticFoundationSourceFiles
     "${StaticFoundationSourceDir}RuntimeStatics.cpp"
-    "${StaticFoundationSourceDir}StaticString.cpp"
 )
 ShowList("Source Files:" "\t" "${StaticFoundationSourceFiles}")
 
@@ -93,7 +99,7 @@ ShowList("Doxygen Input Files:" "\t" "${StaticFoundationDoxFiles}")
 AddJagatiDoxInput("${StaticFoundationDoxFiles}")
 
 ########################################################################################################################
-# Set up config file and do some one time Jagati configuration.
+# Set up config file
 
 AddJagatiCompileOption("MEZZ_BuildDoxygen"
     "Create HTML documentation with Doxygen. Requires Doxygen to be install in PATH." ON)
