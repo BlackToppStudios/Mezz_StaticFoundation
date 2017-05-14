@@ -57,7 +57,8 @@
 
     #include <stdint.h>
     #include <cstddef>
-
+    
+    #include <array>
     #include <algorithm>
     #include <exception>
     #include <istream>
