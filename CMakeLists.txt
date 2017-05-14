@@ -61,7 +61,6 @@ message(STATUS "Determining Source Files.")
 set(StaticFoundationHeaderFiles
     "${StaticFoundationIncludeDir}CrossPlatformExport.h"
     "${StaticFoundationIncludeDir}DataTypes.h"
-    "${StaticFoundationIncludeDir}ExceptionBase.h"
     "${StaticFoundationIncludeDir}RuntimeStatics.h"
     "${StaticFoundationIncludeDir}StaticFoundation.h"
     "${StaticFoundationIncludeDir}StaticString.h"
