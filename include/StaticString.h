@@ -203,6 +203,8 @@ namespace Mezzanine
         namespace
         {
             // A series of templates that create the space needed for concatenating two string literals.
+            // Used with permissions from Stack Overflow Per Creative Commons Attribution license:
+            // http://stackoverflow.com/questions/13292237/c-concat-two-const-char-string-literals
             
             template <DataSize...>
             struct IndiceSequence { };
@@ -222,11 +224,11 @@ namespace Mezzanine
                       DataSize RightSize, DataSize... RightIndice>
             constexpr StaticString<LeftSize+RightSize-1> ConcatenateCharArrayImpl(
                 const std::array<Char8, LeftSize>& LeftString, internal::IndiceSequence<LeftIndice...>,
-                const std::array<Char8, RightSize>& RightString, internal::IndiceSequence<LeftIndice...>)
+                const std::array<Char8, RightSize>& RightString, internal::IndiceSequence<RightIndice...>)
             {
                 return StaticString<LeftSize+RightSize-1> // 1 less because there is only 1 null terminator
                     { std::array<Char8, LeftSize+RightSize-1>{{ LeftString[LeftIndice]...,
-                                                                RightString[LeftIndice]...,
+                                                                RightString[RightIndice]...,
                                                                 '\0' }} };
             }
 

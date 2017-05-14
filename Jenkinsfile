@@ -6,12 +6,12 @@ try {
             node('UbuntuEmscripten') {
                 checkout scm
             }
-        }//,
-        // Label: {
-        //     node('Executorname') {
-        //         sh "shell commands here"
-        //     }
-        // }
+        },
+        RaspianJessie: {
+            node('RaspianJessie') {
+                checkout scm
+            }
+        }
     }
 
     stage('Build') {
@@ -66,4 +66,3 @@ def notifyMail (def Status, def ExtraInfo) {
                "${ExtraInfo}\n\n" +
                "Check console output at $BUILD_URL to view the results."
 }
-
