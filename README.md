@@ -7,7 +7,7 @@ common facilities that such games need. This is just one component of many.
 ## About this Library ##
 
 The current Jenkins (Linux - Emscripten, Rasberry Pi - Gcc) build status is:
-[![Build Status](http://blacktopp.ddns.net:8080/buildStatus/icon?job=Mezz_StaticFoundation)](http://blacktopp.ddns.net:8080/job/Mezz_StaticFoundation/)
+[![Build Status](http://blacktopp.ddns.net:8080/job/Mezz_StaticFoundation/badge/icon)](http://blacktopp.ddns.net:8080/job/Mezz_StaticFoundation/)
 
 The current Travis CI (Apple - GCC/Clang) build status is:
 [![Build Status](https://travis-ci.org/BlackToppStudios/Mezz_StaticFoundation.svg?branch=master)](https://travis-ci.org/BlackToppStudios/Mezz_StaticFoundation)
