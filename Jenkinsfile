@@ -6,12 +6,12 @@ try {
             node('UbuntuEmscripten') {
                 checkout scm
             }
-        }//,
-        // Label: {
-        //     node('Executorname') {
-        //         sh "shell commands here"
-        //     }
-        // }
+        },
+        RaspianJessie: {
+            node('RaspianJessie') {
+                checkout scm
+            }
+        }
     }
 
     stage('Build') {
@@ -19,7 +19,7 @@ try {
             node('UbuntuEmscripten') {
                 // The first group of variables simulates running source ~/emsdk-portable/emsdk_env.sh as the emscripten
                 // portable sdkrequires to work. The next few sets CC and CXX which CMake will use to know to use
-                // the emscripten compiler. The last one sets Mezzanine specific variables so packages are found.
+                // the emscripten compiler. The last one sets Mezzanine specific variables so pacakges are found.
                 sh """ export PATH=$PATH:/home/cisadmin/emsdk-portable/clang/e1.37.9_64bit                            &&       
                        export PATH=$PATH:/home/cisadmin/emsdk-portable/node/4.1.1_64bit/bin                           &&
                        export PATH=$PATH:/home/cisadmin/emsdk-portable/emscripten/1.37.9                              &&
@@ -30,6 +30,21 @@ try {
                        export CC=emcc                                                                                 &&
                        export CXX=em++                                                                                &&
                        export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                   &&
+                       mkdir build -p                                                                                 &&
+                       cd build                                                                                       &&
+                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
+                       ninja
+                """
+            }
+        },
+        RaspianJessie: {
+            node('RaspianJessie') {
+                // The first group of variables simulates running source ~/emsdk-portable/emsdk_env.sh as the emscripten
+                // portable sdkrequires to work. The next few sets CC and CXX which CMake will use to know to use
+                // the emscripten compiler. The last one sets Mezzanine specific variables so pacakges are found.
+                sh """ export CC=gcc-6                                                                                &&
+                       export CXX=g++-6                                                                               &&
+                       export MEZZ_PACKAGE_DIR=/home/pi/Code/                                                         &&
                        mkdir build -p                                                                                 &&
                        cd build                                                                                       &&
                        cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
@@ -47,15 +62,22 @@ try {
                        node StaticFoundation_Tester.js MEZZ_CompilerIsEmscripten:1 MEZZ_CompilerIsGCC:0 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:0 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
                 """
             }
+        },
+        RaspianJessie: {
+            node('RaspianJessie') {
+                sh """ cd build                                                                                       &&
+                       ./StaticFoundation_Tester MEZZ_Arch32:1 MEZZ_Arch64:0 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:0 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
+                """
+            }
         }
     }
 
     stage('SendMail') {
-        notifyMail("Success!", "Build of ${env.JOB_NAME} Successful.")
+        notifyMail("Success!", "Build of Mezz_StaticFoundation Successful.")
     }
 }
 catch(buildException) {
-    notifyMail("Failure!", "Build of ${env.JOB_NAME} Failed!\nException: ${buildException}")
+    notifyMail("Failure!", "Build of Mezz_StaticFoundation Failed!\nException: ${buildException}")
     throw buildException
 }
 
@@ -66,4 +88,3 @@ def notifyMail (def Status, def ExtraInfo) {
                "${ExtraInfo}\n\n" +
                "Check console output at $BUILD_URL to view the results."
 }
-
