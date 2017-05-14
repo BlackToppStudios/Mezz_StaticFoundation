@@ -4,7 +4,8 @@ language: cpp
 osx_image: xcode8.3
 
 os:
-  - linux
+#  - linux # Remarking this disables the Linux build on Travis. When move onto better than a 3 year old os in beta,
+#            we will reconsider using them for our linux builds again. In the mean time check out our Jenkinsfile.
   - osx
 
 compiler:
@@ -44,8 +45,8 @@ script:
         MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0
         MEZZ_Arch64:1       MEZZ_Arch32:0 ;
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ;
-        then valgrind --tool=memcheck --leak-check=full --error-exitcode=1
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ; then # TODO: Duplicate this in Jenkins
+        valgrind --tool=memcheck --leak-check=full --error-exitcode=1
             ./StaticFoundation_Tester MEZZ_BuildDoxygen:0;
     fi
 

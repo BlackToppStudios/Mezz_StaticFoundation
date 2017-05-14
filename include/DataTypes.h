@@ -93,21 +93,21 @@ namespace Mezzanine
     // Efficient and At Least this size.
     ///////////////////////////////////////
 
-    /// @brief An 8-bit integer (or more).
+    /// @brief An 8-bit integer.
     typedef int8_t Int8;
-    /// @brief An 8-bit unsigned integer (or more).
+    /// @brief An 8-bit unsigned integer.
     typedef uint8_t UInt8;
-    /// @brief An 16-bit integer (or more).
+    /// @brief An 16-bit integer.
     typedef int16_t Int16;
-    /// @brief An 16-bit unsigned integer (or more).
+    /// @brief An 16-bit unsigned integer.
     typedef uint16_t UInt16;
-    /// @brief An 32-bit integer (or more).
+    /// @brief An 32-bit integer.
     typedef int32_t Int32;
-    /// @brief An 32-bit unsigned integer (or more).
+    /// @brief An 32-bit unsigned integer.
     typedef uint32_t UInt32;
-    /// @brief An 64-bit integer (or more).
+    /// @brief An 64-bit integer.
     typedef int64_t Int64;
-    /// @brief An 64-bit unsigned integer (or more).
+    /// @brief An 64-bit unsigned integer.
     typedef uint64_t UInt64;
 
     ///////////////////////////////////////////////////////////////////////////////
