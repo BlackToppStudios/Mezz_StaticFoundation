@@ -61,6 +61,7 @@ message(STATUS "Determining Source Files.")
 set(StaticFoundationHeaderFiles
     "${StaticFoundationIncludeDir}CrossPlatformExport.h"
     "${StaticFoundationIncludeDir}DataTypes.h"
+    "${StaticFoundationIncludeDir}ExceptionBase.h"
     "${StaticFoundationIncludeDir}RuntimeStatics.h"
     "${StaticFoundationIncludeDir}StaticFoundation.h"
     "${StaticFoundationIncludeDir}StaticString.h"
@@ -71,7 +72,12 @@ AddJagatiDoxInput("${StaticFoundationHeaderFiles}")
 
 set(StaticFoundationSourceFiles
     "${StaticFoundationSourceDir}RuntimeStatics.cpp"
+<<<<<<< HEAD
     "${StaticFoundationSourceDir}StaticString.cpp"
+=======
+    "${StaticFoundationSourceDir}ExceptionBase.cpp"
+
+>>>>>>> master
 )
 ShowList("Source Files:" "\t" "${StaticFoundationSourceFiles}")
 
@@ -93,7 +99,7 @@ ShowList("Doxygen Input Files:" "\t" "${StaticFoundationDoxFiles}")
 AddJagatiDoxInput("${StaticFoundationDoxFiles}")
 
 ########################################################################################################################
-# Set up config file
+# Set up config file and do some one time Jagati configuration.
 
 AddJagatiCompileOption("MEZZ_BuildDoxygen"
     "Create HTML documentation with Doxygen. Requires Doxygen to be install in PATH." ON)

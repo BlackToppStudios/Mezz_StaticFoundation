@@ -39,7 +39,8 @@
 */
 
 /// @file
-/// @brief The
+/// @brief All the ifdefs to check for compile time options are also declared here as functions to make it easy for
+/// swig based scripting languages to get at them.
 
 #include "RuntimeStatics.h"
 #include "StaticFoundationConfig.h"
@@ -190,5 +191,4 @@ namespace Mezzanine
             return false;
         #endif
     }
-
 }
