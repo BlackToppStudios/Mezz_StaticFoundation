@@ -72,12 +72,7 @@ AddJagatiDoxInput("${StaticFoundationHeaderFiles}")
 
 set(StaticFoundationSourceFiles
     "${StaticFoundationSourceDir}RuntimeStatics.cpp"
-<<<<<<< HEAD
     "${StaticFoundationSourceDir}StaticString.cpp"
-=======
-    "${StaticFoundationSourceDir}ExceptionBase.cpp"
-
->>>>>>> master
 )
 ShowList("Source Files:" "\t" "${StaticFoundationSourceFiles}")
 
