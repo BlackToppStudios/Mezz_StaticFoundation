@@ -47,5 +47,6 @@
 #include "DataTypes.h"
 #include "RuntimeStatics.h"
 #include "SuppressWarnings.h"
+#include "StaticString.h"
 
 #endif

@@ -55,6 +55,8 @@ using Mezzanine::Boole;
 int main(int ArgCount, char** ArgVars)
 {
     CheckUsage(ArgCount, ArgVars);
+    if(false==CheckStaticString())
+        { return EXIT_FAILURE; }
     NameValuePairMap FromCommandLine{CreateMapFromArgs(ArgCount, ArgVars)};
     DoComparisonTest(FromCommandLine, CheckableValues());
     return EXIT_SUCCESS;
@@ -164,4 +166,51 @@ String IntToString(Mezzanine::Int32 SomeInt)
     std::stringstream Results;
     Results << SomeInt;
     return Results.str();
+}
+
+bool CheckStaticString()
+{
+    constexpr auto foo = MakeStaticString("foo");
+
+    static_assert(foo.size() == 4,  "Size of constant string incorrect, 'foo' != 4.");
+
+    static_assert(foo == "foo",     "Equality Comparison operator failed to find equality. [Literal]");
+    static_assert(!(foo == "fooo"), "Equality Comparison operator failed to find inequal length. [Literal]");
+    static_assert(!(foo == "bar"),  "Equality Comparison operator failed to find inqeual content. [Literal]");
+    static_assert("foo" == foo,     "Equality Comparison operator failed to find equality. [Literal]");
+    static_assert(!("fooo" == foo), "Equality Comparison operator failed to find inequal length. [Literal]");
+    static_assert(!("bar" == foo),  "Equality Comparison operator failed to find inqeual content. [Literal]");
+
+    static_assert(foo != "bar",     "Inequality Comparison operator failed to find inequality. [Literal]");
+    static_assert(foo != "fooo",    "Inequality Comparison operator failed to find inequal length. [Literal]");
+    static_assert(!(foo != "foo"),  "Inequality Comparison operator failed to find equal content. [Literal]");
+    static_assert("bar" != foo,     "Inequality Comparison operator failed to find inequality. [Literal]");
+    static_assert("fooo" != foo,    "Inequality Comparison operator failed to find inequal length. [Literal]");
+    static_assert(!("foo" != foo),  "Inequality Comparison operator failed to find equal content. [Literal]");
+
+    constexpr auto lorem = MakeStaticString("lorem");
+    constexpr auto bar = MakeStaticString("bar");
+    constexpr auto foo2 = MakeStaticString("foo");
+
+    static_assert(foo == foo2,     "Equality Comparison operator failed to find equality. [StaticString]");
+    static_assert(foo == foo,      "Equality Comparison operator failed to find equality. [Identity]");
+    static_assert(!(foo == lorem), "Equality Comparison operator failed to find inequal length. [StaticString]");
+    static_assert(!(foo == bar),   "Equality Comparison operator failed to find inqeual content. [StaticString]");
+
+    static_assert(!(foo != foo2),  "Inequality Comparison operator failed to find equality. [StaticString]");
+    static_assert(!(foo != foo),   "Inequality Comparison operator failed to find equality. [Identity]");
+    static_assert(foo != lorem,    "Inequality Comparison operator failed to find inequal length. [StaticString]");
+    static_assert(foo != bar,      "Inequality Comparison operator failed to find inqeual content. [StaticString]");
+
+    if(Mezzanine::String("foo") != foo.str())
+        { return false; }
+    if(Mezzanine::String("foo") != foo.c_str())
+        { return false; }
+
+    static_assert( foo+bar == "foobar", "Concatenation doesn't work as expected with just StaticString instances.");
+
+    // Perhaps someday.
+    //static_assert( foo+"bar" == "foobar", "Concatenation doesn't work as expected with StaticStrings and literals.");
+
+    return true;
 }

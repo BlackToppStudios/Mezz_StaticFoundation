@@ -1,9 +1,11 @@
 sudo: required
 dist: trusty
 language: cpp
+osx_image: xcode8.3
 
 os:
-  - linux
+#  - linux # Remarking this disables the Linux build on Travis. When move onto better than a 3 year old os in beta,
+#            we will reconsider using them for our linux builds again. In the mean time check out our Jenkinsfile.
   - osx
 
 compiler:
@@ -19,10 +21,10 @@ before_script:
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ;
-        then sudo apt-get install valgrind ninja-build emscripten -q -y;
+        then sudo apt-get install valgrind ninja-build -q -y;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]] ;
-        then brew install valgrind ninja llvm emscripten;
+        then brew install ninja;
     fi
 
 script:
@@ -43,25 +45,10 @@ script:
         MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0
         MEZZ_Arch64:1       MEZZ_Arch32:0 ;
     fi
-  - echo "The versions of emscripten support are too old skipping :("
-#  - if [[ "$CXX" == "clang++" ]] ; then
-#        if [[ "$TRAVIS_OS_NAME" == "osx" ]] ; then
-#            export CC=emcc; export CXX=em++;
-#            rm -rf *;
-#            em++ -v;
-#            cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON ;
-#            ninja ;
-#            node StaticFoundation_Tester.js MEZZ_CompilerIsEmscripten:1
-#            MEZZ_CompilerIsGCC:0    MEZZ_CompilerIsClang:0      MEZZ_CompilerIsIntel:0      CompilerIsMsvc:0
-#            MEZZ_BuildDoxygen:0     MEZZ_Debug:0    MEZZ_CodeCoverage:1
-#            MEZZ_Linux:0        MEZZ_MacOSX:0       MEZZ_Windows:0
-#            MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0 ;
-#         fi ;
-#    fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ;
-        then valgrind --tool=memcheck --leak-check=full --error-exitcode=1
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ; then
+        valgrind --tool=memcheck --leak-check=full --error-exitcode=1
             ./StaticFoundation_Tester MEZZ_BuildDoxygen:0;
-    fi
+    fi # TODO: Duplicate this in Jenkins
 
 after_success:
   - ninja StaticFoundationCoverage
