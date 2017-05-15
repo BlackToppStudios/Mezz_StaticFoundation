@@ -57,7 +57,7 @@
 
     #include <stdint.h>
     #include <cstddef>
-    
+
     #include <array>
     #include <algorithm>
     #include <exception>
@@ -114,16 +114,16 @@ namespace Mezzanine
     // General Purpose
     ///////////////////////////////////////
 
-    /// @brief A Datatype used to represent a commaon real floating point number of average precision.
+    /// @brief A Datatype used to represent a common real floating point number of average precision.
     /// @details This Datatype is currently a typedef to a float, This is to match our compilations of Ogre (rendering
     /// subsystem ogre::Real), and Bullet (physics subsystem, btScalar). With a recompilation of all the subsystems and
     /// this there is no theoretical reason why this could not be changed to a double, or even something more extreme
-    /// like a GMP datatype. Most likely this switch would require atleast some troubleshooting.
+    /// like a GMP datatype. Most likely this switch would require at least some troubleshooting.
     /// @n @n
     /// This type will be word aligned and the fastest type for GPU math and the fastest type for floating point CPU
     /// math.
     typedef float Real;
-    /// @brief This is real number that is at least as precise as the Real and could be considerably moreso.
+    /// @brief This is real number that is at least as precise as the Real and could be considerably more-so.
     /// @details Perhaps doubly precise.
     /// @n @n
     /// This type might be poorly aligned and slower on GPUs than the Real.
@@ -134,7 +134,7 @@ namespace Mezzanine
     /// most efficient unsigned type for CPU bound math.
     typedef unsigned long Whole;
     /// @brief A datatype used to represent any integer in an efficient way for general purposes.
-    /// @details This is a typedef to int, but could int16 or smaller to improve performance in some situtations, in
+    /// @details This is a typedef to int, but could int16 or smaller to improve performance in some situations, in
     /// general it will be the most efficient signed type for CPU Bound math.
     typedef int Integer;
     /// @brief A large integer type suitable for compile time math and long term microsecond time
@@ -157,14 +157,14 @@ namespace Mezzanine
 
     /// @brief Generally acts a single bit, true or false
     /// @details Normally just a bool, but on some platform alignment matters more than size for performance, so this
-    /// could be as large as one CPU word in size ro as small as a single bit.
+    /// could be as large as one CPU word in size or as small as a single bit.
     typedef bool Boole;
 
     ///////////////////////////////////////////////////////////////////////////////
     // Complex standardized types.
     ///////////////////////////////////////
 
-    /// @todo See which of thiese can be gotten rid of. These do not provide strong or particularly use guarantees or
+    /// @todo See which of these can be gotten rid of. These do not provide strong or particularly use guarantees or
     /// abstractions and cement suboptimal decisions at the basis or
 
 

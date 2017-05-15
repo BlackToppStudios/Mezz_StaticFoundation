@@ -171,7 +171,7 @@ namespace Mezzanine
         /// @warning This method executes at run time.
         String str() const
             { return std::string(StringData.data()); }
-    };
+    };//StaticString
 
     /// @brief Check for equality of strings when the character array is on the left.
     /// @tparam CharSize The size of the char array
@@ -193,7 +193,7 @@ namespace Mezzanine
     constexpr bool operator!=(const Char8(&Left)[CharSize], const StaticString<StringSize>& Right)
         { return Right != Left; }
 
-    /// @brief A macro to simplify some of the boilerplate required by the typesystem.
+    /// @brief A macro to simplify some of the boilerplate required by the type system.
     #define MakeStaticString(StringLiteral) Mezzanine::StaticString<sizeof(StringLiteral)>\
                                             { std::array<Mezzanine::Char8,sizeof(StringLiteral)> {StringLiteral} }
 
@@ -205,7 +205,7 @@ namespace Mezzanine
             // A series of templates that create the space needed for concatenating two string literals.
             // Used with permissions from Stack Overflow Per Creative Commons Attribution license:
             // http://stackoverflow.com/questions/13292237/c-concat-two-const-char-string-literals
-            
+
             template <DataSize...>
             struct IndiceSequence { };
 
@@ -231,9 +231,8 @@ namespace Mezzanine
                                                                 RightString[RightIndice]...,
                                                                 '\0' }} };
             }
-
         }
-    }
+    }//Internal
 
     /// @brief Concatenate two StaticString instances
     /// @tparam LeftSize The size of the left hand string
@@ -250,6 +249,6 @@ namespace Mezzanine
         return internal::ConcatenateCharArrayImpl(LeftString.GetData(), LeftIndices(),
                                                   RightString.GetData(), RightIndices());
     }
-}
+}//Mezzanine
 
 #endif
