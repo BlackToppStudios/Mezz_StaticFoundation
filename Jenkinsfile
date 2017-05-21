@@ -11,6 +11,26 @@ try {
             node('RaspianJessie') {
                 checkout scm
             }
+        },
+        MacOSSierra: {
+            node('MacOSSierra') {
+                checkout scm
+            }
+        },
+        FedoraGcc: {
+            node('FedoraGcc') {
+                checkout scm
+            }
+        },
+        UbuntuGcc: {
+            node('UbuntuGcc') {
+                checkout scm
+            }
+        },
+        UbuntuClang: {
+            node('UbuntuClang') {
+                checkout scm
+            }
         }
     }
 
@@ -30,7 +50,7 @@ try {
                        export CC=emcc                                                                                 &&
                        export CXX=em++                                                                                &&
                        export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                   &&
-                       mkdir build -p                                                                                 &&
+                       mkdir -p build                                                                                 &&
                        cd build                                                                                       &&
                        cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
                        ninja
@@ -45,7 +65,48 @@ try {
                 sh """ export CC=gcc-6                                                                                &&
                        export CXX=g++-6                                                                               &&
                        export MEZZ_PACKAGE_DIR=/home/pi/Code/                                                         &&
-                       mkdir build -p                                                                                 &&
+                       mkdir -p build                                                                                 &&
+                       cd build                                                                                       &&
+                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
+                       ninja
+                """
+            }
+        },
+        MacOSSierra: {
+            node('MacOSSierra') {
+                sh """ export MEZZ_PACKAGE_DIR=/Users/cisadmin/Code/                                                  &&
+                       export PATH=$PATH:/usr/local/bin/                                                              &&
+                       mkdir -p build                                                                                 &&
+                       cd build                                                                                       &&
+                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
+                       ninja
+                """
+            }
+        },
+        FedoraGcc: {
+            node('FedoraGcc') {
+                sh """ export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                   &&
+                       mkdir -p build                                                                                 &&
+                       cd build                                                                                       &&
+                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
+                       ninja
+                """
+            }
+        },
+        UbuntuGcc: {
+            node('UbuntuGcc') {
+                sh """ export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                   &&
+                       mkdir -p build                                                                                 &&
+                       cd build                                                                                       &&
+                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
+                       ninja
+                """
+            }
+        },
+        UbuntuClang: {
+            node('UbuntuClang') {
+                sh """ export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                   &&
+                       mkdir -p build                                                                                 &&
                        cd build                                                                                       &&
                        cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
                        ninja
@@ -67,6 +128,34 @@ try {
             node('RaspianJessie') {
                 sh """ cd build                                                                                       &&
                        ./StaticFoundation_Tester MEZZ_Arch32:1 MEZZ_Arch64:0 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:0 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
+                """
+            }
+        },
+        MacOSSierra: {
+            node('MacOSSierra') {
+                sh """ cd build                                                                                       &&
+                       ./StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:0 MEZZ_CompilerIsClang:1 MEZZ_CompilerIsIntel:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:0 MEZZ_CodeCoverage:0 MEZZ_Linux:0 MEZZ_MacOSX:1 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
+                """
+            }
+        },
+        FedoraGcc: {
+            node('FedoraGcc') {
+                sh """ cd build                                                                                       &&
+                       ./StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:0 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
+                """
+            }
+        },
+        UbuntuGcc: {
+            node('UbuntuGcc') {
+                sh """ cd build                                                                                       &&
+                       ./StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:0 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
+                """
+            }
+        },
+        UbuntuClang: {
+            node('UbuntuClang') {
+                sh """ cd build                                                                                       &&
+                       ./StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:0 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
                 """
             }
         }
