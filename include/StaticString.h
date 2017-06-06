@@ -171,7 +171,7 @@ namespace Mezzanine
         /// @warning This method executes at run time.
         String str() const
             { return std::string(StringData.data()); }
-    };//StaticString
+    }; //StaticString
 
     /// @brief Check for equality of strings when the character array is on the left.
     /// @tparam CharSize The size of the char array

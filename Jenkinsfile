@@ -52,7 +52,7 @@ try {
                        export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                   &&
                        mkdir -p build                                                                                 &&
                        cd build                                                                                       &&
-                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
+                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF -DCMAKE_USE_OPENSSL=ON      &&
                        ninja
                 """
             }
@@ -67,7 +67,7 @@ try {
                        export MEZZ_PACKAGE_DIR=/home/pi/Code/                                                         &&
                        mkdir -p build                                                                                 &&
                        cd build                                                                                       &&
-                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
+                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF -DCMAKE_USE_OPENSSL=ON      &&
                        ninja
                 """
             }
@@ -78,7 +78,7 @@ try {
                        export PATH=$PATH:/usr/local/bin/                                                              &&
                        mkdir -p build                                                                                 &&
                        cd build                                                                                       &&
-                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
+                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF -DCMAKE_USE_OPENSSL=ON      &&
                        ninja
                 """
             }
@@ -88,7 +88,7 @@ try {
                 sh """ export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                   &&
                        mkdir -p build                                                                                 &&
                        cd build                                                                                       &&
-                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
+                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF -DCMAKE_USE_OPENSSL=ON      &&
                        ninja
                 """
             }
@@ -98,7 +98,7 @@ try {
                 sh """ export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                   &&
                        mkdir -p build                                                                                 &&
                        cd build                                                                                       &&
-                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
+                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF -DCMAKE_USE_OPENSSL=ON      &&
                        ninja
                 """
             }
@@ -108,7 +108,7 @@ try {
                 sh """ export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                   &&
                        mkdir -p build                                                                                 &&
                        cd build                                                                                       &&
-                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF                             &&
+                       cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF -DCMAKE_USE_OPENSSL=ON      &&
                        ninja
                 """
             }
