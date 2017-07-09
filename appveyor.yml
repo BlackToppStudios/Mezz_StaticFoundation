@@ -8,26 +8,22 @@ environment:
   matrix:
   - GENERATOR: MinGW Makefiles
     CompilerPath: C:\msys64\mingw32\bin
-    TestPath: "."
     CompilerMS: "0"
     CompilerNix: "1"
     Arch64: "0"
     Arch32: "1"
   - GENERATOR: MinGW Makefiles
     CompilerPath: C:\msys64\mingw64\bin
-    TestPath: "."
     CompilerMS: "0"
     CompilerNix: "1"
     Arch64: "1"
     Arch32: "0"
 #  - GENERATOR: Visual Studio 14 2015
-#    TestPath: "./%configuration%"
 #    CompilerMS: "1"
 #    CompilerNix: "0"
 #    Arch64: "0"
 #    Arch32: "1"
   - GENERATOR: Visual Studio 15 2017 Win64
-    TestPath: "./%configuration%"
     CompilerMS: "1"
     CompilerNix: "0"
     Arch64: "1"
@@ -62,7 +58,6 @@ build_script:
   
 test_script:
   - cmd: cd C:\projects\Mezz_StaticFoundation\build
-  - cmd: cd %TestPath%
   - cmd: StaticFoundation_Tester MEZZ_BuildDoxygen:0 MEZZ_Linux:0 MEZZ_BuildStaticLibraries:1 MEZZ_MacOSX:0 MEZZ_Windows:1 MEZZ_CompilerDesignNix:%CompilerNix% MEZZ_CompilerDesignMS:%CompilerMS% MEZZ_Arch64:%Arch64% MEZZ_Arch32:%Arch32%
 
 notifications:
