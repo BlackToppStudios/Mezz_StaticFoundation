@@ -44,52 +44,42 @@ message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VER
 
 ##########################################################################|#############################################
 # Download, Verify and setup the Jagati
-set(JagatiChecksum "dc6acb8f46c303bc601d58f688e9e01bf13aafcc9fab23f130a835\
-78501e2e620e6e68929353642621ba219e5ced319e74086c2d2eb12081759474ec47907d96")
+set(JagatiChecksum "a64cd1bfa71c72fab744741094f9e4269a576177593bc861c64dd8\
+763c9083797fad83c46e561efe3ee7034a02b97527cad2823d48c70b7c8c3c44fa88bc57fa")
 file(DOWNLOAD
-    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.19.0/Jagati.cmake"
+    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/Proposed-bigleap/Jagati.cmake"
     "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
     EXPECTED_HASH SHA512=${JagatiChecksum}
 )
 include("${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake")
 
+set(${PROJECT_NAME}BinTarget "${PROJECT_NAME}_Tester")
 StandardJagatiSetup()
 
 ########################################################################################################################
 message(STATUS "Determining Source Files.")
 
-set(StaticFoundationHeaderFiles
-    "${StaticFoundationIncludeDir}CrossPlatformExport.h"
-    "${StaticFoundationIncludeDir}DataTypes.h"
-    "${StaticFoundationIncludeDir}RuntimeStatics.h"
-    "${StaticFoundationIncludeDir}StaticFoundation.h"
-    "${StaticFoundationIncludeDir}StaticString.h"
-    "${StaticFoundationIncludeDir}SuppressWarnings.h"
-)
+AddHeaderFile("CrossPlatformExport.h")
+AddHeaderFile("DataTypes.h")
+AddHeaderFile("RuntimeStatics.h")
+AddHeaderFile("StaticFoundation.h")
+AddHeaderFile("StaticString.h")
+AddHeaderFile("SuppressWarnings.h")
 ShowList("Header Files:" "\t" "${StaticFoundationHeaderFiles}")
-AddJagatiDoxInput("${StaticFoundationHeaderFiles}")
 
-set(StaticFoundationSourceFiles
-    "${StaticFoundationSourceDir}RuntimeStatics.cpp"
-)
+AddSourceFile("RuntimeStatics.cpp")
 ShowList("Source Files:" "\t" "${StaticFoundationSourceFiles}")
 
-set(StaticFoundationTestSourceFiles
-    "${StaticFoundationTestDir}Tests.h"
-    "${StaticFoundationTestDir}Tests.cpp"
-)
-ShowList("Test Source Files:" "\t" "${StaticFoundationTestSourceFiles}")
+# Because this can't rely on Mezz_Test we need to do this manually
+AddMainSourceFile("${StaticFoundationTestDir}Tests.h")
+AddMainSourceFile("${StaticFoundationTestDir}Tests.cpp")
+ShowList("Test Source Files:" "\t" "${StaticFoundationMainSourceFiles}")
 
-set(StaticFoundationSwigFiles
-    "${StaticFoundationSwigDir}SwigConfig.h"
-)
+AddSwigEntryPoint("SwigConfig.h")
 ShowList("Swig Input Files:" "\t" "${StaticFoundationSwigFiles}")
 
-set(StaticFoundationDoxFiles
-    "${StaticFoundationDoxDir}Dox.h"
-)
+AddJagatiDoxInput("Dox.h")
 ShowList("Doxygen Input Files:" "\t" "${StaticFoundationDoxFiles}")
-AddJagatiDoxInput("${StaticFoundationDoxFiles}")
 
 ########################################################################################################################
 # Set up config file
@@ -101,7 +91,7 @@ AddJagatiCompileOption("MEZZ_BuildStaticLibraries"
 AddJagatiCompileOption("MEZZ_CodeCoverage"
     "If set compiler flags will be set that gather code coverage data on build results." OFF)
 
-ChooseLibraryType(${MEZZ_BuildStaticLibraries})
+UseStaticLinking(${MEZZ_BuildStaticLibraries})
 ChooseCodeCoverage(${MEZZ_CodeCoverage})
 
 AddJagatiConfig("MEZZ_Linux" "" ${SystemIsLinux})
@@ -211,9 +201,8 @@ endif(MEZZ_BuildDoxygen)
 AddJagatiLibrary()
 CreateCoverageTarget(${StaticFoundationLib} ${StaticFoundationSourceFiles})
 
-# This manually makes its own tester because this cannot rely on Mezz_Test.
-add_executable(${${PROJECT_NAME}TestTarget} ${StaticFoundationHeaderFiles} ${StaticFoundationTestSourceFiles})
-target_link_libraries(${${PROJECT_NAME}TestTarget} ${StaticFoundationLib} ${JagatiLinkArray})
+# This makes its own tester as the main exe because this cannot rely on Mezz_Test.
+AddJagatiExecutable()
 
 # Some extra creating of targets for other development related tasks
 AddIDEVisibility("${StaticFoundationTestSourceFiles}")
