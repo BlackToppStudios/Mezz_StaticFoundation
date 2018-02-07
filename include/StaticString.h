@@ -112,6 +112,10 @@ namespace Mezzanine
         }
 
     public:
+
+        SAVE_WARNING_STATE
+        SUPPRESS_VC_WARNING(4100) // Incorrect warning OtherString is referenced and msvc missed that somehow.
+
         /// @brief Compare equality of two strings.
         /// @tparam OtherByteCount The size of the other character array, because it is part of the type.
         /// @param OtherString The char array to compare this too.
@@ -124,6 +128,7 @@ namespace Mezzanine
             return  ByteCount == OtherByteCount &&
                     ( 0==ByteCount || CompareEqualityContents(OtherString) );
         }
+
         /// @brief Compare equality of two StaticString instances.
         /// @tparam OtherByteCount The size of the other StaticString instance, because it is part of the type.
         /// @param OtherString The StaticString instance to compare this too.
@@ -136,6 +141,8 @@ namespace Mezzanine
             return  ByteCount == OtherByteCount &&
                     ( 0==ByteCount || CompareEqualityContents(OtherString) );
         }
+
+        RESTORE_WARNING_STATE
 
         /// @brief Check two string for inequality.
         /// @tparam OtherByteCount The size of the other character array, because it is part of the type.
