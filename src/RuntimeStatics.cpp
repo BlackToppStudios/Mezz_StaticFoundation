@@ -1,4 +1,4 @@
-// © Copyright 2010 - 2017 BlackTopp Studios Inc.
+// © Copyright 2010 - 2018 BlackTopp Studios Inc.
 /* This file is part of The Mezzanine Engine.
 
     The Mezzanine Engine is free software: you can redistribute it and/or modify
@@ -74,6 +74,42 @@ namespace Mezzanine
         #endif
     }
 
+    Boole RuntimeStatic::CpuKnown()
+    {
+        #ifdef MEZZ_CpuKnown
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::CpuX86()
+    {
+        #ifdef MEZZ_CpuX86
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::CpuAmd64()
+    {
+        #ifdef MEZZ_CpuAmd64
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::CpuArm()
+    {
+        #ifdef MEZZ_CpuArm
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
     Boole RuntimeStatic::Linux()
     {
         #ifdef MEZZ_Linux
@@ -95,6 +131,24 @@ namespace Mezzanine
     Boole RuntimeStatic::MacOSX()
     {
         #ifdef MEZZ_MacOSX
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::Ios()
+    {
+        #ifdef MEZZ_Ios
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
+    Boole RuntimeStatic::CompilerDetected()
+    {
+        #ifdef MEZZ_CompilerDetected
             return true;
         #else
             return false;
