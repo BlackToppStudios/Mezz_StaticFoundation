@@ -69,6 +69,22 @@ namespace Mezzanine
             /// @return If MEZZ_CodeCoverage is defined true, false otherwise.
             static Boole CodeCoverage();
 
+            /// @brief If CpuIsKnown is defined true, false otherwise.
+            /// @details CPU detection is imperfect this is true. If false no other CPU method will return true.
+            static Boole CpuKnown();
+
+            /// @brief If CpuIsX86 is defined true, false otherwise.
+            /// @details True if known to be on Intel/Amd/Cyrix/Via/whatever x86compatible including Amd64/Emt64 as
+            static Boole CpuX86();
+
+            /// @brief If CpuIsAmd64 is defined true, false otherwise.
+            /// @details True if known to be on Amd64 or Emt64, x86 comptible 64 bit compatible systems
+            static Boole CpuAmd64();
+
+            /// @brief If CpuIsArm is defined true, false otherwise.
+            /// @details True if known to be on any flavor of Arm.
+            static Boole CpuArm();
+
             /// @return If MEZZ_Linux is defined true, false otherwise.
             static Boole Linux();
 
@@ -77,6 +93,12 @@ namespace Mezzanine
 
             /// @return If MEZZ_MacOSX is defined true, false otherwise.
             static Boole MacOSX();
+
+            /// @return If MEZZ_Ios is defined true, false otherwise.
+            static Boole Ios();
+
+            /// @return If MEZZ_CompilerDetected is defined true (it almost always will be), false otherwise.
+            static Boole CompilerDetected();
 
             /// @return If MEZZ_CompilerIsClang is defined true, false otherwise.
             static Boole CompilerIsClang();

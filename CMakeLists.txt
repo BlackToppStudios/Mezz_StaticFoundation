@@ -44,8 +44,8 @@ message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VER
 
 ##########################################################################|#############################################
 # Download, Verify and setup the Jagati
-set(JagatiChecksum "a64cd1bfa71c72fab744741094f9e4269a576177593bc861c64dd8\
-763c9083797fad83c46e561efe3ee7034a02b97527cad2823d48c70b7c8c3c44fa88bc57fa")
+set(JagatiChecksum "7143962fefaf0c3e50aebb916037235d61fc5c50dbfafd61bf9479\
+be66ca786cd93c3267de03b1cf0900946906b4cf5c1ec54da1ed33e9883da2671dbc77d357")
 file(DOWNLOAD
     "https://raw.githubusercontent.com/BlackToppStudios/Jagati/Proposed-bigleap/Jagati.cmake"
     "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
@@ -79,7 +79,7 @@ AddSwigEntryPoint("SwigConfig.h")
 ShowList("Swig Input Files:" "\t" "${StaticFoundationSwigFiles}")
 
 AddJagatiDoxInput("Dox.h")
-ShowList("Doxygen Input Files:" "\t" "${StaticFoundationDoxFiles}")
+ShowList("Doxygen Input Files:" "\t" "${JagatiDoxArray}")
 
 ########################################################################################################################
 # Set up config file
@@ -94,10 +94,17 @@ AddJagatiCompileOption("MEZZ_CodeCoverage"
 UseStaticLinking(${MEZZ_BuildStaticLibraries})
 ChooseCodeCoverage(${MEZZ_CodeCoverage})
 
+AddJagatiConfig("MEZZ_CpuKnown" "" ${CpuIsKnown})
+AddJagatiConfig("MEZZ_CpuX86" "" ${CpuIsX86})
+AddJagatiConfig("MEZZ_CpuAmd64" "" ${CpuIsAmd64})
+AddJagatiConfig("MEZZ_CpuArm" "" ${CpuIsArm})
+
 AddJagatiConfig("MEZZ_Linux" "" ${SystemIsLinux})
 AddJagatiConfig("MEZZ_Windows" "" ${SystemIsWindows})
 AddJagatiConfig("MEZZ_MacOSX" "" ${SystemIsMacOSX})
+AddJagatiConfig("MEZZ_Ios" "" ${SystemIsIOS})
 
+AddJagatiConfig("MEZZ_CompilerDetected" "" ${CompilerDetected})
 AddJagatiConfig("MEZZ_CompilerIsClang" "" ${CompilerIsClang})
 AddJagatiConfig("MEZZ_CompilerIsEmscripten" "" ${CompilerIsEmscripten})
 AddJagatiConfig("MEZZ_CompilerIsGCC" "" ${CompilerIsGCC})

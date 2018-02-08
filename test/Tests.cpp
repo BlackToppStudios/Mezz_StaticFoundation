@@ -109,9 +109,15 @@ NameValuePairMap CheckableValues()
     Results["MEZZ_BuildDoxygen"] = IntToString(Mezzanine::RuntimeStatic::BuildDoxygen());
     Results["MEZZ_BuildStaticLibraries"] = IntToString(Mezzanine::RuntimeStatic::BuildStaticLibraries());
     Results["MEZZ_CodeCoverage"] = IntToString(Mezzanine::RuntimeStatic::CodeCoverage());
+    Results["MEZZ_CpuKnown"] = IntToString(Mezzanine::RuntimeStatic::CpuKnown());
+    Results["MEZZ_CpuX86"] = IntToString(Mezzanine::RuntimeStatic::CpuX86());
+    Results["MEZZ_CpuAmd64"] = IntToString(Mezzanine::RuntimeStatic::CpuAmd64());
+    Results["MEZZ_CpuArm"] = IntToString(Mezzanine::RuntimeStatic::CpuArm());
     Results["MEZZ_Linux"] = IntToString(Mezzanine::RuntimeStatic::Linux());
     Results["MEZZ_Windows"] = IntToString(Mezzanine::RuntimeStatic::Windows());
     Results["MEZZ_MacOSX"] = IntToString(Mezzanine::RuntimeStatic::MacOSX());
+    Results["MEZZ_Ios"] = IntToString(Mezzanine::RuntimeStatic::Ios());
+    Results["MEZZ_CompilerDetected"] = IntToString(Mezzanine::RuntimeStatic::CompilerDetected());
     Results["MEZZ_CompilerIsClang"] = IntToString(Mezzanine::RuntimeStatic::CompilerIsClang());
     Results["MEZZ_CompilerIsGCC"] = IntToString(Mezzanine::RuntimeStatic::CompilerIsGCC());
     Results["MEZZ_CompilerIsEmscripten"] = IntToString(Mezzanine::RuntimeStatic::CompilerIsEmscripten());
