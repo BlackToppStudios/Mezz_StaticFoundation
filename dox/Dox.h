@@ -53,9 +53,16 @@
 ///     - @ref MEZZ_BuildDoxygen - @ref StaticFoundationConfig.h - Set if the doxygen build option was set.
 ///     - @ref MEZZ_BuildStaticLibraries - @ref StaticFoundationConfig.h - Set if the build option to build static
 /// libraries was set. This defaults to true. Dynamic libraries will be built otherwise.
-///     - @ref MEZZ_Linux  - @ref StaticFoundationConfig.h - Set if CMake dectects a Linux build environment.
-///     - @ref MEZZ_Windows  - @ref StaticFoundationConfig.h - Set if CMake dectects a Windows build environment.
-///     - @ref MEZZ_MacOSX  - @ref StaticFoundationConfig.h - Set if CMake dectects a Mac OS X build environment.
+///     - @ref MEZZ_CodeCoverage - @ref StaticFoundationConfig.h - Set if code coverage requested by project.
+///     - @ref MEZZ_CpuKnown - @ref StaticFoundationConfig.h - Set if the CPU type could be detected.
+///     - @ref MEZZ_CpuX86 - @ref StaticFoundationConfig.h - Set if the CPU is known is x86 or Amd64.
+///     - @ref MEZZ_CpuAmd64 - @ref StaticFoundationConfig.h - Set if the CPU is known is Amd64.
+///     - @ref MEZZ_CpuArm - @ref StaticFoundationConfig.h - Set if the CPU is known is Arm.
+///     - @ref MEZZ_Linux - @ref StaticFoundationConfig.h - Set if CMake dectects a Linux build environment.
+///     - @ref MEZZ_Windows - @ref StaticFoundationConfig.h - Set if CMake dectects a Windows build environment.
+///     - @ref MEZZ_MacOSX - @ref StaticFoundationConfig.h - Set if CMake dectects a Mac OS X build environment.
+///     - @ref MEZZ_Ios - @ref StaticFoundationConfig.h - Set if CMake dectects a cross compile for IOS.
+///     - @ref MEZZ_CompilerDetected - @ref StaticFoundationConfig.h - Set if CMake dectects the compiler, so its set.
 ///     - @ref MEZZ_CompilerIsClang  - @ref StaticFoundationConfig.h - Set if the compiler is Clang.
 ///     - @ref MEZZ_CompilerIsEmscripten  - @ref StaticFoundationConfig.h - Set if the compiler is Emscripten.
 ///     - @ref MEZZ_CompilerIsGCC  - @ref StaticFoundationConfig.h - Set if the compiler is GCC, Mingw or TDM-GCC.
@@ -79,6 +86,29 @@
 /// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is set by cmake option and on supported
 /// platforms this will allow choosing between static libraries (.a/.lib) and dynamic libraries (.so/.dll).
 
+/// @def MEZZ_CodeCoverage
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is set if the project calls the
+/// SetCodeCoverage CMake macro. If set extra files will be generated during the build (on supported compilers) and
+/// test coverage can be tracked.
+
+/// @def MEZZ_CpuKnown
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is set when CPU detection worked, which it
+/// often doesn't. If this is not set then none of the other Mezz_Cpu macros will be set,so check this first.
+
+/// @def MEZZ_CpuX86
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is set when CPU detection worked, and the
+/// current CPU is x86 compatible. This is set when Amd64 is set or whenever the current CPU is compatible with intel,
+/// so it should be true Via, Amd and a few other CPUs are used.
+
+/// @def MEZZ_CpuAmd64
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is set when CPU detection worked, and the
+/// current CPU is Amd64 compatible. This is set when using and Amd64 CPU or one compatible like any Emt64 CPU, but not
+/// itanium.
+
+/// @def MEZZ_CpuArm
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is set when CPU detection worked, and the
+/// current CPU is Arm compatible.
+
 /// @def MEZZ_Linux
 /// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if Linux is the target platform, unset
 /// otherwise.
@@ -90,7 +120,15 @@
 /// @def MEZZ_MacOSX
 /// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if Mac OS X is the target platform, unset
 /// otherwise.
-///
+
+/// @def MEZZ_Ios
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if this is a cross-compile for IOS or this is
+/// being built on an IOS device.
+
+/// @def MEZZ_CompilerDetected
+/// @brief Pretty much always set, the Jagati bails if it cannot find the compiler, this may be used inthe future when
+/// cross-compiling could complicate matters.
+
 /// @def MEZZ_CompilerIsClang
 /// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with Clang,
 ///  false otherwise.
