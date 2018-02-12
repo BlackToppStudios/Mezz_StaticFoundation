@@ -392,10 +392,11 @@ pipeline {
 
     post {
         failure (
-            mail to: 'sqeaky@blacktoppstudios.com, makoenergy@blacktoppstudios.com',
+            mail body: "Failure - ${env.JOB_NAME} - Branch ${env.BRANCH_NAME} - Build # ${env.BUILD_NUMBER}\n\n" +
+                        "Check console output at ${env.BUILD_URL} to view the results."
                  subject: "Failure - ${env.JOB_NAME}",
-                 body: "Failure - ${env.JOB_NAME} - Branch ${env.BRANCH_NAME} - Build # ${env.BUILD_NUMBER}\n\n" +
-                       "Check console output at ${env.BUILD_URL} to view the results."
+                 to: 'sqeaky@blacktoppstudios.com, makoenergy@blacktoppstudios.com',
+
         }
     }
 }
