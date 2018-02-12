@@ -71,6 +71,7 @@ pipeline {
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
+                            export PATH='$PATH:/usr/local/bin/'&&
                             cmake -G"Xcode" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF               &&
                             cmake --build .
                         """ }
@@ -95,8 +96,8 @@ pipeline {
                 stage('UbuntuClang') {
                     agent { label "UbuntuClang" }
                     environment {
-                        CC = 'gcc-6'
-                        CXX = 'g++-6'
+                        CC = 'clang'
+                        CXX = 'clang++'
                         MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
                     }
                     steps {
@@ -125,8 +126,8 @@ pipeline {
                 stage('UbuntuGcc') {
                     agent { label "UbuntuGcc" }
                     environment {
-                        CC = 'emcc'
-                        CXX = 'em++'
+                        CC = 'gcc-6'
+                        CXX = 'g++-6'
                         MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
                     }
                     steps {
