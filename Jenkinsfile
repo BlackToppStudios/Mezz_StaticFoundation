@@ -76,13 +76,6 @@ try {
             // portable sdkrequires to work. The next few sets CC and CXX which CMake will use to know to use
             // the emscripten compiler. The last one sets Mezzanine specific variables so pacakges are found.
             dir('build-debug') { sh """
-                export PATH=$PATH:/home/cisadmin/emsdk-portable/clang/e1.37.9_64bit                                   &&
-                export PATH=$PATH:/home/cisadmin/emsdk-portable/node/4.1.1_64bit/bin                                  &&
-                export PATH=$PATH:/home/cisadmin/emsdk-portable/emscripten/1.37.9                                     &&
-                export EMSDK=/home/cisadmin/emsdk-portable                                                            &&
-                export EM_CONFIG=/home/cisadmin/.emscripten                                                           &&
-                export BINARYEN_ROOT=/home/cisadmin/emsdk-portable/clang/e1.37.9_64bit/binaryen                       &&
-                export EMSCRIPTEN=/home/cisadmin/emsdk-portable/emscripten/1.37.9                                     &&
                 export CC=emcc                                                                                        &&
                 export CXX=em++                                                                                       &&
                 export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                          &&
