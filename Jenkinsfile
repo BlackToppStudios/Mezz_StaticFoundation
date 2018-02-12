@@ -251,7 +251,7 @@ stage('Test-Release') {
         dir('build-Release') { sh """
             ./StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:0 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
         """ }
-        junit 'Mezz_StaticFoundationTests.xml'
+        junit '**/*.xml'
     } },
     MacOSSierra: { node('MacOSSierra') {
         dir('build-Release') { sh """
