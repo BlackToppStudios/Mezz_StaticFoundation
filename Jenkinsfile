@@ -47,9 +47,9 @@ pipeline {
 
             }
         }
-        stage('BuildTest-Debug') {
+        stage('Build-Debug') {
             parallel {
-                stage('FedoraGcc-build') {
+                stage('FedoraGcc') {
                     agent { label "FedoraGcc" }
                     steps {
                         sh 'mkdir -p build-debug'
@@ -60,18 +60,100 @@ pipeline {
                         """ }
                     }
                 }
-                stage('FedoraGcc-test') {
-                    agent { label "FedoraGcc" }
+                stage('MacOSSierra') {
+                    agent { label "MacOSSierra" }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
-                            ./StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:0 MEZZ_CompilerIsClang:1 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:0 MEZZ_Linux:0 MEZZ_MacOSX:1 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
+                            export MEZZ_PACKAGE_DIR=/Users/cisadmin/Code/                                                             &&
+                            export PATH=$PATH:/usr/local/bin/                                                                         &&
+                            cmake -G"Xcode" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF               &&
+                            cmake --build .
                         """ }
                     }
                 }
-
-
+                stage('RaspianJessie') {
+                    agent { label "RaspianJessie" }
+                    steps {
+                        sh 'mkdir -p build-debug'
+                        dir('build-debug') { sh """
+                            export CC=gcc-6                                                                                           &&
+                            export CXX=g++-6                                                                                          &&
+                            export MEZZ_PACKAGE_DIR=/home/pi/Code/                                                                    &&
+                            cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF               &&
+                            ninja
+                        """ }
+                    }
+                }
+                stage('UbuntuClang') {
+                    agent { label "UbuntuClang" }
+                    steps {
+                        sh 'mkdir -p build-debug'
+                        dir('build-debug') { sh """
+                            export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                              &&
+                            cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF               &&
+                            ninja
+                        """ }
+                    }
+                }
+                stage('UbuntuEmscripten') {
+                    agent { label "UbuntuEmscripten" }
+                    steps {
+                        sh 'mkdir -p build-debug'
+                        // The first group of variables simulates running source ~/emsdk-portable/emsdk_env.sh as the emscripten
+                        // portable sdkrequires to work. The next few sets CC and CXX which CMake will use to know to use
+                        // the emscripten compiler. The last one sets Mezzanine specific variables so pacakges are found.
+                        dir('build-debug') { sh """
+                            export CC=emcc                                                                                            &&
+                            export CXX=em++                                                                                           &&
+                            export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                              &&
+                            cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF               &&
+                            ninja
+                    }
+                }
+                stage('UbuntuGcc') {
+                    agent { label "UbuntuGcc" }
+                    steps {
+                        sh 'mkdir -p build-debug'
+                        dir('build-debug') { sh """
+                            export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                              &&
+                            cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF               &&
+                            ninja
+                        """ }
+                    }
+                }
+                stage('windows7Mingw32') {
+                    agent { label "windows7Mingw32" }
+                    steps {
+                        bat 'if not exist "build-debug" mkdir build-debug'
+                        dir('build-debug') {
+                            bat 'cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
+                            bat 'ninja'
+                        }
+                    }
+                }
+                stage('windows7Mingw64') {
+                    agent { label "windows7Mingw64" }
+                    steps {
+                        bat 'if not exist "build-debug" mkdir build-debug'
+                        dir('build-debug') {
+                            bat 'cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
+                            bat 'ninja'
+                        }
+                    }
+                }
+                stage('windows7msvc') {
+                    agent { label "windows7msvc" }
+                    steps {
+                        bat 'if not exist "build-debug" mkdir build-debug'
+                        dir('build-debug') {
+                            bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat" x86_amd64 && cmake -G"Visual Studio 15 2017 Win64" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
+                            bat 'cmake --build .'
+                        }
+                    }
+                }
             }
+
 
 //            parallel FedoraGcc: { node('FedoraGcc') {
 //                checkout scm
