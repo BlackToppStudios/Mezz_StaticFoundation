@@ -8,6 +8,10 @@ pipeline {
     stages {
         stage('Checkout') {
             parallel {
+                stage('FedoraGcc') {
+                    agent { label "FedoraGcc" }
+                    steps { checkout scm }
+                }
 
             }
         }
