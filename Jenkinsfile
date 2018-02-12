@@ -64,11 +64,13 @@ pipeline {
                 }
                 stage('MacOSSierra') {
                     agent { label "MacOSSierra" }
+                    environment {
+                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
+                        PATH = '$PATH:/usr/local/bin/'
+                    }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
-                            export MEZZ_PACKAGE_DIR=/Users/cisadmin/Code/                                                             &&
-                            export PATH=$PATH:/usr/local/bin/                                                                         &&
                             cmake -G"Xcode" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF               &&
                             cmake --build .
                         """ }
@@ -76,11 +78,14 @@ pipeline {
                 }
                 stage('RaspianJessie') {
                     agent { label "RaspianJessie" }
+                    environment {
+                        CC = 'gcc-6'
+                        CXX = 'g++-6'
+                        MEZZ_PACKAGE_DIR = '/home/pi/Code/'
+                    }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
-                            export CC=gcc-6                                                                                           &&
-                            export CXX=g++-6                                                                                          &&
                             export MEZZ_PACKAGE_DIR=/home/pi/Code/                                                                    &&
                             cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF               &&
                             ninja
@@ -89,10 +94,14 @@ pipeline {
                 }
                 stage('UbuntuClang') {
                     agent { label "UbuntuClang" }
+                    environment {
+                        CC = 'gcc-6'
+                        CXX = 'g++-6'
+                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
+                    }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
-                            export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                              &&
                             cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF               &&
                             ninja
                         """ }
@@ -100,15 +109,14 @@ pipeline {
                 }
                 stage('UbuntuEmscripten') {
                     agent { label "UbuntuEmscripten" }
+                    environment {
+                        CC = 'emcc'
+                        CXX = 'em++'
+                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
+                    }
                     steps {
                         sh 'mkdir -p build-debug'
-                        // The first group of variables simulates running source ~/emsdk-portable/emsdk_env.sh as the emscripten
-                        // portable sdkrequires to work. The next few sets CC and CXX which CMake will use to know to use
-                        // the emscripten compiler. The last one sets Mezzanine specific variables so pacakges are found.
                         dir('build-debug') { sh """
-                            export CC=emcc                                                                                            &&
-                            export CXX=em++                                                                                           &&
-                            export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                              &&
                             cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF               &&
                             ninja
                         """ }
@@ -116,10 +124,14 @@ pipeline {
                 }
                 stage('UbuntuGcc') {
                     agent { label "UbuntuGcc" }
+                    environment {
+                        CC = 'emcc'
+                        CXX = 'em++'
+                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
+                    }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
-                            export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                              &&
                             cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF               &&
                             ninja
                         """ }
@@ -167,6 +179,11 @@ pipeline {
                             ./StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
                         """ }
                     }
+                    post {
+                        always {
+                            junit "**/Mezz*.xml"
+                        }
+                    }
                 }
                 stage('MacOSSierra') {
                     agent { label "MacOSSierra" }
@@ -174,6 +191,11 @@ pipeline {
                         dir('build-debug') { sh """
                             ./StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:0 MEZZ_CompilerIsClang:1 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:0 MEZZ_Linux:0 MEZZ_MacOSX:1 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
                         """ }
+                    }
+                    post {
+                        always {
+                            junit "**/Mezz*.xml"
+                        }
                     }
                 }
                 stage('RaspianJessie') {
@@ -183,6 +205,11 @@ pipeline {
                            ./StaticFoundation_Tester MEZZ_Arch32:1 MEZZ_Arch64:0 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
                         """ }
                     }
+                    post {
+                        always {
+                            junit "**/Mezz*.xml"
+                        }
+                    }
                 }
                 stage('UbuntuClang') {
                     agent { label "UbuntuClang" }
@@ -190,6 +217,11 @@ pipeline {
                         dir('build-debug') { sh """
                            ./StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
                         """ }
+                    }
+                    post {
+                        always {
+                            junit "**/Mezz*.xml"
+                        }
                     }
                 }
                 stage('UbuntuEmscripten') {
@@ -199,6 +231,11 @@ pipeline {
                             node StaticFoundation_Tester.js MEZZ_CompilerIsEmscripten:1 MEZZ_CompilerIsGCC:0 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
                         """ }
                     }
+                    post {
+                        always {
+                            junit "**/Mezz*.xml"
+                        }
+                    }
                 }
                 stage('UbuntuGcc') {
                     agent { label "UbuntuGcc" }
@@ -207,12 +244,22 @@ pipeline {
                                ./StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
                         """ }
                     }
+                    post {
+                        always {
+                            junit "**/Mezz*.xml"
+                        }
+                    }
                 }
                 stage('windows7Mingw32') {
                     agent { label "windows7Mingw32" }
                     steps {
                         dir('build-debug') {
                             bat 'StaticFoundation_Tester MEZZ_Arch32:1 MEZZ_Arch64:0 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:0 MEZZ_Linux:0 MEZZ_MacOSX:0 MEZZ_Windows:1 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0'
+                        }
+                    }
+                    post {
+                        always {
+                            junit "**/Mezz*.xml"
                         }
                     }
                 }
@@ -223,12 +270,22 @@ pipeline {
                             bat 'StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:0 MEZZ_Linux:0 MEZZ_MacOSX:0 MEZZ_Windows:1 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0'
                         }
                     }
+                    post {
+                        always {
+                            junit "**/Mezz*.xml"
+                        }
+                    }
                 }
                 stage('windows7msvc') {
                     agent { label "windows7msvc" }
                     steps {
                         dir('build-debug') {
                             bat 'StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:0 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:1 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:0 MEZZ_Linux:0 MEZZ_MacOSX:0 MEZZ_Windows:1 MEZZ_CompilerDesignNix:0 MEZZ_CompilerDesignMS:1'
+                        }
+                    }
+                    post {
+                        always {
+                            junit "**/Mezz*.xml"
                         }
                     }
                 }
