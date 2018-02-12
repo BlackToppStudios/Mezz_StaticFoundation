@@ -60,14 +60,12 @@ pipeline {
                         """ }
                     }
                 }
-                stage('FedoraGcc-build') {
+                stage('FedoraGcc-test') {
                     agent { label "FedoraGcc" }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
-                            export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/ &&
-                            cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
-                            ninja
+                            ./StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:0 MEZZ_CompilerIsClang:1 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:0 MEZZ_Linux:0 MEZZ_MacOSX:1 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
                         """ }
                     }
                 }
