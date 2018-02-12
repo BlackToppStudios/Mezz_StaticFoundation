@@ -6,7 +6,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr:'30'))
     }
     stages {
-        stage('Checkout') {
+        stage('Checkout') { steps {
             parallel {
                 stage('FedoraGcc') {
                     agent { label "FedoraGcc" }
@@ -45,10 +45,8 @@ pipeline {
                     steps { checkout scm }
                 }
             }
-        }
-    }
-    stages {
-        stage('Build-Debug') {
+        } }
+        stage('Build-Debug') { steps {
             parallel {
                 stage('FedoraGcc') {
                     agent { label "FedoraGcc" }
@@ -154,9 +152,9 @@ pipeline {
                         }
                     }
                 }
-            }
+            } }
 
-            stage('Test-Debug') {
+            stage('Test-Debug') { steps {
                 parallel {
                     stage('FedoraGcc-build') {
                         agent { label "FedoraGcc" }
@@ -231,7 +229,7 @@ pipeline {
                         }
                     }
                 }
-            }
+            } }
 //            parallel FedoraGcc: { node('FedoraGcc') {
 //                checkout scm
 //            } },
