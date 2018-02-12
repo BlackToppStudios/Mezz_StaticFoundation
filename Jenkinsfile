@@ -1,11 +1,10 @@
 #!groovy
 
 pipeline {
+    options {
+        buildDiscarder(logRotator(numToKeepStr:'30'))
+    }
     stages {
-        options {
-            buildDiscarder(logRotator(numToKeepStr:'30'))
-        }
-
         stage('Checkout') {
             parallel FedoraGcc: { node('FedoraGcc') {
                 checkout scm
