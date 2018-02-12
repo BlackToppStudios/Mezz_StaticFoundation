@@ -51,6 +51,9 @@ pipeline {
             parallel {
                 stage('FedoraGcc') {
                     agent { label "FedoraGcc" }
+                    environment {
+                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
+                    }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
@@ -65,7 +68,49 @@ pipeline {
                         }
                     }
                 }
-
+                stage('MacOSSierra') {
+                    agent { label "MacOSSierra" }
+                    environment {
+                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
+                    }
+                    steps {
+                        sh 'mkdir -p build-debug'
+                        dir('build-debug') { sh """
+                            export PATH='$PATH:/usr/local/bin/' &&
+                            cmake -G"Xcode" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
+                            cmake --build . &&
+                           ./StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:0 MEZZ_CompilerIsClang:1 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:0 MEZZ_Linux:0 MEZZ_MacOSX:1 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
+                        """ }
+                        }
+                        post {
+                            always {
+                                junit "build-debug/**/Mezz*.xml"
+                            }
+                        }
+                    }
+                }
+                stage('RaspianJessie') {
+                    agent { label "RaspianJessie" }
+                    environment {
+                        CC = 'gcc-6'
+                        CXX = 'g++-6'
+                        MEZZ_PACKAGE_DIR = '/home/pi/Code/'
+                    }
+                    steps {
+                        sh 'mkdir -p build-debug'
+                        dir('build-debug') { sh """
+                            export MEZZ_PACKAGE_DIR=/home/pi/Code/ &&
+                            cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
+                            ninja &&
+                            ./StaticFoundation_Tester MEZZ_Arch32:1 MEZZ_Arch64:0 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
+                         """ }
+                    }
+                    post {
+                         always {
+                             junit "build-debug/**/Mezz*.xml"
+                         }
+                    }
+                }
             }
         }
 
