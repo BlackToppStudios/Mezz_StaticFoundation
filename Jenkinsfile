@@ -44,9 +44,9 @@ pipeline {
                     agent { label "windows7msvc" }
                     steps { checkout scm }
                 }
-
             }
         }
+
         stage('Build-Debug') {
             parallel {
                 stage('FedoraGcc') {
