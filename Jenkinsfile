@@ -7,7 +7,6 @@ pipeline {
     }
     stages {
         stage('Checkout') {
-            agent none
             parallel {
                             stage('Fedora') {
                                 agent { label "FedoraGcc" }
