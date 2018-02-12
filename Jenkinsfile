@@ -109,6 +109,7 @@ pipeline {
                             export MEZZ_PACKAGE_DIR=/home/cisadmin/Code/                                                              &&
                             cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF               &&
                             ninja
+                        """ }
                     }
                 }
                 stage('UbuntuGcc') {
