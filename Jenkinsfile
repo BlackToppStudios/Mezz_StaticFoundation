@@ -1,6 +1,5 @@
 #!groovy
 
-
 stage('Checkout') {
     parallel FedoraGcc: { node('FedoraGcc') {
         checkout scm
@@ -251,7 +250,6 @@ stage('Test-Release') {
         dir('build-Release') { sh """
             ./StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:1 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:0 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
         """ }
-        junit '**/*.xml'
     } },
     MacOSSierra: { node('MacOSSierra') {
         dir('build-Release') { sh """
@@ -294,4 +292,45 @@ stage('Test-Release') {
             bat 'StaticFoundation_Tester MEZZ_Arch32:0 MEZZ_Arch64:1 MEZZ_CompilerIsEmscripten:0 MEZZ_CompilerIsGCC:0 MEZZ_CompilerIsClang:0 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:1 MEZZ_BuildDoxygen:0 MEZZ_Debug:0 MEZZ_CodeCoverage:0 MEZZ_Linux:0 MEZZ_MacOSX:0 MEZZ_Windows:1 MEZZ_CompilerDesignNix:0 MEZZ_CompilerDesignMS:1'
         }
     } }
+}
+
+post {
+    always{
+        stage('GatherResults') {
+            parallel  FedoraGcc: { node('FedoraGcc') {
+                junit '**/Mezz*.xml'
+            } },
+            MacOSSierra: { node('MacOSSierra') {
+                junit '**/Mezz*.xml'
+            } },
+            RaspianJessie: { node('RaspianJessie') {
+                junit '**/Mezz*.xml'
+            } },
+            UbuntuClang: { node('UbuntuClang') {
+                junit '**/Mezz*.xml'
+            } },
+            UbuntuEmscripten: { node('UbuntuEmscripten') {
+                junit '**/Mezz*.xml'
+            } },
+            UbuntuGcc: { node('UbuntuGcc') {
+                junit '**/Mezz*.xml'
+            } },
+            windows7Mingw32: { node('windows7Mingw32') {
+                junit '**/Mezz*.xml'
+            } },
+            windows7Mingw64: { node('windows7Mingw64') {
+                junit '**/Mezz*.xml'
+            } },
+            windows7msvc: { node('windows7msvc') {
+                junit '**/Mezz*.xml'
+            } }
+        }
+    }
+
+    failure (
+        mail to: 'sqeaky@blacktoppstudios.com, makoenergy@blacktoppstudios.com',
+             subject: "Failure - ${env.JOB_NAME}",
+             body: "Failure - ${env.JOB_NAME} - Branch ${env.BRANCH_NAME} - Build # ${env.BUILD_NUMBER}\n\n" +
+                   "Check console output at ${env.BUILD_URL} to view the results."
+    }
 }
