@@ -181,7 +181,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit "**/Mezz*.xml"
+                            junit "build-debug/**/Mezz*.xml"
                         }
                     }
                 }
@@ -194,7 +194,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit "**/Mezz*.xml"
+                            junit "build-debug/**/Mezz*.xml"
                         }
                     }
                 }
@@ -207,7 +207,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit "**/Mezz*.xml"
+                            junit "build-debug/**/Mezz*.xml"
                         }
                     }
                 }
@@ -220,7 +220,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit "**/Mezz*.xml"
+                            junit "build-debug/**/Mezz*.xml"
                         }
                     }
                 }
@@ -233,7 +233,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit "**/Mezz*.xml"
+                            junit "build-debug/**/Mezz*.xml"
                         }
                     }
                 }
@@ -246,7 +246,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit "**/Mezz*.xml"
+                            junit "build-debug/**/Mezz*.xml"
                         }
                     }
                 }
@@ -259,7 +259,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit "**/Mezz*.xml"
+                            junit "build-debug/**/Mezz*.xml"
                         }
                     }
                 }
@@ -272,7 +272,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit "**/Mezz*.xml"
+                            junit "build-debug/**/Mezz*.xml"
                         }
                     }
                 }
@@ -285,7 +285,7 @@ pipeline {
                     }
                     post {
                         always {
-                            junit "**/Mezz*.xml"
+                            junit "build-debug/**/Mezz*.xml"
                         }
                     }
                 }
@@ -319,7 +319,7 @@ pipeline {
 //            windows7msvc: { node('windows7msvc') {
 //                checkout scm
 //            } }
-        }
+
 
     } // stages
 
