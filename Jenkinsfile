@@ -51,9 +51,6 @@ pipeline {
             parallel {
                 stage('FedoraGcc') {
                     agent { label "FedoraGcc" }
-                    environment {
-                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
-                    }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
