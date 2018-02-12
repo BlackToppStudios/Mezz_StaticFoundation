@@ -7,33 +7,50 @@ pipeline {
     }
     stages {
         stage('Checkout') {
-            parallel FedoraGcc: { node('FedoraGcc') {
-                checkout scm
-            } },
-            MacOSSierra: { node('MacOSSierra') {
-                checkout scm
-            } },
-            RaspianJessie: { node('RaspianJessie') {
-                checkout scm
-            } },
-            UbuntuClang: { node('UbuntuClang') {
-                checkout scm
-            } },
-            UbuntuEmscripten: { node('UbuntuEmscripten') {
-                checkout scm
-            } },
-            UbuntuGcc: { node('UbuntuGcc') {
-                checkout scm
-            } },
-            windows7Mingw32: { node('windows7Mingw32') {
-                checkout scm
-            } },
-            windows7Mingw64: { node('windows7Mingw64') {
-                checkout scm
-            } },
-            windows7msvc: { node('windows7msvc') {
-                checkout scm
-            } }
+            agent none
+            parallel {
+                            stage('Fedora') {
+                                agent { label "FedoraGcc" }
+                                steps {
+                                    checkout scm
+                                }
+                                post {
+                                    always {
+                                        junit "**/Mezz*.xml"
+                                    }
+                                }
+                            }
+
+
+            }
+
+//            parallel FedoraGcc: { node('FedoraGcc') {
+//                checkout scm
+//            } },
+//            MacOSSierra: { node('MacOSSierra') {
+//                checkout scm
+//            } },
+//            RaspianJessie: { node('RaspianJessie') {
+//                checkout scm
+//            } },
+//            UbuntuClang: { node('UbuntuClang') {
+//                checkout scm
+//            } },
+//            UbuntuEmscripten: { node('UbuntuEmscripten') {
+//                checkout scm
+//            } },
+//            UbuntuGcc: { node('UbuntuGcc') {
+//                checkout scm
+//            } },
+//            windows7Mingw32: { node('windows7Mingw32') {
+//                checkout scm
+//            } },
+//            windows7Mingw64: { node('windows7Mingw64') {
+//                checkout scm
+//            } },
+//            windows7msvc: { node('windows7msvc') {
+//                checkout scm
+//            } }
         }
 
         stage('Build-Debug') {
