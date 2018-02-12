@@ -8,42 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             parallel {
-                stage('FedoraGcc') {
-                    agent { label "FedoraGcc" }
-                    steps { checkout scm }
-                }
-                stage('MacOSSierra') {
-                    agent { label "MacOSSierra" }
-                    steps { checkout scm }
-                }
-                stage('RaspianJessie') {
-                    agent { label "RaspianJessie" }
-                    steps { checkout scm }
-                }
-                stage('UbuntuClang') {
-                    agent { label "UbuntuClang" }
-                    steps { checkout scm }
-                }
-                stage('UbuntuEmscripten') {
-                    agent { label "UbuntuEmscripten" }
-                    steps { checkout scm }
-                }
-                stage('UbuntuGcc') {
-                    agent { label "UbuntuGcc" }
-                    steps { checkout scm }
-                }
-                stage('windows7Mingw32') {
-                    agent { label "windows7Mingw32" }
-                    steps { checkout scm }
-                }
-                stage('windows7Mingw64') {
-                    agent { label "windows7Mingw64" }
-                    steps { checkout scm }
-                }
-                stage('windows7msvc') {
-                    agent { label "windows7msvc" }
-                    steps { checkout scm }
-                }
+
             }
         }
 
