@@ -51,9 +51,6 @@ pipeline {
             parallel {
                 stage('FedoraGcc') {
                     agent { label "FedoraGcc" }
-                    environment {
-                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
-                    }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
@@ -70,9 +67,6 @@ pipeline {
                 }
                 stage('MacOSSierra') {
                     agent { label "MacOSSierra" }
-                    environment {
-                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
-                    }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
@@ -90,11 +84,6 @@ pipeline {
                 }
                 stage('RaspianJessie') {
                     agent { label "RaspianJessie" }
-                    environment {
-                        CC = 'gcc-6'
-                        CXX = 'g++-6'
-                        MEZZ_PACKAGE_DIR = '/home/pi/Code/'
-                    }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
@@ -112,11 +101,6 @@ pipeline {
                 }
                 stage('UbuntuClang') {
                     agent { label "UbuntuClang" }
-                    environment {
-                        CC = 'clang'
-                        CXX = 'clang++'
-                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
-                    }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
@@ -133,11 +117,6 @@ pipeline {
                 }
                 stage('UbuntuEmscripten') {
                     agent { label "UbuntuEmscripten" }
-                    environment {
-                        CC = 'emcc'
-                        CXX = 'em++'
-                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
-                    }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
@@ -150,9 +129,6 @@ pipeline {
                 }
                 stage('UbuntuGcc') {
                     agent { label "UbuntuGcc" }
-                    environment {
-                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
-                    }
                     steps {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
@@ -222,9 +198,6 @@ pipeline {
             parallel {
                 stage('FedoraGcc') {
                     agent { label "FedoraGcc" }
-                    environment {
-                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
-                    }
                     steps {
                         sh 'mkdir -p build-release'
                         dir('build-release') { sh """
@@ -241,9 +214,6 @@ pipeline {
                 }
                 stage('MacOSSierra') {
                     agent { label "MacOSSierra" }
-                    environment {
-                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
-                    }
                     steps {
                         sh 'mkdir -p build-release'
                         dir('build-release') { sh """
@@ -261,11 +231,6 @@ pipeline {
                 }
                 stage('RaspianJessie') {
                     agent { label "RaspianJessie" }
-                    environment {
-                        CC = 'gcc-6'
-                        CXX = 'g++-6'
-                        MEZZ_PACKAGE_DIR = '/home/pi/Code/'
-                    }
                     steps {
                         sh 'mkdir -p build-release'
                         dir('build-release') { sh """
@@ -283,11 +248,6 @@ pipeline {
                 }
                 stage('UbuntuClang') {
                     agent { label "UbuntuClang" }
-                    environment {
-                        CC = 'clang'
-                        CXX = 'clang++'
-                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
-                    }
                     steps {
                         sh 'mkdir -p build-release'
                         dir('build-release') { sh """
@@ -304,11 +264,6 @@ pipeline {
                 }
                 stage('UbuntuEmscripten') {
                     agent { label "UbuntuEmscripten" }
-                    environment {
-                        CC = 'emcc'
-                        CXX = 'em++'
-                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
-                    }
                     steps {
                         sh 'mkdir -p build-release'
                         dir('build-release') { sh """
@@ -321,9 +276,6 @@ pipeline {
                 }
                 stage('UbuntuGcc') {
                     agent { label "UbuntuGcc" }
-                    environment {
-                        MEZZ_PACKAGE_DIR = '/home/cisadmin/Code/'
-                    }
                     steps {
                         sh 'mkdir -p build-release'
                         dir('build-release') { sh """
