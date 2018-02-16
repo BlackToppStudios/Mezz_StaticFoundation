@@ -6,6 +6,14 @@ common facilities that such games need. This is just one component of many.
 
 ## About this Library ##
 
+This library, the StaticFoundation, is responsible for detecting compilation options, compiler settings, doing work at
+compile time (like string manipulation) and handling other platform specific details.
+
+It does this by a mix a of use of preprocessor macros, constexpr C++11/14 and configuration time/CMake scripting
+techniques.
+
+## Build Status ##
+
 The current Jenkins (Linux - Emscripten, Rasberry Pi - Gcc) build status is:
 [![Build Status](http://blacktopp.ddns.net:8080/job/Mezz_StaticFoundation/badge/icon)](http://blacktopp.ddns.net:8080/job/Mezz_StaticFoundation/)
 
@@ -17,9 +25,3 @@ The current Appveyor (Windows - MinGW/Msvc) build status is:
 
 The current code coverage for tests is:
 [![codecov](https://codecov.io/gh/BlackToppStudios/Mezz_StaticFoundation/branch/master/graph/badge.svg)](https://codecov.io/gh/BlackToppStudios/Mezz_StaticFoundation)
-
-This library, the StaticFoundation, is responsible for detecting compilation options, compiler settings, doing work at
-compile time (like string manipulation) and handling other platform specific details.
-
-It does this by a mix a of use of preprocessor macros, constexpr C++11/14 and configuration time/CMake scripting
-techniques.
