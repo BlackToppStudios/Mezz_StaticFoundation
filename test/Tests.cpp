@@ -41,11 +41,13 @@
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 
 #include "Tests.h"
 #include "RuntimeStatics.h"
 
 using std::cout;
+using std::stringstream;
 using std::cerr;
 using std::endl;
 using Mezzanine::String;
@@ -136,9 +138,12 @@ void DoComparisonTest(const Mezzanine::NameValuePairMap& Expected, const Mezzani
     cout << "Expected:\n" << Stringify(Expected)
          << "\nCompiled in:\n" << Stringify(Compiled);
 
+    stringstream XmlContents;
+    XmlContents << "<testsuite tests=\"" << Expected.size() << "\">\n";
+
     Boole failed = false;
     String Other;
-    for(auto pair : Expected)
+    for(Mezzanine::NameValuePair pair : Expected)
     {
         SAVE_WARNING_STATE
         SUPPRESS_VC_WARNING(4571)
@@ -150,11 +155,28 @@ void DoComparisonTest(const Mezzanine::NameValuePairMap& Expected, const Mezzani
 
         cout << "\n" << pair.first << ": " << Other << " == " << pair.second;
         if(Other == pair.second)
-            { cout <<  " \t[PASS]"; }
+        {
+            cout <<  " \t[PASS]";
+            XmlContents << "    <testcase classname=\"RuntimeStatic\" name=\"" << pair.first << "\"/>\n";
+        }
         else
-            { cout <<  " \t[FAIL]"; failed=true; }
+        {
+            cout <<  " \t[FAIL]";
+            XmlContents << "    <testcase classname=\"RuntimeStatic\" name=\"" << pair.first << "\">\n"
+                        << "        <failure type=\"Mismatch\">"
+                            << "Expected " << Other << " actually " << pair.second  << "</failure>\n"
+                        << "    </testcase>\n";
+
+            failed=true;
+
+        }
     }
+    XmlContents << "</testsuite>";
     cout << endl;
+
+    std::ofstream JunitCompatibleXML("Mezz_StaticFoundationTests.xml");
+    JunitCompatibleXML << XmlContents.str() << endl;
+
     if(failed)
         { std::exit(EXIT_FAILURE); }
 }
@@ -162,14 +184,14 @@ void DoComparisonTest(const Mezzanine::NameValuePairMap& Expected, const Mezzani
 Mezzanine::String Stringify(const Mezzanine::NameValuePairMap& Mapping)
 {
     String Results;
-    for(auto pair : Mapping)
+    for(Mezzanine::NameValuePair pair : Mapping)
         { Results += "  " + pair.first + ": " + pair.second + "\n"; }
     return Results;
 }
 
 String IntToString(Mezzanine::Int32 SomeInt)
 {
-    std::stringstream Results;
+    stringstream Results;
     Results << SomeInt;
     return Results.str();
 }
