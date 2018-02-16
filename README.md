@@ -14,9 +14,6 @@ techniques.
 
 ## Build Status ##
 
-The current Jenkins (Linux - Emscripten, Rasberry Pi - Gcc) build status is:
-[![Build Status](http://blacktopp.ddns.net:8080/job/Mezz_StaticFoundation/badge/icon)](http://blacktopp.ddns.net:8080/job/Mezz_StaticFoundation/)
-
 The current Travis CI (Apple - GCC/Clang) build status is:
 [![Build Status](https://travis-ci.org/BlackToppStudios/Mezz_StaticFoundation.svg?branch=master)](https://travis-ci.org/BlackToppStudios/Mezz_StaticFoundation)
 
@@ -25,3 +22,5 @@ The current Appveyor (Windows - MinGW/Msvc) build status is:
 
 The current code coverage for tests is:
 [![codecov](https://codecov.io/gh/BlackToppStudios/Mezz_StaticFoundation/branch/master/graph/badge.svg)](https://codecov.io/gh/BlackToppStudios/Mezz_StaticFoundation)
+
+The current Jenkins, which covers Linux (Emscripten, Rasberry Pi, Ubuntu and Fedora), old Mac OS X (High Sierra) and old windows (7 64 bit msvc and mingw), build status is available on the [BTS Jenkins Instance](http://blacktopp.ddns.net:8080/blue/organizations/jenkins/Mezz_StaticFoundation/activity).
