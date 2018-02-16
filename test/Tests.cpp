@@ -143,7 +143,7 @@ void DoComparisonTest(const Mezzanine::NameValuePairMap& Expected, const Mezzani
 
     Boole failed = false;
     String Other;
-    for(auto pair : Expected)
+    for(Mezzanine::NameValuePair pair : Expected)
     {
         SAVE_WARNING_STATE
         SUPPRESS_VC_WARNING(4571)
@@ -184,7 +184,7 @@ void DoComparisonTest(const Mezzanine::NameValuePairMap& Expected, const Mezzani
 Mezzanine::String Stringify(const Mezzanine::NameValuePairMap& Mapping)
 {
     String Results;
-    for(auto pair : Mapping)
+    for(Mezzanine::NameValuePair pair : Mapping)
         { Results += "  " + pair.first + ": " + pair.second + "\n"; }
     return Results;
 }
