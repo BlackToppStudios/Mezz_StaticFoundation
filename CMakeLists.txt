@@ -44,8 +44,10 @@ message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VER
 
 ############################################################################|###########################################
 # Download, Verify and setup the Jagati
-option("JAGATI_Download_All" "Should the jagati be downloaded at by any project, if OFF whatever is present is used. \
-if disabled no project will download. This is on by default." ON)
+set(JAGATI_Download_All_Message "Should the jagati be downloaded at by any project, if OFF whatever is present is used. \
+    if disabled no project will download. This is on by default.")
+option("JAGATI_Download_All" "${JAGATI_Download_All_Message}" ON)
+set(JAGATI_Download_All "${JAGATI_Download_All}" CACHE BOOL "${JAGATI_Download_All_Message}" FORCE)
 
 # The code in here is all that is needed to use the Jagati and provide download options. The HASH and URL should be
 # updated as needed.
