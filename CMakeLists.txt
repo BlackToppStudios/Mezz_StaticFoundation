@@ -42,16 +42,27 @@ cmake_minimum_required(VERSION 2.8)
 project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VERSION}.")
 
-##########################################################################|#############################################
+############################################################################|###########################################
 # Download, Verify and setup the Jagati
-set(JagatiChecksum "a6ef39bf2436c98dfdf476e1e4d2649a2d8e267dbbdc7ec6d66585\
-0e23ef00718d7df60f586673ea902eb69637ff14b3c33d0e36d76057e2c4c4f6fa6cabb414")
-file(DOWNLOAD
-    "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.22.2/Jagati.cmake"
-    "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
-    EXPECTED_HASH SHA512=${JagatiChecksum}
-)
+option("JAGATI_Download_All" "Should the jagati be downloaded at by any project, if OFF whatever is present is used. \
+if disabled no project will download. This is on by default." ON)
 
+# The code in here is all that is needed to use the Jagati and provide download options. The HASH and URL should be
+# updated as needed.
+####
+option("JAGATI_Download_${PROJECT_NAME}" "Should the jagati br downloaded by ${PROJECT_NAME}, if OFF whatever is \
+present is used. This and JAGATI_Download_All need to be on for downloads to occur. These are on by default." ON)
+if(${JAGATI_Download_${PROJECT_NAME}} AND ${JAGATI_Download_All})
+    set(JagatiChecksum "a6ef39bf2436c98dfdf476e1e4d2649a2d8e267dbbdc7ec6d665\
+850e23ef00718d7df60f586673ea902eb69637ff14b3c33d0e36d76057e2c4c4f6fa6cabb414")
+    file(DOWNLOAD
+        "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.22.2/Jagati.cmake"
+        "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
+        EXPECTED_HASH SHA512=${JagatiChecksum}
+    )
+endif(${JAGATI_Download_${PROJECT_NAME}} AND ${JAGATI_Download_All})
+####
+#
 
 include("${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake")
 
