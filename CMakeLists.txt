@@ -62,7 +62,7 @@ endif(JAGATI_Download)
 include("${JAGATI_File}")
 
 ########################################################################################################################
-# The rest of the Jagait setup
+# The rest of the Jagati setup
 
 # Override One Jagati setting so that everyfike knows where this test executable is. This is required because most of
 # the test settings and code are in MEZZ_Test which requires this package.
