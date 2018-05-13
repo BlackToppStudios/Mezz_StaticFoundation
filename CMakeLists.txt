@@ -43,30 +43,32 @@ project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VERSION}.")
 
 ############################################################################|###########################################
-# Download, Verify and setup the Jagati
-option("JAGATI_Download_All" "Should the jagati be downloaded at by any project, if OFF whatever is present is used. \
-if disabled no project will download. This is on by default." ON)
+# Download, Verify and Setup the Jagati
+if(NOT JAGATI_File)
+    set(JAGATI_File "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake" CACHE FILEPATH
+        "The file to load the Jagati from and potentially to download it to.")
+endif(NOT JAGATI_File)
+if(NOT JAGATI_Download)
+    option(JAGATI_Download "Should the Jagati be downloaded automatically" ON)
+endif(NOT JAGATI_Download)
+if(JAGATI_Download)
+    set(JAGATI_Checksum "a6ef39bf2436c98dfdf476e1e4d2649a2d8e267dbbdc7ec6d66\
+5850e23ef00718d7df60f586673ea902eb69637ff14b3c33d0e36d76057e2c4c4f6fa6cabb414"
+        CACHE STRING "Check that when the Jagati is downloaded the right one is used (for consistency and security).")
+    set(JAGATI_Url "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.22.2/Jagati.cmake"
+        CACHE STRING "Where to download the Jagati from.")
+    file(DOWNLOAD "${JAGATI_Url}" "${JAGATI_File}" EXPECTED_HASH SHA512=${JAGATI_Checksum})
+endif(JAGATI_Download)
+include("${JAGATI_File}")
 
-# The code in here is all that is needed to use the Jagati and provide download options. The HASH and URL should be
-# updated as needed.
-####
-option("JAGATI_Download_${PROJECT_NAME}" "Should the jagati br downloaded by ${PROJECT_NAME}, if OFF whatever is \
-present is used. This and JAGATI_Download_All need to be on for downloads to occur. These are on by default." ON)
-if(${JAGATI_Download_${PROJECT_NAME}} AND ${JAGATI_Download_All})
-    set(JagatiChecksum "a6ef39bf2436c98dfdf476e1e4d2649a2d8e267dbbdc7ec6d665\
-850e23ef00718d7df60f586673ea902eb69637ff14b3c33d0e36d76057e2c4c4f6fa6cabb414")
-    file(DOWNLOAD
-        "https://raw.githubusercontent.com/BlackToppStudios/Jagati/0.22.2/Jagati.cmake"
-        "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake"
-        EXPECTED_HASH SHA512=${JagatiChecksum}
-    )
-endif(${JAGATI_Download_${PROJECT_NAME}} AND ${JAGATI_Download_All})
-####
-#
+########################################################################################################################
+# The rest of the Jagati setup
 
-include("${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake")
-
+# Override One Jagati setting so that everyfike knows where this test executable is. This is required because most of
+# the test settings and code are in MEZZ_Test which requires this package.
 set(${PROJECT_NAME}BinTarget "${PROJECT_NAME}_Tester")
+
+# Otherwise normal Jagati setup
 StandardJagatiSetup()
 
 ########################################################################################################################
