@@ -3,21 +3,31 @@ dist: trusty
 language: cpp
 osx_image: xcode8.3
 
-os:
-#  - linux # Remarking this disables the Linux build on Travis. When move onto better than a 3 year old os in beta,
-#            we will reconsider using them for our linux builds again. In the mean time check out our Jenkinsfile.
-  - osx
-
-compiler:
-  - clang
-  - gcc
+matrix:
+  include:
+    - os: osx
+      compiler: clang
+      env: BUILD_TYPE=Debug
+      env: CXX_FLAGS=-O0
+    - os: osx
+      compiler: gcc
+      env: BUILD_TYPE=Debug
+      env: CXX_FLAGS=-O0
+    - os: osx
+      compiler: clang
+      env: BUILD_TYPE=Release
+      env: CXX_FLAGS=
+    - os: osx
+      compiler: gcc
+      env: BUILD_TYPE=Release
+      env: CXX_FLAGS=
 
 before_script:
   - mkdir build
   - cd build
   - mkdir JagatiPackages
   - export JAGATI_DIR=`pwd`/JagatiPackages
-  - cmake -G"Ninja" .. -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON -DCMAKE_USE_OPENSSL=ON
+  - cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE="$BUILD_TYPE" -DCMAKE_CXX_FLAGS="$CXX_FLAGS" -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ;
