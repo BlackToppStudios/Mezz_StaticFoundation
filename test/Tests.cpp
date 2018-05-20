@@ -86,6 +86,8 @@ String Usage(String ExecutableName)
            Stringify(CheckableValues())+ "\n";
 }
 
+SAVE_WARNING_STATE
+SUPPRESS_VC_WARNING(5045)
 Mezzanine::NameValuePairMap CreateMapFromArgs(int ArgCount, char** ArgVars)
 {
     NameValuePairMap Results;
@@ -104,6 +106,7 @@ Mezzanine::NameValuePairMap CreateMapFromArgs(int ArgCount, char** ArgVars)
     }
     return Results;
 }
+RESTORE_WARNING_STATE
 
 NameValuePairMap CheckableValues()
 {
