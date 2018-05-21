@@ -227,7 +227,7 @@ CreateCoverageTarget(${StaticFoundationLib} ${StaticFoundationSourceFiles})
 AddJagatiExecutable()
 
 # Some extra creating of targets for other development related tasks
-AddIDEVisibility("${StaticFoundationTestSourceFiles}")
+AddIDEVisibility("${StaticFoundationTestSourceFiles};Jenkinsfile")
 SetCodeCoverage()
 
 message(STATUS "${PROJECT_NAME} - Ending Configuration.")
