@@ -56,7 +56,7 @@
     #include "CrossPlatformExport.h"
 
     SAVE_WARNING_STATE
-    SUPPRESS_VS_WARNING(4061)
+    SUPPRESS_VC_WARNING(4061)
 
     #include <stdint.h>
     #include <cstddef>
