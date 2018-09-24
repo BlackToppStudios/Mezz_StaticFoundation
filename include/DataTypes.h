@@ -55,6 +55,9 @@
 #ifndef SWIG
     #include "CrossPlatformExport.h"
 
+    SAVE_WARNING_STATE
+    SUPPRESS_VS_WARNING(4061)
+
     #include <stdint.h>
     #include <cstddef>
     #include <cassert>
@@ -84,6 +87,8 @@
     #include <type_traits>
     #include <typeindex>
     #include <utility>
+    
+    RESTORE_WARNING_STATE
 #endif
 
 namespace Mezzanine
