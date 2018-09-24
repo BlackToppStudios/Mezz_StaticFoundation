@@ -57,21 +57,33 @@
 
     #include <stdint.h>
     #include <cstddef>
+    #include <cassert>
 
     #include <array>
-    #include <algorithm>
-    #include <exception>
-    #include <istream>
     #include <list>
     #include <map>
-    #include <string>
-    #include <sstream>
-    #include <fstream>
     #include <set>
     #include <vector>
-    #include <utility>
-    #include <memory>
+
+    #include <atomic>
+    #include <condition_variable>
+
+    #include <fstream>
+    #include <istream>
     #include <ostream>
+    #include <sstream>
+
+    #include <algorithm>
+    #include <chrono>
+    #include <exception>
+    #include <functional>
+    #include <initializer_list>
+    #include <memory>
+    #include <new>
+    #include <string>
+    #include <type_traits>
+    #include <typeindex>
+    #include <utility>
 #endif
 
 namespace Mezzanine
