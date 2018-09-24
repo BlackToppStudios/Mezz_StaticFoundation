@@ -54,6 +54,7 @@
 
 #ifndef SWIG
     #include "CrossPlatformExport.h"
+    #include "SuppressWarnings.h"
 
     SAVE_WARNING_STATE
     SUPPRESS_VC_WARNING(4061)
