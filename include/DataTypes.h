@@ -58,7 +58,8 @@
 
     SAVE_WARNING_STATE
     SUPPRESS_VC_WARNING(4061)
-    SUPPRESS_VC_WARNING(4548)
+    SUPPRESS_VC_WARNING(4548) // This was added to suppress a warning in MSVC's implementation 
+                              // of malloc.h where they use a comma in an assert.
 
     #include <stdint.h>
     #include <cstddef>
