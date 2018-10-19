@@ -4,54 +4,16 @@ pipeline {
     agent none
     options {
         buildDiscarder(logRotator(numToKeepStr:'30'))
+        timeout(time: 1500, unit: 'SECONDS')
     }
     stages {
-        stage('Checkout') {
-            parallel {
-                stage('FedoraGcc') {
-                    agent { label "FedoraGcc" }
-                    steps { checkout scm }
-                }
-                stage('MacOSSierra') {
-                    agent { label "MacOSSierra" }
-                    steps { checkout scm }
-                }
-                stage('RaspianJessie') {
-                    agent { label "RaspianJessie" }
-                    steps { checkout scm }
-                }
-                stage('UbuntuClang') {
-                    agent { label "UbuntuClang" }
-                    steps { checkout scm }
-                }
-                stage('UbuntuEmscripten') {
-                    agent { label "UbuntuEmscripten" }
-                    steps { checkout scm }
-                }
-                stage('UbuntuGcc') {
-                    agent { label "UbuntuGcc" }
-                    steps { checkout scm }
-                }
-                stage('windows7Mingw32') {
-                    agent { label "windows7Mingw32" }
-                    steps { checkout scm }
-                }
-                stage('windows7Mingw64') {
-                    agent { label "windows7Mingw64" }
-                    steps { checkout scm }
-                }
-                stage('windows7msvc') {
-                    agent { label "windows7msvc" }
-                    steps { checkout scm }
-                }
-            }
-        } // Checkout
 
         stage('BuildTest-Debug') {
             parallel {
                 stage('FedoraGcc') {
                     agent { label "FedoraGcc" }
                     steps {
+                        checkout scm
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
                             cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
@@ -68,6 +30,7 @@ pipeline {
                 stage('MacOSSierra') {
                     agent { label "MacOSSierra" }
                     steps {
+                        checkout scm
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
                             export PATH='$PATH:/usr/local/bin/' &&
@@ -82,9 +45,10 @@ pipeline {
                         }
                     }
                 }
-                stage('RaspianJessie') {
-                    agent { label "RaspianJessie" }
+                stage('Raspbian') {
+                    agent { label "Raspbian" }
                     steps {
+                        checkout scm
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
                             export MEZZ_PACKAGE_DIR=/home/pi/Code/ &&
@@ -102,6 +66,7 @@ pipeline {
                 stage('UbuntuClang') {
                     agent { label "UbuntuClang" }
                     steps {
+                        checkout scm
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
                             cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
@@ -118,6 +83,7 @@ pipeline {
                 stage('UbuntuEmscripten') {
                     agent { label "UbuntuEmscripten" }
                     steps {
+                        checkout scm
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
                             cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
@@ -130,6 +96,7 @@ pipeline {
                 stage('UbuntuGcc') {
                     agent { label "UbuntuGcc" }
                     steps {
+                        checkout scm
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """
                             cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
@@ -146,6 +113,7 @@ pipeline {
                 stage('windows7Mingw32') {
                     agent { label "windows7Mingw32" }
                     steps {
+                        checkout scm
                         bat 'if not exist "build-debug" mkdir build-debug'
                         dir('build-debug') {
                             bat 'cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
@@ -162,6 +130,7 @@ pipeline {
                 stage('windows7Mingw64') {
                     agent { label "windows7Mingw64" }
                     steps {
+                        checkout scm
                         bat 'if not exist "build-debug" mkdir build-debug'
                         dir('build-debug') {
                             bat 'cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
@@ -178,6 +147,7 @@ pipeline {
                 stage('windows7msvc') {
                     agent { label "windows7msvc" }
                     steps {
+                        checkout scm
                         bat 'if not exist "build-debug" mkdir build-debug'
                         dir('build-debug') {
                             bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat" x86_amd64 && cmake -G"Visual Studio 15 2017 Win64" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
@@ -199,6 +169,7 @@ pipeline {
                 stage('FedoraGcc') {
                     agent { label "FedoraGcc" }
                     steps {
+                        checkout scm
                         sh 'mkdir -p build-release'
                         dir('build-release') { sh """
                             cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
@@ -215,6 +186,7 @@ pipeline {
                 stage('MacOSSierra') {
                     agent { label "MacOSSierra" }
                     steps {
+                        checkout scm
                         sh 'mkdir -p build-release'
                         dir('build-release') { sh """
                             export PATH='$PATH:/usr/local/bin/' &&
@@ -229,9 +201,10 @@ pipeline {
                         }
                     }
                 }
-                stage('RaspianJessie') {
-                    agent { label "RaspianJessie" }
-                    steps {
+                stage('Raspbian') {
+                    agent { label "Raspbian" }
+                     {
+                        checkout scm
                         sh 'mkdir -p build-release'
                         dir('build-release') { sh """
                             export MEZZ_PACKAGE_DIR=/home/pi/Code/ &&
@@ -249,6 +222,7 @@ pipeline {
                 stage('UbuntuClang') {
                     agent { label "UbuntuClang" }
                     steps {
+                        checkout scm
                         sh 'mkdir -p build-release'
                         dir('build-release') { sh """
                             cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
@@ -265,6 +239,7 @@ pipeline {
                 stage('UbuntuEmscripten') {
                     agent { label "UbuntuEmscripten" }
                     steps {
+                        checkout scm
                         sh 'mkdir -p build-release'
                         dir('build-release') { sh """
                             cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
@@ -277,6 +252,7 @@ pipeline {
                 stage('UbuntuGcc') {
                     agent { label "UbuntuGcc" }
                     steps {
+                        checkout scm
                         sh 'mkdir -p build-release'
                         dir('build-release') { sh """
                             cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
@@ -293,6 +269,7 @@ pipeline {
                 stage('windows7Mingw32') {
                     agent { label "windows7Mingw32" }
                     steps {
+                        checkout scm
                         bat 'if not exist "build-release" mkdir build-release'
                         dir('build-release') {
                             bat 'cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
@@ -309,6 +286,7 @@ pipeline {
                 stage('windows7Mingw64') {
                     agent { label "windows7Mingw64" }
                     steps {
+                        checkout scm
                         bat 'if not exist "build-release" mkdir build-release'
                         dir('build-release') {
                             bat 'cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
@@ -325,6 +303,7 @@ pipeline {
                 stage('windows7msvc') {
                     agent { label "windows7msvc" }
                     steps {
+                        checkout scm
                         bat 'if not exist "build-release" mkdir build-release'
                         dir('build-release') {
                             bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat" x86_amd64 && cmake -G"Visual Studio 15 2017 Win64" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
