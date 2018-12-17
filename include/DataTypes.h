@@ -58,7 +58,7 @@
 
     SAVE_WARNING_STATE
     SUPPRESS_VC_WARNING(4061)
-    SUPPRESS_VC_WARNING(4548) // This was added to suppress a warning in MSVC's implementation 
+    SUPPRESS_VC_WARNING(4548) // This was added to suppress a warning in MSVC's implementation
                               // of malloc.h where they use a comma in an assert.
 
     #include <stdint.h>
@@ -90,7 +90,7 @@
     #include <type_traits>
     #include <typeindex>
     #include <utility>
-    
+
     RESTORE_WARNING_STATE
 #endif
 
@@ -102,7 +102,7 @@ namespace Mezzanine
 
     /// @brief A type that any pointer can be converted to and back from.
     /// @details This insures after the conversion back it will be identical.
-    typedef std::intptr_t ConvertiblePointer;
+    typedef intptr_t ConvertiblePointer;
 
     /// @brief A number large enough to hold every integer from 0 to the amount of bytes of addressable space.
     /// @details This is intended to be of use when using buffer/size pairs or otherwise keeping track of data like
@@ -157,14 +157,18 @@ namespace Mezzanine
     /// @details This is a typedef to int, but could int16 or smaller to improve performance in some situations, in
     /// general it will be the most efficient signed type for CPU Bound math.
     typedef int Integer;
-    /// @brief A large integer type suitable for compile time math and long term microsecond time
-    /// keeping.
+    /// @brief A large integer type suitable for compile time math and long term microsecond time keeping.
     /// @details For reference when this is a 64 bit integer, it can store a number between
     /// −9,223,372,036,854,775,808 and 9,223,372,036,854,775,807. In seconds that is approximately
     /// 292,277,000,000 years and the universe is only 14,600,000,000 years old. So this is good for
     /// any time between 20x the age of the universe before and after the beginning of any chosen
     /// epoch. Even if used to track nanoseconds it should be good for 292 years.
     typedef intmax_t MaxInt;
+    /// @brief An unsigned integral type suitable for storing the sizes and alignments of types.
+    /// @details On 64-bit systems this will often be larger than a Whole. For (potentially) very large arrays
+    /// this type will be more suitable for massive index values and loops. This is the type returned by many
+    /// standard functions, including the return for container sizes such as vector and string.
+    typedef size_t SizeType;
 
     /// @brief A datatype used to a series of characters that has most of the interface of std::string.
     /// @details This is a typedef to std::string, but could change particularly if UTF16 or UTF32 support is desired.
