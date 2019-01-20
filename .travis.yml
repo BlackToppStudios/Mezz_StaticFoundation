@@ -1,46 +1,29 @@
 sudo: required
-dist: trusty
+dist: xenial
 language: cpp
-osx_image: xcode8.3
 
 matrix:
   include:
     - os: osx
       compiler: clang
       env: BUILD_TYPE=Debug
-      env: CXX_FLAGS=-O0
-      env: CMAKE_GEMERATOR=Xcode
-    - os: osx
-      compiler: gcc
-      env: BUILD_TYPE=Debug
-      env: CXX_FLAGS=-O0
-      env: CMAKE_GEMERATOR=Xcode
+      env: CXXFLAGS=-fno-var-tracking
     - os: osx
       compiler: clang
       env: BUILD_TYPE=Release
-      env: CXX_FLAGS=
-      env: CMAKE_GEMERATOR=Ninja
-    - os: osx
-      compiler: gcc
-      env: BUILD_TYPE=Release
-      env: CXX_FLAGS=
-      env: CMAKE_GEMERATOR=Ninja
+      env: CXXFLAGS=-fno-var-tracking
 
 before_script:
   - mkdir build
   - cd build
   - mkdir JagatiPackages
   - export JAGATI_DIR=`pwd`/JagatiPackages
-  - cmake -G"$CMAKE_GEMERATOR" .. -DCMAKE_BUILD_TYPE="$BUILD_TYPE" -DCMAKE_CXX_FLAGS="$CXX_FLAGS" -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON
+  - cmake -G"XCode" .. -DCMAKE_BUILD_TYPE="$BUILD_TYPE" -DCMAKE_CXX_FLAGS="$CXX_FLAGS" -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON
 
-install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ;
-        then sudo apt-get install valgrind ninja-build -q -y;
-    fi
 
 script:
   - cmake --build .
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ; then
+  - if [[ "$BUILD_TYPE" == "Release" ]] ; then
         ./StaticFoundation_Tester
         MEZZ_CompilerIsEmscripten:0     MEZZ_CompilerIsIntel:0  MEZZ_CompilerIsMsvc:0
         MEZZ_BuildStaticLibraries:1     MEZZ_BuildDoxygen:0     MEZZ_Debug:0    MEZZ_CodeCoverage:1
@@ -48,18 +31,14 @@ script:
         MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0
         MEZZ_Arch64:1       MEZZ_Arch32:0 ;
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]] ; then
-        ./StaticFoundation_Tester
-        MEZZ_CompilerIsEmscripten:0     MEZZ_CompilerIsIntel:0  MEZZ_CompilerIsMsvc:0
-        MEZZ_BuildStaticLibraries:1     MEZZ_BuildDoxygen:0     MEZZ_Debug:0    MEZZ_CodeCoverage:1
-        MEZZ_Linux:0        MEZZ_MacOSX:1       MEZZ_Windows:0
-        MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0
-        MEZZ_Arch64:1       MEZZ_Arch32:0 ;
-    fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ; then
-        valgrind --tool=memcheck --leak-check=full --error-exitcode=1
-            ./StaticFoundation_Tester MEZZ_BuildDoxygen:0;
-    fi # TODO: Duplicate this in Jenkins
+    - if [[ "$BUILD_TYPE" == "Debug" ]] ; then
+          ./StaticFoundation_Tester
+          MEZZ_CompilerIsEmscripten:0     MEZZ_CompilerIsIntel:0  MEZZ_CompilerIsMsvc:0
+          MEZZ_BuildStaticLibraries:1     MEZZ_BuildDoxygen:0     MEZZ_Debug:1    MEZZ_CodeCoverage:1
+          MEZZ_Linux:1        MEZZ_MacOSX:0       MEZZ_Windows:0
+          MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0
+          MEZZ_Arch64:1       MEZZ_Arch32:0 ;
+      fi
 
 after_success:
   - cmake --build . StaticFoundationCoverage
