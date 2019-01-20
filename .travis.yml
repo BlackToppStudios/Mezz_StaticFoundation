@@ -9,36 +9,37 @@ matrix:
       compiler: clang
       env: BUILD_TYPE=Debug
       env: CXX_FLAGS=-O0
+      env: CMAKE_GEMERATOR=Xcode
     - os: osx
       compiler: gcc
       env: BUILD_TYPE=Debug
       env: CXX_FLAGS=-O0
+      env: CMAKE_GEMERATOR=Xcode
     - os: osx
       compiler: clang
       env: BUILD_TYPE=Release
       env: CXX_FLAGS=
+      env: CMAKE_GEMERATOR=Ninja
     - os: osx
       compiler: gcc
       env: BUILD_TYPE=Release
       env: CXX_FLAGS=
+      env: CMAKE_GEMERATOR=Ninja
 
 before_script:
   - mkdir build
   - cd build
   - mkdir JagatiPackages
   - export JAGATI_DIR=`pwd`/JagatiPackages
-  - cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE="$BUILD_TYPE" -DCMAKE_CXX_FLAGS="$CXX_FLAGS" -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON
+  - cmake -G"$CMAKE_GEMERATOR" .. -DCMAKE_BUILD_TYPE="$BUILD_TYPE" -DCMAKE_CXX_FLAGS="$CXX_FLAGS" -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ;
         then sudo apt-get install valgrind ninja-build -q -y;
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]] ;
-        then brew install ninja;
-    fi
 
 script:
-  - ninja
+  - cmake --build .
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ; then
         ./StaticFoundation_Tester
         MEZZ_CompilerIsEmscripten:0     MEZZ_CompilerIsIntel:0  MEZZ_CompilerIsMsvc:0
@@ -61,7 +62,7 @@ script:
     fi # TODO: Duplicate this in Jenkins
 
 after_success:
-  - ninja StaticFoundationCoverage
+  - cmake --build . StaticFoundationCoverage
   - bash <(curl -s https://codecov.io/bash)
 
 notifications:
