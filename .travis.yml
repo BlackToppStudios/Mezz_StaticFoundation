@@ -32,14 +32,14 @@ script:
         MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0
         MEZZ_Arch64:1       MEZZ_Arch32:0 ;
     fi
-    - if [[ "$BUILD_TYPE" == "Debug" ]] ; then
-          ./StaticFoundation_Tester
-          MEZZ_CompilerIsEmscripten:0     MEZZ_CompilerIsIntel:0  MEZZ_CompilerIsMsvc:0
-          MEZZ_BuildStaticLibraries:1     MEZZ_BuildDoxygen:0     MEZZ_Debug:1    MEZZ_CodeCoverage:1
-          MEZZ_Linux:1        MEZZ_MacOSX:0       MEZZ_Windows:0
-          MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0
-          MEZZ_Arch64:1       MEZZ_Arch32:0 ;
-      fi
+  - if [[ "$BUILD_TYPE" == "Debug" ]] ; then
+        ./StaticFoundation_Tester
+        MEZZ_CompilerIsEmscripten:0     MEZZ_CompilerIsIntel:0  MEZZ_CompilerIsMsvc:0
+        MEZZ_BuildStaticLibraries:1     MEZZ_BuildDoxygen:0     MEZZ_Debug:1    MEZZ_CodeCoverage:1
+        MEZZ_Linux:1        MEZZ_MacOSX:0       MEZZ_Windows:0
+        MEZZ_CompilerDesignNix:1            MEZZ_CompilerDesignMS:0
+        MEZZ_Arch64:1       MEZZ_Arch32:0 ;
+    fi
 
 after_success:
   - cmake --build . StaticFoundationCoverage
