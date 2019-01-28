@@ -1,4 +1,4 @@
-// © Copyright 2010 - 2018 BlackTopp Studios Inc.
+// © Copyright 2010 - 2019 BlackTopp Studios Inc.
 /* This file is part of The Mezzanine Engine.
 
     The Mezzanine Engine is free software: you can redistribute it and/or modify
@@ -63,16 +63,16 @@
 ///     - @ref MEZZ_MacOSX - @ref StaticFoundationConfig.h - Set if CMake dectects a Mac OS X build environment.
 ///     - @ref MEZZ_Ios - @ref StaticFoundationConfig.h - Set if CMake dectects a cross compile for IOS.
 ///     - @ref MEZZ_CompilerDetected - @ref StaticFoundationConfig.h - Set if CMake dectects the compiler, so its set.
-///     - @ref MEZZ_CompilerIsClang  - @ref StaticFoundationConfig.h - Set if the compiler is Clang.
+///     - @ref MEZZ_CompilerIsClang - @ref StaticFoundationConfig.h - Set if the compiler is Clang.
 ///     - @ref MEZZ_CompilerIsEmscripten  - @ref StaticFoundationConfig.h - Set if the compiler is Emscripten.
-///     - @ref MEZZ_CompilerIsGCC  - @ref StaticFoundationConfig.h - Set if the compiler is GCC, Mingw or TDM-GCC.
-///     - @ref MEZZ_CompilerIsIntel  - @ref StaticFoundationConfig.h - Set if the compiler Intel.
-///     - @ref MEZZ_CompilerIsMsvc  - @ref StaticFoundationConfig.h - Set only if the compiler is MSVC.
-///     - @ref MEZZ_CompilerDesignNix  - @ref StaticFoundationConfig.h - Set for pretty much all compilers except MSVC.
-///     - @ref MEZZ_CompilerDesignMS  - @ref StaticFoundationConfig.h - Set only when using MSVC
-///     - @ref MEZZ_Arch64  - @ref StaticFoundationConfig.h - Set only if the build is 64 bit.
-///     - @ref MEZZ_Arch32  - @ref StaticFoundationConfig.h - Set only if the build is 64 bit.
-///     - @ref MEZZ_Debug  - @ref StaticFoundationConfig.h - Set if the build includes debug symbols.
+///     - @ref MEZZ_CompilerIsGCC - @ref StaticFoundationConfig.h - Set if the compiler is GCC, Mingw or TDM-GCC.
+///     - @ref MEZZ_CompilerIsIntel - @ref StaticFoundationConfig.h - Set if the compiler Intel.
+///     - @ref MEZZ_CompilerIsMsvc - @ref StaticFoundationConfig.h - Set only if the compiler is MSVC.
+///     - @ref MEZZ_CompilerDesignNix - @ref StaticFoundationConfig.h - Set for pretty much all compilers except MSVC.
+///     - @ref MEZZ_CompilerDesignMS - @ref StaticFoundationConfig.h - Set only when using MSVC
+///     - @ref MEZZ_Arch64 - @ref StaticFoundationConfig.h - Set only if the build is 64 bit.
+///     - @ref MEZZ_Arch32 - @ref StaticFoundationConfig.h - Set only if the build is 64 bit.
+///     - @ref MEZZ_Debug - @ref StaticFoundationConfig.h - Set if the build includes debug symbols.
 
 /// @file StaticFoundationConfig.h
 /// @details This file is generated automatically by the CMake build process in the Static Foundation Jagati Package.
@@ -126,27 +126,27 @@
 /// being built on an IOS device.
 
 /// @def MEZZ_CompilerDetected
-/// @brief Pretty much always set, the Jagati bails if it cannot find the compiler, this may be used inthe future when
+/// @brief Pretty much always set, the Jagati bails if it cannot find the compiler. This may be used in the future when
 /// cross-compiling could complicate matters.
 
 /// @def MEZZ_CompilerIsClang
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with Clang,
-///  false otherwise.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is done with Clang,
+/// false otherwise.
 
 /// @def MEZZ_CompilerIsGCC
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with GCC,
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is done with GCC,
 /// false otherwise.
 
 /// @def MEZZ_CompilerIsEmscripten
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with
-/// Emscripten, false otherwise.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is done with Emscripten
+/// false otherwise.
 
 /// @def MEZZ_CompilerIsIntel
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with the
-/// Intel compiler, false otherwise.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is done with the Intel
+/// compiler, false otherwise.
 
 /// @def MEZZ_CompilerIsMsvc
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is being done with msvc,
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the current build is done with msvc,
 /// false otherwise.
 
 /// @def MEZZ_CompilerDesignNix
@@ -166,15 +166,13 @@
 /// platform.
 
 /// @def MEZZ_Debug
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler includes debugging
-/// information.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler includes debugging info.
 
 /// @def MEZZ_CodeCoverage
-/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler includes code coverage
-/// information.
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler includes code coverage info.
 
 
 /// @page Jagati Jagati
-/// @todo describe using Jagati
+/// @todo Describe using Jagati.
 
 #endif

@@ -1,4 +1,4 @@
-// © Copyright 2010 - 2018 BlackTopp Studios Inc.
+// © Copyright 2010 - 2019 BlackTopp Studios Inc.
 /* This file is part of The Mezzanine Engine.
 
     The Mezzanine Engine is free software: you can redistribute it and/or modify
@@ -41,21 +41,19 @@
 #define Mezz_StaticFoundation_runtime_statics_h
 
 /// @file
-/// @brief This file is deeply confused, it tries to provide runtime versions of various compile
-/// time constants.
-/// @details This might seem useless, but languages like Lua and Ruby have no concept of compile
-/// time at all and languages like Like Java and C# do not have a robust equivelant to the C
-/// preprocessor. These and languages like these could use the Mezzanine via SWIG bindings.
+/// @brief This file is deeply confused, it tries to provide runtime versions of various compile time constants.
+/// @details This might seem useless, but languages like Lua and Ruby have no concept of compile time at all and
+/// languages like Like Java and C# do not have a robust equivelant to the C preprocessor. These and languages like
+/// these could use the Mezzanine via SWIG bindings.
 /// @n @n
-/// This might also be useful in situations where the absence of a preprocessor value needs to
-/// stored in a C++ container.
+/// This might also be useful in situations where the absence of a preprocessor value needs to be stored in a 
+/// C++ container.
 
 #include "DataTypes.h"
 
 namespace Mezzanine
 {
-    /// @brief A class for aggregating all the methods related to the Mezzanine preprocessor
-    /// directives
+    /// @brief A class for aggregating all the methods related to the Mezzanine preprocessor directives.
     /// @details This is required because some SWIG languages cannot handle free functions.
     class RuntimeStatic
     {
@@ -70,15 +68,15 @@ namespace Mezzanine
             static Boole CodeCoverage();
 
             /// @return If CpuIsKnown is defined true, false otherwise.
-            /// @details CPU detection is imperfect this is true. If false no other CPU method will return true.
+            /// @details CPU detection is definitely imperfect. If false no other CPU method will return true.
             static Boole CpuKnown();
 
             /// @return If CpuIsX86 is defined true, false otherwise.
-            /// @details True if known to be on Intel/Amd/Cyrix/Via/whatever x86compatible including Amd64/Emt64 as
+            /// @details True if known to be on Intel/Amd/Cyrix/Via/whatever x86 compatible including Amd64/Emt64.
             static Boole CpuX86();
 
             /// @return If CpuIsAmd64 is defined true, false otherwise.
-            /// @details True if known to be on Amd64 or Emt64, x86 comptible 64 bit compatible systems
+            /// @details True if known to be on Amd64 or Emt64, x86 comptible 64 bit compatible systems.
             static Boole CpuAmd64();
 
             /// @return If CpuIsArm is defined true, false otherwise.

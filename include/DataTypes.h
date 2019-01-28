@@ -1,4 +1,4 @@
-// © Copyright 2010 - 2018 BlackTopp Studios Inc.
+// © Copyright 2010 - 2019 BlackTopp Studios Inc.
 /* This file is part of The Mezzanine Engine.
 
     The Mezzanine Engine is free software: you can redistribute it and/or modify
@@ -47,10 +47,9 @@
 /// this is where all of the other standard header inclusions go as well.
 ///////////////////////////////////////
 
-// Standard Headers are not included in SWIG preprocessing
-// Most std includes are centralized here to make modifying this list as simple as possible. Other
-// standard includes that are not included here are in places that they are required and
-// conditionally may not be compiled in.
+// Standard Headers are not included in SWIG preprocessing. Most std includes are centralized here to make modifying 
+// this list as simple as possible. Other standard includes that are not included here are in places that they are
+// required and conditionally may not be compiled in.
 
 #ifndef SWIG
     #include "CrossPlatformExport.h"
@@ -58,8 +57,8 @@
 
     SAVE_WARNING_STATE
     SUPPRESS_VC_WARNING(4061)
-    SUPPRESS_VC_WARNING(4548) // This was added to suppress a warning in MSVC's implementation
-                              // of malloc.h where they use a comma in an assert.
+    SUPPRESS_VC_WARNING(4548) // This was added to suppress a warning in MSVC's implementation of malloc.h where they
+                              // use a comma in an assert.
 
     #include <stdint.h>
     #include <cstddef>
@@ -105,29 +104,29 @@ namespace Mezzanine
     typedef intptr_t ConvertiblePointer;
 
     /// @brief A number large enough to hold every integer from 0 to the amount of bytes of addressable space.
-    /// @details This is intended to be of use when using buffer/size pairs or otherwise keeping track of data like
-    /// that.
+    /// @details This is intended to be of use when using buffer/size pairs or otherwise keeping track of data
+    /// like that.
     typedef uintptr_t DataSize;
 
     ///////////////////////////////////////////////////////////////////////////////
-    // Efficient and At Least this size.
+    // Efficient and at least this size.
     ///////////////////////////////////////
 
     /// @brief An 8-bit integer.
     typedef int8_t Int8;
     /// @brief An 8-bit unsigned integer.
     typedef uint8_t UInt8;
-    /// @brief An 16-bit integer.
+    /// @brief A 16-bit integer.
     typedef int16_t Int16;
-    /// @brief An 16-bit unsigned integer.
+    /// @brief A 16-bit unsigned integer.
     typedef uint16_t UInt16;
-    /// @brief An 32-bit integer.
+    /// @brief A 32-bit integer.
     typedef int32_t Int32;
-    /// @brief An 32-bit unsigned integer.
+    /// @brief A 32-bit unsigned integer.
     typedef uint32_t UInt32;
-    /// @brief An 64-bit integer.
+    /// @brief A 64-bit integer.
     typedef int64_t Int64;
-    /// @brief An 64-bit unsigned integer.
+    /// @brief A 64-bit unsigned integer.
     typedef uint64_t UInt64;
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -158,11 +157,10 @@ namespace Mezzanine
     /// general it will be the most efficient signed type for CPU Bound math.
     typedef int Integer;
     /// @brief A large integer type suitable for compile time math and long term microsecond time keeping.
-    /// @details For reference when this is a 64 bit integer, it can store a number between
-    /// −9,223,372,036,854,775,808 and 9,223,372,036,854,775,807. In seconds that is approximately
-    /// 292,277,000,000 years and the universe is only 14,600,000,000 years old. So this is good for
-    /// any time between 20x the age of the universe before and after the beginning of any chosen
-    /// epoch. Even if used to track nanoseconds it should be good for 292 years.
+    /// @details For reference when this is a 64 bit integer, it can store a number between 9,223,372,036,854,775,808
+    /// and 9,223,372,036,854,775,807. That many seconds is approximately 292,277,000,000 years and the universe is
+    /// only 14,600,000,000 years old. So this is good for any time between 20x the age of the universe before and
+    /// after the beginning of any chosen epoch. Even if used to track nanoseconds it should be good for 292 years.
     typedef intmax_t MaxInt;
     /// @brief An unsigned integral type suitable for storing the sizes and alignments of types.
     /// @details On 64-bit systems this will often be larger than a Whole. For (potentially) very large arrays
@@ -193,7 +191,7 @@ namespace Mezzanine
 
 
     /// @brief A Datatype used for streaming operations with strings.
-    /// @todo see if this can be removed entirely.
+    /// @todo See if this can be removed entirely.
     typedef std::stringstream StringStream;
 
     /// @brief In case we ever replace the stringstream with another class, this will allow us to swap it out.
@@ -202,18 +200,18 @@ namespace Mezzanine
     typedef std::stringstream Logger;
 
     /// @brief A datatype used to indicate a specific point in time, or a timestamp.
-    /// @details This is made into it's own datatype for when we want to tweak the possible size for a timestamp.
-    /// @todo replace with something from std::chrono
+    /// @details This is made into its own datatype for when we want to tweak the possible size for a timestamp.
+    /// @todo Replace with something from std::chrono.
     typedef UInt32 TimeMarker;
 
     ///////////////////////////////////////////////////////////////////////////////
     // Compound String types
     ///////////////////////////////////////
 
-    /// @brief This is a pair for the generic storage of a value and it's associated name.
+    /// @brief This is a pair for the generic storage of a value and its associated name.
     typedef std::pair< String, String > NameValuePair;
     /// @brief This is a datatype mostly used for describing settings or parameters that can't be declared in advance.
-    /// @details This datatype uses the std::map container for it's storage.
+    /// @details This datatype uses the std::map container for its storage.
     typedef std::map< String, String > NameValuePairMap;
 
     /// @brief This is a simple datatype for a vector container of strings.
