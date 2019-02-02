@@ -100,7 +100,7 @@ namespace Mezzanine
     ///////////////////////////////////////
 
     /// @brief A type that any pointer can be converted to and back from.
-    /// @details This insures after the conversion back it will be identical.
+    /// @details This ensures after the conversion back it will be identical.
     typedef intptr_t ConvertiblePointer;
 
     /// @brief A number large enough to hold every integer from 0 to the amount of bytes of addressable space.

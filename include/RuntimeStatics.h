@@ -68,7 +68,7 @@ namespace Mezzanine
             static Boole CodeCoverage();
 
             /// @return If CpuIsKnown is defined true, false otherwise.
-            /// @details CPU detection is definitely imperfect. If false no other CPU method will return true.
+            /// @details If the CPU is detected this will return true. If false no other CPU method will return true.
             static Boole CpuKnown();
 
             /// @return If CpuIsX86 is defined true, false otherwise.
