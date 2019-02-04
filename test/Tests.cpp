@@ -41,7 +41,7 @@
 #include "SuppressWarnings.h"
 
 SAVE_WARNING_STATE
-SUPPRESS_VC_WARNING(4548) // This was added to suppress a warning in MSVC's implementation 
+SUPPRESS_VC_WARNING(4548) // This was added to suppress a warning in MSVC's implementation
                           // of malloc.h where they use a comma in an assert.
 
 #include <cstdlib>
@@ -74,16 +74,19 @@ int main(int ArgCount, char** ArgVars)
 
 void CheckUsage(int ArgCount, char** ArgVars)
 {
+SAVE_WARNING_STATE
+SUPPRESS_VC_WARNING(4866) // MSVC can't order operations properly in it's own stdlib
     if(ArgCount==1)
     {
-        cerr << Usage(ArgVars[0]);
+        cerr << Usage(ArgVars[0]); // 4866 offending line
         std::exit(EXIT_FAILURE);
     }
     if(ArgCount<1)
     {
-        cerr << Usage("StaticFoundation_Tester");
+        cerr << Usage("StaticFoundation_Tester"); // 4866 offending line
         std::exit(EXIT_FAILURE);
     }
+RESTORE_WARNING_STATE
 }
 
 String Usage(String ExecutableName)
