@@ -1,4 +1,4 @@
-// © Copyright 2010 - 2018 BlackTopp Studios Inc.
+// © Copyright 2010 - 2019 BlackTopp Studios Inc.
 /* This file is part of The Mezzanine Engine.
 
     The Mezzanine Engine is free software: you can redistribute it and/or modify
@@ -41,8 +41,8 @@
 #include "SuppressWarnings.h"
 
 SAVE_WARNING_STATE
-SUPPRESS_VC_WARNING(4548) // This was added to suppress a warning in MSVC's implementation
-                          // of malloc.h where they use a comma in an assert.
+SUPPRESS_VC_WARNING(4548) // This was added to suppress a warning in MSVC's implementation of malloc.h where they use a
+                          // comma in an assert.
 
 #include <cstdlib>
 #include <iostream>
@@ -95,8 +95,8 @@ String Usage(String ExecutableName)
 }
 
 SAVE_WARNING_STATE
-SUPPRESS_VC_WARNING(4619) // Supress Missing warning notifications on old compilers.
-SUPPRESS_VC_WARNING(5045) // Supress Spectre mitigation notifications
+SUPPRESS_VC_WARNING(4619) // Suppress Missing warning notifications on old compilers.
+SUPPRESS_VC_WARNING(5045) // Suppress Spectre mitigation notifications.
 Mezzanine::NameValuePairMap CreateMapFromArgs(int ArgCount, char** ArgVars)
 {
     NameValuePairMap Results;
@@ -250,7 +250,7 @@ bool CheckStaticString()
     static_assert( foo+bar == "foobar", "Concatenation doesn't work as expected with just StaticString instances.");
 
     // Perhaps someday.
-    //static_assert( foo+"bar" == "foobar", "Concatenation doesn't work as expected with StaticStrings and literals.");
+    // static_assert( foo+"bar" == "foobar", "Concatenation doesn't work as expected with StaticStrings and literals.");
 
     return true;
 }
