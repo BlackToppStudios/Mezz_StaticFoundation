@@ -95,8 +95,8 @@ String Usage(String ExecutableName)
 }
 
 SAVE_WARNING_STATE
-SUPPRESS_VC_WARNING(4619) // Supress Missing warning notifcations on old compilers.
-SUPPRESS_VC_WARNING(5045) // Supress Spectre mitigation notifications.
+SUPPRESS_VC_WARNING(4619) // Suppress Missing warning notifications on old compilers.
+SUPPRESS_VC_WARNING(5045) // Suppress Spectre mitigation notifications.
 Mezzanine::NameValuePairMap CreateMapFromArgs(int ArgCount, char** ArgVars)
 {
     NameValuePairMap Results;
