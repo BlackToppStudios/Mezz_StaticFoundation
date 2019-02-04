@@ -1,4 +1,4 @@
-// © Copyright 2010 - 2018 BlackTopp Studios Inc.
+// © Copyright 2010 - 2019 BlackTopp Studios Inc.
 /* This file is part of The Mezzanine Engine.
 
     The Mezzanine Engine is free software: you can redistribute it and/or modify
@@ -49,42 +49,42 @@
 namespace Mezzanine
 {
     /// @brief A class for simple manipulation of strings at compile time.
-    /// @details if used with constexpr values everything this class does can be evaluated at compile time, except those
+    /// @details If used with constexpr values everything this class does can be evaluated at compile time, except those
     /// methods marked with warnings and labeled otherwise.
     /// @tparam ByteCount The size of string in question.
     template <DataSize ByteCount>
     class StaticString
     {
     public:
-        /// @brief the type used for sizes in this class
+        /// @brief The type used for sizes in this class.
         typedef DataSize size_t;
 
     private:
-        /// @brief The data in the string, except its null terminator
+        /// @brief The data in the string, except its null terminator.
         std::array<Char8, ByteCount> StringData;
 
     public:
 
         /// @brief Initializing Constructor
-        /// @param OtherString an std::array of chars, which can implicitly be constructed from a string literal.
+        /// @param OtherString A std::array of chars, which can implicitly be constructed from a string literal.
         constexpr StaticString(const std::array<Char8, ByteCount>& OtherString)
             : StringData(OtherString)
             { }
 
-        /// @brief How big is the contained string, including the null terminator
+        /// @brief How big is the contained string, including the null terminator.
         /// @return A DataSize with this size of the important data+1, so 'foo'.size() would be 4.
         constexpr DataSize size() const
             { return ByteCount; }
 
-        /// @brief Indexing operator, get a Char8 from a specific place
-        /// @param Index indicates the char to get, does compile times bounds checking.
+        /// @brief Indexing operator, get a Char8 from a specific place.
+        /// @param Index Indicates the char to get, does compile times bounds checking.
         /// @return If with the bounds of the string get the requested Char8, otherwise get a null terminator.
         constexpr Char8 operator[](DataSize Index) const
             { return (Index < ByteCount-1 ? StringData[Index] : '\0'); }
 
     private:
 
-        /// @brief Compare equality of two strings recursively
+        /// @brief Compare equality of two strings recursively.
         /// @tparam OtherByteCount The size of the other character array, because it is part of the type.
         /// @param OtherString The char array to compare this too.
         /// @param Index The first/current index to compare. Default to 0 so the calls itself with the index +1.
@@ -97,7 +97,7 @@ namespace Mezzanine
                     ( ByteCount>Index || CompareEqualityContents(OtherString, Index+1) );
         }
 
-        /// @brief Compare equality of two StaticString instances recursively
+        /// @brief Compare equality of two StaticString instances recursively.
         /// @tparam OtherByteCount The size of the other StaticString, because it is part of the type.
         /// @param OtherString The StaticString to compare this too.
         /// @param Index The first/current index to compare. Default to 0 so the calls itself with the index +1.
@@ -163,17 +163,17 @@ namespace Mezzanine
         constexpr bool operator!=(const StaticString<OtherByteCount>& OtherString) const
             { return !( *this==OtherString ); }
 
-        /// @brief Get the raw data backing this string in its native form
+        /// @brief Get the raw data backing this string in its native form.
         /// @return A std::array of Char8.
         constexpr const std::array<Char8, ByteCount>& GetData() const
             { return StringData; }
 
-        /// @brief Convert this to a const char* for runtime use.
-        /// @return A c-string with this the same contents as this.
+        /// @brief Convert this to a const c-string for runtime use.
+        /// @return A c-string with the same contents as this.
         /// @warning This method executes at run time.
         const Char8* c_str() const
             { return StringData.data(); }
-        /// @brief Convert this to a Mezzanine::String for runtime use
+        /// @brief Convert this to a Mezzanine::String for runtime use.
         /// @return A string with this the same contents as this.
         /// @warning This method executes at run time.
         String str() const
@@ -181,21 +181,21 @@ namespace Mezzanine
     }; //StaticString
 
     /// @brief Check for equality of strings when the character array is on the left.
-    /// @tparam CharSize The size of the char array
-    /// @tparam StringSize The size of the StaticString
-    /// @param Left the character array
-    /// @param Right the Static string
-    /// @return True if they match and false if they differ
+    /// @tparam CharSize The size of the char array.
+    /// @tparam StringSize The size of the StaticString.
+    /// @param Left The character array.
+    /// @param Right The StaticString.
+    /// @return True if they match and false if they differ.
     template <DataSize CharSize, DataSize StringSize>
     constexpr bool operator==(const Char8(&Left)[CharSize], const StaticString<StringSize>& Right)
         { return Right == Left; }
 
     /// @brief Check for inequality of strings when the character array is on the left.
-    /// @tparam CharSize The size of the char array
-    /// @tparam StringSize The size of the StaticString
-    /// @param Left the character array
-    /// @param Right the Static string
-    /// @return True if they match and false if they differ
+    /// @tparam CharSize The size of the char array.
+    /// @tparam StringSize The size of the StaticString.
+    /// @param Left The character array.
+    /// @param Right The StaticString.
+    /// @return True if they match and false if they differ.
     template <DataSize CharSize, DataSize StringSize>
     constexpr bool operator!=(const Char8(&Left)[CharSize], const StaticString<StringSize>& Right)
         { return Right != Left; }
@@ -204,7 +204,7 @@ namespace Mezzanine
     #define MakeStaticString(StringLiteral) Mezzanine::StaticString<sizeof(StringLiteral)>\
                                             { std::array<Mezzanine::Char8,sizeof(StringLiteral)> {StringLiteral} }
 
-    /// @brief A namespace for implementation details
+    /// @brief A namespace for implementation details.
     namespace internal
     {
         namespace
@@ -216,7 +216,7 @@ namespace Mezzanine
             template <DataSize...>
             struct IndiceSequence { };
 
-            // A type recursively define in terms of itself to get one item off a parameter pack.
+            // A type recursively defined in terms of itself to get one item off a parameter pack.
             template <DataSize OneId, DataSize... Pack>
             struct GenerateIndiceSequence : GenerateIndiceSequence<OneId-1, OneId-1, Pack...> { };
 
@@ -233,7 +233,7 @@ namespace Mezzanine
                 const std::array<Char8, LeftSize>& LeftString, internal::IndiceSequence<LeftIndice...>,
                 const std::array<Char8, RightSize>& RightString, internal::IndiceSequence<RightIndice...>)
             {
-                return StaticString<LeftSize+RightSize-1> // 1 less because there is only 1 null terminator
+                return StaticString<LeftSize+RightSize-1> // 1 less because there is only 1 null terminator.
                     { std::array<Char8, LeftSize+RightSize-1>{{ LeftString[LeftIndice]...,
                                                                 RightString[RightIndice]...,
                                                                 '\0' }} };
@@ -241,9 +241,9 @@ namespace Mezzanine
         }
     }//Internal
 
-    /// @brief Concatenate two StaticString instances
-    /// @tparam LeftSize The size of the left hand string
-    /// @tparam RightSize The size of the right hand string
+    /// @brief Concatenate two StaticString instances.
+    /// @tparam LeftSize The size of the left hand string.
+    /// @tparam RightSize The size of the right hand string.
     /// @param LeftString The StaticString on the Left of the +.
     /// @param RightString The StaticString on the Right of the +.
     /// @return A new StaticString with the data of both strings and a null terminator at the end.
