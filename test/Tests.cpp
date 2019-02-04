@@ -74,19 +74,16 @@ int main(int ArgCount, char** ArgVars)
 
 void CheckUsage(int ArgCount, char** ArgVars)
 {
-SAVE_WARNING_STATE
-SUPPRESS_VC_WARNING(4866) // MSVC can't order operations properly in it's own stdlib
     if(ArgCount==1)
     {
-        cerr << Usage(ArgVars[0]); // 4866 offending line
+        cerr << Usage(ArgVars[0]);
         std::exit(EXIT_FAILURE);
     }
     if(ArgCount<1)
     {
-        cerr << Usage("StaticFoundation_Tester"); // 4866 offending line
+        cerr << Usage("StaticFoundation_Tester");
         std::exit(EXIT_FAILURE);
     }
-RESTORE_WARNING_STATE
 }
 
 String Usage(String ExecutableName)
@@ -98,7 +95,7 @@ String Usage(String ExecutableName)
 }
 
 SAVE_WARNING_STATE
-SUPPRESS_VC_WARNING(4619) // Supress Missing warning notifcations on old compilers.
+SUPPRESS_VC_WARNING(4619) // Supress Missing warning notifications on old compilers.
 SUPPRESS_VC_WARNING(5045) // Supress Spectre mitigation notifications
 Mezzanine::NameValuePairMap CreateMapFromArgs(int ArgCount, char** ArgVars)
 {
