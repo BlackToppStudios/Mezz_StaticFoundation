@@ -1,4 +1,4 @@
-# © Copyright 2010 - 2018 BlackTopp Studios Inc.
+# © Copyright 2010 - 2019 BlackTopp Studios Inc.
 # This file is part of The Mezzanine Engine.
 #
 #    The Mezzanine Engine is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VERSION}.")
 
 ############################################################################|###########################################
-# Download, Verify and Setup the Jagati
+# Download, verify and setup the Jagati.
 if(NOT JAGATI_File)
     set(JAGATI_File "${${PROJECT_NAME}_BINARY_DIR}/Jagati.cmake" CACHE FILEPATH
         "The file to load the Jagati from and potentially to download it to.")
@@ -62,13 +62,13 @@ endif(JAGATI_Download)
 include("${JAGATI_File}")
 
 ########################################################################################################################
-# The rest of the Jagati setup
+# The rest of the Jagati setup.
 
 # Override One Jagati setting so that everyfike knows where this test executable is. This is required because most of
 # the test settings and code are in MEZZ_Test which requires this package.
 set(${PROJECT_NAME}BinTarget "${PROJECT_NAME}_Tester")
 
-# Otherwise normal Jagati setup
+# Otherwise normal Jagati setup.
 StandardJagatiSetup()
 
 ########################################################################################################################
@@ -85,7 +85,7 @@ ShowList("Header Files:" "\t" "${StaticFoundationHeaderFiles}")
 AddSourceFile("RuntimeStatics.cpp")
 ShowList("Source Files:" "\t" "${StaticFoundationSourceFiles}")
 
-# Because this can't rely on Mezz_Test we need to do this manually
+# Because this can't rely on Mezz_Test we need to do this manually.
 AddMainSourceFile("${StaticFoundationTestDir}Tests.h")
 AddMainSourceFile("${StaticFoundationTestDir}Tests.cpp")
 ShowList("Test Source Files:" "\t" "${StaticFoundationMainSourceFiles}")
@@ -97,7 +97,7 @@ AddJagatiDoxInput("Dox.h")
 ShowList("Doxygen Input Files:" "\t" "${JagatiDoxArray}")
 
 ########################################################################################################################
-# Set up config file
+# Set up config file.
 
 AddJagatiCompileOption("MEZZ_BuildDoxygen"
     "Create HTML documentation with Doxygen. Requires Doxygen to be install in PATH." ON)
@@ -138,7 +138,7 @@ ShowList("Config Files made by StaticFoundation:" "\t" "${StaticFoundationConfig
 AddJagatiDoxInput("${StaticFoundationConfigFilename}")
 
 ########################################################################################################################
-# Set up Doxygen Targets
+# Set up Doxygen targets.
 if(MEZZ_BuildDoxygen)
     find_program(MEZZ_DoxygenExecutable "doxygen")
     if(MEZZ_DoxygenExecutable)
@@ -210,14 +210,14 @@ if(MEZZ_BuildDoxygen)
                     ${DoxygenConfigDir}html/DoxyFooter.html
                     ${DoxygenConfigDir}html/DoxyHeader.html
         )
-        # Creation Doxygen target here
+        # Creation Doxygen target here.
     else(MEZZ_DoxygenExecutable)
         message(ERROR
             " Could not find doxygen executable, is it installed and in your system Path?'")
     endif(MEZZ_DoxygenExecutable)
 endif(MEZZ_BuildDoxygen)
 ########################################################################################################################
-# Set up Build targets
+# Set up build targets.
 
 # Add this as a library to the list of available libraries.
 AddJagatiLibrary()
@@ -226,7 +226,7 @@ CreateCoverageTarget(${StaticFoundationLib} ${StaticFoundationSourceFiles})
 # This makes its own tester as the main exe because this cannot rely on Mezz_Test.
 AddJagatiExecutable()
 
-# Some extra creating of targets for other development related tasks
+# Some extra creating of targets for other development related tasks.
 AddIDEVisibility("${StaticFoundationTestSourceFiles};Jenkinsfile")
 SetCodeCoverage()
 
