@@ -44,6 +44,8 @@ doxygen_sqlite3.db
 # Mac OS X spotlight
 .DS_Store
 
+# KDE Temp settingsyyut
+.directory
 
 # Ignore libincludes mercurial files
 .hg*

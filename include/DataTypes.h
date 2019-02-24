@@ -62,6 +62,7 @@
 
     #include <stdint.h>
     #include <cstddef>
+    #include <cstdlib>
     #include <cassert>
 
     #include <array>
@@ -181,6 +182,9 @@ namespace Mezzanine
     /// @details Normally just a bool, but on some platform alignment matters more than size for performance, so this
     /// could be as large as one CPU word in size or as small as a single bit.
     typedef bool Boole;
+
+    /// @brief The type that the system expects to be returned from main.
+    typedef decltype(EXIT_SUCCESS) ExitCode;
 
     ///////////////////////////////////////////////////////////////////////////////
     // Complex standardized types.
