@@ -59,26 +59,30 @@
     SUPPRESS_VC_WARNING(4061)
     SUPPRESS_VC_WARNING(4548) // This was added to suppress a warning in MSVC's implementation of malloc.h where they
                               // use a comma in an assert.
-
+    // C-Library Utilities
     #include <stdint.h>
     #include <cstddef>
     #include <cstdlib>
     #include <cassert>
-
+    // Containers
     #include <array>
+    #include <initializer_list>
     #include <list>
     #include <map>
     #include <set>
     #include <vector>
-
+    // Strings
+    #include <string>
+    #include <string_view>
+    // Threading
     #include <atomic>
     #include <condition_variable>
-
+    // Streams
     #include <fstream>
     #include <istream>
     #include <ostream>
     #include <sstream>
-
+    // Whatever Else
     #include <algorithm>
     #include <chrono>
     #include <exception>
@@ -87,7 +91,6 @@
     #include <initializer_list>
     #include <memory>
     #include <new>
-    #include <string>
     #include <type_traits>
     #include <typeindex>
     #include <utility>
@@ -170,10 +173,14 @@ namespace Mezzanine
     /// standard functions, including the return for container sizes such as vector and string.
     typedef size_t SizeType;
 
-    /// @brief A datatype used to a series of characters that has most of the interface of std::string.
-    /// @details This is a typedef to std::string, but could change particularly if UTF16 or UTF32 support is desired.
-    /// If this is changed, The Character typedef should be adjusted accordingly.
+    /// @brief A type used to express a run-time series of characters.
+    /// @remarks This is a typedef to std::string, but could change particularly if UTF16 or UTF32 support is
+    /// desired.  If this is changed, The Character typedef should be adjusted accordingly.
     typedef std::string String;
+    /// @brief A type used to express a compile-time range of characters.
+    /// @remarks This is a typedef to std::string_view, but could change particularly if UTF16 or UTF32 support
+    /// is desired.  If this is changed, The Character typedef should be adjusted accordingly.
+    typedef std::string_view StringView;
 
     /// @brief Some compatible with std::filesystem::path to work with filesystem paths.
     using Path = std::filesystem::path;
