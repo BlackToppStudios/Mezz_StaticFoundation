@@ -47,7 +47,7 @@
 /// this is where all of the other standard header inclusions go as well.
 ///////////////////////////////////////
 
-// Standard Headers are not included in SWIG preprocessing. Most std includes are centralized here to make modifying 
+// Standard Headers are not included in SWIG preprocessing. Most std includes are centralized here to make modifying
 // this list as simple as possible. Other standard includes that are not included here are in places that they are
 // required and conditionally may not be compiled in.
 
@@ -71,6 +71,9 @@
     #include <set>
     #include <vector>
 
+    #include <string>
+    #include <string_view>
+
     #include <atomic>
     #include <condition_variable>
 
@@ -86,7 +89,6 @@
     #include <initializer_list>
     #include <memory>
     #include <new>
-    #include <string>
     #include <type_traits>
     #include <typeindex>
     #include <utility>
@@ -169,10 +171,14 @@ namespace Mezzanine
     /// standard functions, including the return for container sizes such as vector and string.
     typedef size_t SizeType;
 
-    /// @brief A datatype used to a series of characters that has most of the interface of std::string.
-    /// @details This is a typedef to std::string, but could change particularly if UTF16 or UTF32 support is desired.
-    /// If this is changed, The Character typedef should be adjusted accordingly.
+    /// @brief A type used to express a run-time series of characters.
+    /// @remarks This is a typedef to std::string, but could change particularly if UTF16 or UTF32 support is
+    /// desired.  If this is changed, The Character typedef should be adjusted accordingly.
     typedef std::string String;
+    /// @brief A type used to express a compile-time range of characters.
+    /// @remarks This is a typedef to std::string_view, but could change particularly if UTF16 or UTF32 support
+    /// is desired.  If this is changed, The Character typedef should be adjusted accordingly.
+    typedef std::string_view StringView;
 
     /// @brief A datatype to represent one character.
     /// @details The character type of String
