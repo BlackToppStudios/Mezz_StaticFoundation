@@ -47,7 +47,7 @@
 /// this is where all of the other standard header inclusions go as well.
 ///////////////////////////////////////
 
-// Standard Headers are not included in SWIG preprocessing. Most std includes are centralized here to make modifying 
+// Standard Headers are not included in SWIG preprocessing. Most std includes are centralized here to make modifying
 // this list as simple as possible. Other standard includes that are not included here are in places that they are
 // required and conditionally may not be compiled in.
 
@@ -83,6 +83,7 @@
     #include <chrono>
     #include <exception>
     #include <functional>
+    #include <filesystem>
     #include <initializer_list>
     #include <memory>
     #include <new>
@@ -173,6 +174,9 @@ namespace Mezzanine
     /// @details This is a typedef to std::string, but could change particularly if UTF16 or UTF32 support is desired.
     /// If this is changed, The Character typedef should be adjusted accordingly.
     typedef std::string String;
+
+    /// @brief Some compatible with std::filesystem::path to work with filesystem paths.
+    using Path = std::filesystem::path;
 
     /// @brief A datatype to represent one character.
     /// @details The character type of String
