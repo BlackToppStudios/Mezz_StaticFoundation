@@ -59,34 +59,34 @@
     SUPPRESS_VC_WARNING(4061)
     SUPPRESS_VC_WARNING(4548) // This was added to suppress a warning in MSVC's implementation of malloc.h where they
                               // use a comma in an assert.
-
+    // C-Library Utilities
     #include <stdint.h>
     #include <cstddef>
     #include <cstdlib>
     #include <cassert>
-
+    // Containers
     #include <array>
+    #include <initializer_list>
     #include <list>
     #include <map>
     #include <set>
     #include <vector>
-
+    // Strings
     #include <string>
     #include <string_view>
-
+    // Threading
     #include <atomic>
     #include <condition_variable>
-
+    // Streams
     #include <fstream>
     #include <istream>
     #include <ostream>
     #include <sstream>
-
+    // Whatever Else
     #include <algorithm>
     #include <chrono>
     #include <exception>
     #include <functional>
-    #include <initializer_list>
     #include <memory>
     #include <new>
     #include <type_traits>
