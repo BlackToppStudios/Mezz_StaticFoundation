@@ -88,7 +88,6 @@
     #include <exception>
     #include <functional>
     #include <filesystem>
-    #include <initializer_list>
     #include <memory>
     #include <new>
     #include <type_traits>
