@@ -171,6 +171,10 @@
 /// @def MEZZ_CodeCoverage
 /// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. Set if the compiler includes code coverage info.
 
+/// @def INCLUDE_STD_FILESYSTEM_EXPERIMENTAL
+/// @brief Used by the Static Foundation DataTypes.h header to aid in detecting the correct filesystem header.
+
+
 
 /// @page Jagati Jagati
 /// @todo Describe using Jagati.
