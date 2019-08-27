@@ -76,6 +76,7 @@ message(STATUS "Determining Source Files.")
 
 AddHeaderFile("CrossPlatformExport.h")
 AddHeaderFile("DataTypes.h")
+AddHeaderFile("DetectionTraits.h")
 AddHeaderFile("RuntimeStatics.h")
 AddHeaderFile("StaticFoundation.h")
 AddHeaderFile("StaticString.h")
