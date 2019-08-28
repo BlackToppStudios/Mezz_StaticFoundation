@@ -47,7 +47,6 @@
 /// a bonus, this code will exclude itself (via ifdef) if we build with any C++ version older than C++17.
 
 #if __cplusplus <= 201703L
-// A hack to allow easier exposure to std::is_detected.  Delete this when we update to C++20.
 #if defined(_MSC_VER) && !defined(__INTEL_COMPILER)
 namespace std
 {
