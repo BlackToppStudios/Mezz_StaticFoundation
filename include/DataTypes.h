@@ -89,6 +89,7 @@
     #include <functional>
     #include <memory>
     #include <new>
+    #include <optional>
     #include <type_traits>
     #include <typeindex>
     #include <utility>
@@ -200,7 +201,7 @@ namespace Mezzanine
     /// abstractions and cement suboptimal decisions at the basis or
 
 
-    /// @brief A Datatype used for streaming operations with strings.
+    /// @brief A datatype used for streaming operations with Strings.
     /// @todo See if this can be removed entirely.
     typedef std::stringstream StringStream;
 
@@ -211,8 +212,17 @@ namespace Mezzanine
 
     /// @brief A datatype used to indicate a specific point in time, or a timestamp.
     /// @details This is made into its own datatype for when we want to tweak the possible size for a timestamp.
-    /// @todo Replace with something from std::chrono.
-    typedef UInt32 TimeMarker;
+    typedef UInt32 OldTimeMarker;
+        
+    /// @brief A datatype for precision timing with std::chrono.
+    /// @details This is a time point with the standard high resolution clock which can be used for frame timings.
+    typedef std::chrono::time_point<std::chrono::high_resolution_clock> PrecisionTimeMarker;
+        
+    /// @brief A datatype for returning data and whether or not it is safe to use that data.
+    /// @details This should replace any and all uses of the std::pair<bool,Datum> idiom.
+    /// @tparam OptType Can be any allocatable class.
+    template<class OptType>
+    using Optional = std::optional<OptType>;
 
     ///////////////////////////////////////////////////////////////////////////////
     // Compound String types
@@ -224,10 +234,12 @@ namespace Mezzanine
     /// @details This datatype uses the std::map container for its storage.
     typedef std::map< String, String > NameValuePairMap;
 
-    /// @brief This is a simple datatype for a vector container of strings.
+    /// @brief This is a simple datatype for a vector container of Strings.
     typedef std::vector< String > StringVector;
+    /// @brief This is a simple datatype for a vector container of StringViews.
+    typedef std::vector< StringView > StringViewVector;
 
-    /// @brief This is a simple datatype for a set container of strings.
+    /// @brief This is a simple datatype for a set container of Strings.
     typedef std::set< String > StringSet;
 
 }//Mezzanine
