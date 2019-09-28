@@ -60,7 +60,7 @@
     // 4548 was added to suppress a warning in MSVC's implementation of malloc.h where
     // they use a comma in an assert.
     SUPPRESS_VC_WARNING(4548)
-    // 4582 and 4583 was added to suppress a warning in MSVC's implementation of optional where 
+    // 4582 and 4583 was added to suppress a warning in MSVC's implementation of optional where
     // constructors and destructors were not implicitly called.
     SUPPRESS_VC_WARNING(4582)
     SUPPRESS_VC_WARNING(4583)
@@ -93,7 +93,7 @@
     #include <chrono>
     #include <exception>
     #include <functional>
-    #include <filesystem>
+    //#include <filesystem> // When will this work?!
     #include <initializer_list>
     #include <memory>
     #include <new>
@@ -224,11 +224,11 @@ namespace Mezzanine
     /// @brief A datatype used to indicate a specific point in time, or a timestamp.
     /// @details This is made into its own datatype for when we want to tweak the possible size for a timestamp.
     typedef UInt32 OldTimeMarker;
-        
+
     /// @brief A datatype for precision timing with std::chrono.
     /// @details This is a time point with the standard high resolution clock which can be used for frame timings.
     typedef std::chrono::time_point<std::chrono::high_resolution_clock> PrecisionTimeMarker;
-        
+
     /// @brief A datatype for returning data and whether or not it is safe to use that data.
     /// @details This should replace any and all uses of the std::pair<bool,Datum> idiom.
     /// @tparam OptType Can be any allocatable class.
