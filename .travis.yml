@@ -3,6 +3,9 @@ dist: xenial
 language: cpp
 osx_image: xcode10.1
 
+# The `-fno-var-tracking` flag removes some debug information about templates from the build
+# that we want most of the time, but can exhaust memory in CI.
+
 matrix:
   include:
     - os: osx
@@ -19,7 +22,6 @@ before_script:
   - cd build
   - cmake -E env CXXFLAGS="-fno-var-tracking" cmake -G"Xcode" .. -DCMAKE_BUILD_TYPE="$BUILD_TYPE" -DCMAKE_CXX_FLAGS="$CXX_FLAGS" -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON
   - cmake -E env CXXFLAGS="-fno-var-tracking" cmake -G"Xcode" .. -DCMAKE_BUILD_TYPE="$BUILD_TYPE" -DCMAKE_CXX_FLAGS="$CXX_FLAGS" -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON
-
 
 script:
   - cmake --build .
