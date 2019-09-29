@@ -94,8 +94,11 @@ namespace std
 #endif
 namespace std
 {
+    /// @brief Alias is_detected in the std namespace on systems where it is experimental.
     template<template<typename...> class Op, typename... Args>
     using is_detected = std::experimental::is_detected<Op,Args...>;
+
+    /// @brief Alias is_detected_v in the std namespace on systems where it is experimental.
     template<template<typename...> class Op, typename... Args>
     constexpr bool is_detected_v = std::experimental::is_detected_v<Op,Args...>;
 }
