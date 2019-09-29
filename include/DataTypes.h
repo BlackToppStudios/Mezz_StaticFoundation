@@ -189,8 +189,8 @@ namespace Mezzanine
     /// is desired.  If this is changed, The Character typedef should be adjusted accordingly.
     typedef std::string_view StringView;
 
-    /// @brief Some compatible with std::filesystem::path to work with filesystem paths.
-    using Path = std::filesystem::path;
+    // @brief Some compatible with std::filesystem::path to work with filesystem paths.
+    //using Path = std::filesystem::path;
 
     /// @brief A datatype to represent one character.
     /// @details The character type of String
