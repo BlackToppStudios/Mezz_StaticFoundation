@@ -74,6 +74,16 @@ namespace Mezzanine
         #endif
     }
 
+
+    Boole RuntimeStatic::ForceGcc32Bit()
+    {
+        #ifdef MEZZ_ForceGcc32Bit
+            return true;
+        #else
+            return false;
+        #endif
+    }
+
     Boole RuntimeStatic::CpuKnown()
     {
         #ifdef MEZZ_CpuKnown
