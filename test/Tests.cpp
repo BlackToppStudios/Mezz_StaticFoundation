@@ -123,6 +123,7 @@ NameValuePairMap CheckableValues()
     Results["MEZZ_BuildDoxygen"] = IntToString(Mezzanine::RuntimeStatic::BuildDoxygen());
     Results["MEZZ_BuildStaticLibraries"] = IntToString(Mezzanine::RuntimeStatic::BuildStaticLibraries());
     Results["MEZZ_CodeCoverage"] = IntToString(Mezzanine::RuntimeStatic::CodeCoverage());
+    Results["MEZZ_ForceGcc32Bit"] = IntToString(Mezzanine::RuntimeStatic::ForceGcc32Bit());
     Results["MEZZ_CpuKnown"] = IntToString(Mezzanine::RuntimeStatic::CpuKnown());
     Results["MEZZ_CpuX86"] = IntToString(Mezzanine::RuntimeStatic::CpuX86());
     Results["MEZZ_CpuAmd64"] = IntToString(Mezzanine::RuntimeStatic::CpuAmd64());

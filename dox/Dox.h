@@ -54,6 +54,7 @@
 ///     - @ref MEZZ_BuildStaticLibraries - @ref StaticFoundationConfig.h - Set if the build option to build static
 /// libraries was set. This defaults to true. Dynamic libraries will be built otherwise.
 ///     - @ref MEZZ_CodeCoverage - @ref StaticFoundationConfig.h - Set if code coverage requested by project.
+///     - @ref MEZZ_ForceGcc32Bit - @ref StaticFoundationConfig.h - Force GCC compatible compilers to build 32 bit bins.
 ///     - @ref MEZZ_CpuKnown - @ref StaticFoundationConfig.h - Set if the CPU type could be detected.
 ///     - @ref MEZZ_CpuX86 - @ref StaticFoundationConfig.h - Set if the CPU is known is x86 or Amd64.
 ///     - @ref MEZZ_CpuAmd64 - @ref StaticFoundationConfig.h - Set if the CPU is known is Amd64.
@@ -90,6 +91,10 @@
 /// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is set if the project calls the
 /// SetCodeCoverage CMake macro. If set extra files will be generated during the build (on supported compilers) and
 /// test coverage can be tracked.
+
+/// @def MEZZ_ForceGcc32Bit
+/// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This can be set on to force GCC compatible
+/// compilers to perform local builds are 32 bits builds, if they could be differemt.
 
 /// @def MEZZ_CpuKnown
 /// @brief A Preprocessor macro set in @ref StaticFoundationConfig.h. This is set when CPU detection worked, which it
