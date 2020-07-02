@@ -61,7 +61,7 @@ Building on any platform with a command line works something like this:
     $ cmake --build .   # Use CMake to do it.
     $ make -j4          # You used makefile in the previous stepm `-j` indicates the number of build processes
     $ ninja             # You know and understand ninja, and you used it in the previous step
-    > ; Do nothing on the cmd line, if you uses MSVC in the previous open visual studion, and click build.
+    > ; Do nothing on the cmd line, if you used MSVC in the previous open visual studion, and click build.
 
 Here are some of the options you can pass to CMake to configure the behaviour of the build.
 
