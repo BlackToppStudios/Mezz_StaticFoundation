@@ -168,7 +168,7 @@ pipeline {
                         sh 'mkdir -p build-debug'
                         dir('build-debug') { sh """#!/bin/bash
                             source ~/emsdk/emsdk_env.sh &&
-                            cmake -G"Ninja" .. -DCMAKE_AR=`which emar` -DCMAKE_C_COMPILER=emcc -DCMAKE_CXX_COMPILER=em++ -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON &&
+                            cmake -G"Ninja" .. -DCMAKE_AR=`which emar` -DCMAKE_CXX_ARCHIVE_CREATE=`which emar` -DCMAKE_C_ARCHIVE_CREATE=`which emar` -DCMAKE_C_COMPILER=emcc -DCMAKE_CXX_COMPILER=em++ -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON &&
                             ninja &&
                             node StaticFoundation_Tester.js MEZZ_CompilerIsEmscripten:1 MEZZ_ForceGcc32Bit:0 MEZZ_CompilerIsGCC:0 MEZZ_CompilerIsClang:1 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:1 MEZZ_CodeCoverage:1 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0 &&
                             bash <(curl -s https://codecov.io/bash) -t ${env.CODECOV_TOKEN}
@@ -183,7 +183,7 @@ pipeline {
                         sh 'mkdir -p build-release'
                         dir('build-release') { sh """#!/bin/bash
                             source ~/emsdk/emsdk_env.sh &&
-                            cmake -G"Ninja" .. -DCMAKE_CXX_ARCHIVE_CREATE=`which emar` -DCMAKE_C_ARCHIVE_CREATE=`which emar` -DCMAKE_C_COMPILER=emcc -DCMAKE_CXX_COMPILER=em++ -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
+                            cmake -G"Ninja" .. -DCMAKE_AR=`which emar` -DCMAKE_CXX_ARCHIVE_CREATE=`which emar` -DCMAKE_C_ARCHIVE_CREATE=`which emar` -DCMAKE_C_COMPILER=emcc -DCMAKE_CXX_COMPILER=em++ -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
                             ninja &&
                             node StaticFoundation_Tester.js MEZZ_CompilerIsEmscripten:1 MEZZ_ForceGcc32Bit:0 MEZZ_CompilerIsGCC:0 MEZZ_CompilerIsClang:1 MEZZ_CompilerIsIntel:0 MEZZ_CompilerIsMsvc:0 MEZZ_BuildDoxygen:0 MEZZ_Debug:0 MEZZ_CodeCoverage:0 MEZZ_Linux:1 MEZZ_MacOSX:0 MEZZ_Windows:0 MEZZ_CompilerDesignNix:1 MEZZ_CompilerDesignMS:0
                         """ }
