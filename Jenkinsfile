@@ -174,7 +174,7 @@ pipeline {
                         """ }
                     }
                     // Don't capture Emscripten logs, because it cannot make files
-                } //
+                }
                 stage('UbuntuEmscripten-Release') {
                     agent { label "UbuntuEmscripten" }
                     steps {
