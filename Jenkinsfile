@@ -338,7 +338,7 @@ pipeline {
                 }
 
             } // parallel
-        } // BuildTest-Debug
+        } // Build and Test
     } // Stages
 
 }
