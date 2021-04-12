@@ -83,10 +83,10 @@ int main(int ArgCount, char** ArgVars)
 
     MEZZ_TRACE("Parsing inputs.")
     NameValuePairMap FromCommandLine{CreateMapFromArgs(ArgCount, ArgVars)};
-    const Mezzanine::Whole NonCommandLineTestCount{3u + // StaticString
-                                                   2u   // Trace
-                                                   };   // When updating tests, adjust this count
-    const Mezzanine::Whole TestCount{FromCommandLine.size()+NonCommandLineTestCount};
+    const Mezzanine::SizeType NonCommandLineTestCount{3u + // StaticString
+                                                      2u   // Trace
+                                                      };   // When updating tests, adjust this count
+    const Mezzanine::SizeType TestCount{FromCommandLine.size()+NonCommandLineTestCount};
     StartJunitXml(TestCount);
 
     MEZZ_TRACE("Checking outputs.")
