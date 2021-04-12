@@ -332,7 +332,7 @@ Boole DoTraceTest()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // XML Results
 
-void StartJunitXml(Mezzanine::Whole Count)
+void StartJunitXml(Mezzanine::SizeType Count)
     { XmlContents << "<testsuite tests=\"" << Count << "\">\n"; }
 
 void AddPass(Mezzanine::StringView&& TestClass,

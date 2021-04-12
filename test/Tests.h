@@ -102,7 +102,7 @@ Mezzanine::Boole DoTraceTest();
 
 /// @brief Start Preparing an XML file that is compatible with JUnit.
 /// @param Count The amount of tests
-void StartJunitXml(Mezzanine::Whole Count);
+void StartJunitXml(Mezzanine::SizeType Count);
 
 /// @brief Add a passing test result to the output file and display a message to the standard output.
 /// @param TestClass The class or group that the test is a member of.

@@ -41,7 +41,7 @@ build_script:
 
 test_script:
   - cmd: cd C:\projects\Mezz_StaticFoundation\build
-  - cmd: StaticFoundation_Tester MEZZ_BuildDoxygen:0 MEZZ_Linux:0 MEZZ_BuildStaticLibraries:1 MEZZ_MacOSX:0 MEZZ_Windows:1 MEZZ_CompilerDesignNix:%CompilerNix% MEZZ_CompilerDesignMS:%CompilerMS% MEZZ_Arch64:%Arch64% MEZZ_Arch32:%Arch32%
+  - cmd: StaticFoundation_Tester MEZZ_Trace:0 MEZZ_BuildDoxygen:0 MEZZ_Linux:0 MEZZ_BuildStaticLibraries:1 MEZZ_MacOSX:0 MEZZ_Windows:1 MEZZ_CompilerDesignNix:%CompilerNix% MEZZ_CompilerDesignMS:%CompilerMS% MEZZ_Arch64:%Arch64% MEZZ_Arch32:%Arch32%
 
 notifications:
 - provider: Email
