@@ -70,6 +70,9 @@ namespace Mezzanine
             /// @return If MEZZ_ForceGcc32Bit is defined true, false otherwise.
             static Boole ForceGcc32Bit();
 
+            /// @return If MEZZ_Trace is defined true, false otherwise.
+            static Boole TroubleshootingTracing();
+
             /// @return If CpuIsKnown is defined true, false otherwise.
             /// @details If the CPU is detected this will return true. If false no other CPU method will return true.
             static Boole CpuKnown();

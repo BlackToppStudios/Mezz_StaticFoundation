@@ -45,6 +45,9 @@
 /// @file
 /// @brief Some declarations of functions for the tests Mezz_StaticFoundation.
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Dealing with the command line
+
 /// @brief Check if the command line arguments are completely wrong. Can easily miss minor mistakes.
 /// @details If this detects a problem this will exit with a failure code and print a message to std::cerr.
 /// @param ArgCount The Argument count passed into main.
@@ -62,17 +65,12 @@ Mezzanine::String Usage(Mezzanine::String ExecutableName);
 /// @return A NameValuePairMap With an entry for each of the ArgVars split on a ":"
 Mezzanine::NameValuePairMap CreateMapFromArgs(int ArgCount, char** ArgVars);
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Test Functions
+
 /// @brief What values where stored at compile time.
 /// @return Mezzanine::NameValuePairMap which contains all the compiler flags set during the build.
 Mezzanine::NameValuePairMap CheckableValues();
-
-/// @brief compare two instances Mezzanine::NameValuePairMap and determine if one is a subset of the
-/// other.
-/// @param Expected The list of correct values that must be entirely contained in the other list for the test to be
-/// successful.
-/// @param Compiled The list of all values as compiled into the code.
-void DoComparisonTest(  const Mezzanine::NameValuePairMap& Expected,
-                        const Mezzanine::NameValuePairMap& Compiled);
 
 /// @param Mapping A name value pair list to turn into a String.
 /// @return A String with each name value pair on its own line seperated by ":" and preceded by two spaces.
@@ -82,8 +80,48 @@ Mezzanine::String Stringify(const Mezzanine::NameValuePairMap& Mapping);
 /// @return A String contained the lexigraphically equivalent String to SomeInt.
 Mezzanine::String IntToString(Mezzanine::Int32 SomeInt = 0);
 
+/// @brief compare two instances Mezzanine::NameValuePairMap and determine if one is a subset of the
+/// other.
+/// @param Expected The list of correct values that must be entirely contained in the other list for the test to be
+/// successful.
+/// @param Compiled The list of all values as compiled into the code.
+/// @return True on success, false otherwise.
+Mezzanine::Boole DoComparisonTest(const Mezzanine::NameValuePairMap& Expected,
+                                  const Mezzanine::NameValuePairMap& Compiled);
+
 /// @brief Check the StaticString class.
 /// @return True if the class works, false if there was an issue.
 Mezzanine::Boole CheckStaticString();
+
+/// @brief Check that tracing works
+/// @return True if tracing works, false if there was an issue.
+Mezzanine::Boole DoTraceTest();
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// XML Results
+
+/// @brief Start Preparing an XML file that is compatible with JUnit.
+/// @param Count The amount of tests
+void StartJunitXml(Mezzanine::Whole Count);
+
+/// @brief Add a passing test result to the output file and display a message to the standard output.
+/// @param TestClass The class or group that the test is a member of.
+/// @param TestName A unique identifier for a test in a group.
+/// @param Message A message that might be emitted or stored in the JUnit file.
+void AddPass(Mezzanine::StringView&& TestClass,
+             Mezzanine::StringView&& TestName,
+             Mezzanine::StringView&& Message);
+
+/// @brief Add a failing test result to the output file and display a message to the standard output.
+/// @param TestClass The class or group that the test is a member of.
+/// @param TestName A unique identifier for a test in a group.
+/// @param Message A message that might be emitted or stored in the JUnit file.
+void AddFail(Mezzanine::StringView&& TestClass,
+             Mezzanine::StringView&& TestName,
+             Mezzanine::StringView&& Message);
+
+/// @brief Close and emit the JUnit file.
+void CloseJunitXml();
+
 
 #endif

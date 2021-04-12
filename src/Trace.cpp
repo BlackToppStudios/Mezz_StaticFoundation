@@ -1,4 +1,4 @@
-// © Copyright 2010 - 2020 BlackTopp Studios Inc.
+// © Copyright 2010 - 2021 BlackTopp Studios Inc.
 /* This file is part of The Mezzanine Engine.
 
     The Mezzanine Engine is free software: you can redistribute it and/or modify
@@ -37,17 +37,27 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef Mezz_StaticFoundation_staticfoundation_h
-#define Mezz_StaticFoundation_staticfoundation_h
 
 /// @file
-/// @brief The main header to include for this library
+/// @brief The implementations of making the statics available at runtime.
 
-#include "CrossPlatformExport.h"
 #include "DataTypes.h"
-#include "RuntimeStatics.h"
-#include "SuppressWarnings.h"
-#include "StaticString.h"
 #include "Trace.h"
 
-#endif
+
+#include <iostream>
+
+namespace Mezzanine
+{
+namespace StaticFoundation
+{
+
+
+void MEZZ_LIB Trace(String&& Message,
+                    String&& FuncName,
+                    String&& File,
+                    Whole Line)
+    { std::clog << "Executed: " << File << ":" << Line << " in " << FuncName << " - " << Message << std::endl; }
+
+}// RuntimeStatic
+}
