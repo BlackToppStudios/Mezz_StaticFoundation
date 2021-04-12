@@ -65,7 +65,7 @@ using Mezzanine::Boole;
 namespace
 {
     SAVE_WARNING_STATE
-    SUPPRESS_GCC_WARNING("-Wexit-time-destructors")
+    SUPPRESS_CLANG_WARNING("-Wexit-time-destructors")
     SUPPRESS_CLANG_WARNING("-Wglobal-constructors")
     stringstream XmlContents;
     RESTORE_WARNING_STATE
