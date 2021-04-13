@@ -78,10 +78,9 @@ Mezzanine::String Stringify(const Mezzanine::NameValuePairMap& Mapping);
 
 /// @param SomeInt Any integer to be converted to a String, defaults to 0.
 /// @return A String contained the lexigraphically equivalent String to SomeInt.
-Mezzanine::String IntToString(Mezzanine::Int32 SomeInt = 0);
+Mezzanine::String IntToString(const Mezzanine::Int32 SomeInt);
 
-/// @brief compare two instances Mezzanine::NameValuePairMap and determine if one is a subset of the
-/// other.
+/// @brief compare two instances Mezzanine::NameValuePairMap and determine if one is a subset of the other.
 /// @param Expected The list of correct values that must be entirely contained in the other list for the test to be
 /// successful.
 /// @param Compiled The list of all values as compiled into the code.
@@ -101,7 +100,7 @@ Mezzanine::Boole DoTraceTest();
 // XML Results
 
 /// @brief Start Preparing an XML file that is compatible with JUnit.
-/// @param Count The amount of tests
+/// @param Count The amount of tests that will be executed through all tests.
 void StartJunitXml(Mezzanine::SizeType Count);
 
 /// @brief Add a passing test result to the output file and display a message to the standard output.

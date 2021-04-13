@@ -192,7 +192,7 @@ Mezzanine::String Stringify(const Mezzanine::NameValuePairMap& Mapping)
     return Results;
 }
 
-String IntToString(Mezzanine::Int32 SomeInt)
+String IntToString(const Mezzanine::Int32 SomeInt)
 {
     stringstream Results;
     Results << SomeInt;

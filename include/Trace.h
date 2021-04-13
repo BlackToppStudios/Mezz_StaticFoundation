@@ -52,7 +52,7 @@
 
     /// @def MEZZ_TRACE
     /// @brief This is a better alternative to littering prints in code when troubleshooting without a debugger.
-    /// @details When MEZZ_Trace (Lower case) is enable this is nothing, When enabled this emits a message, file name,
+    /// @details When MEZZ_Trace (Lower case) is disabled this is nothing, When enabled this emits a message, file name,
     /// line number, and function name it is called from.
     /// @param Message A message to be emitted
 
@@ -75,12 +75,12 @@ namespace Mezzanine
 namespace StaticFoundation
 {
 
-    /// @brief A simple function that sends the provided information
-    /// @note This shouldn't be used directly by most cost. instead game devs should use MEZZ_TRACE.
+    /// @brief A simple function that sends the provided information to the standard log.
+    /// @note This shouldn't be used directly in most cases. Instead game devs should use MEZZ_TRACE.
     /// @param Message Any text to be emitted when tracing is enabled.
-    /// @param FuncName The function name this is called from, emitted when enabled.
-    /// @param File The file name this is called from, emitted when enabled.
-    /// @param Line The line number this was called from, emitted when enabled.
+    /// @param FuncName The function name this is called from, emitted when tracing is enabled.
+    /// @param File The file name this is called from, emitted when tracing is enabled.
+    /// @param Line The line number this was called from, emitted when tracing is enabled.
     void MEZZ_LIB Trace(String&& Message,
                         String&& FuncName = "",
                         String&& File = "",
