@@ -81,9 +81,11 @@ AddHeaderFile("RuntimeStatics.h")
 AddHeaderFile("StaticFoundation.h")
 AddHeaderFile("StaticString.h")
 AddHeaderFile("SuppressWarnings.h")
+AddHeaderFile("Trace.h")
 ShowList("Header Files:" "\t" "${StaticFoundationHeaderFiles}")
 
 AddSourceFile("RuntimeStatics.cpp")
+AddSourceFile("Trace.cpp")
 ShowList("Source Files:" "\t" "${StaticFoundationSourceFiles}")
 
 # Because this can't rely on Mezz_Test we need to do this manually
@@ -108,6 +110,8 @@ AddJagatiCompileOption("MEZZ_CodeCoverage"
     "If set compiler flags will be set that gather code coverage data on build results." OFF)
 AddJagatiCompileOption("MEZZ_ForceGcc32Bit"
     "If set and the compiler is Gcc compatible then the compiler will use a 32 instead of the 64 bit default" OFF)
+AddJagatiCompileOption("MEZZ_Trace"
+    "Turn on troubleshooting tracing." OFF)
 
 UseStaticLinking(${MEZZ_BuildStaticLibraries})
 ChooseCodeCoverage(${MEZZ_CodeCoverage})

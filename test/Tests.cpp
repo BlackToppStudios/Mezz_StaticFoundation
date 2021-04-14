@@ -62,14 +62,48 @@ using Mezzanine::String;
 using Mezzanine::NameValuePairMap;
 using Mezzanine::Boole;
 
+namespace
+{
+    SAVE_WARNING_STATE
+    SUPPRESS_CLANG_WARNING("-Wexit-time-destructors")
+    SUPPRESS_CLANG_WARNING("-Wglobal-constructors")
+    stringstream XmlContents;
+    RESTORE_WARNING_STATE
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Dealing with the command line
+
 int main(int ArgCount, char** ArgVars)
 {
+    Boole Success = true;
+
+    MEZZ_TRACE("Starting up.")
     CheckUsage(ArgCount, ArgVars);
-    if(false==CheckStaticString())
-        { return EXIT_FAILURE; }
+
+    MEZZ_TRACE("Parsing inputs.")
     NameValuePairMap FromCommandLine{CreateMapFromArgs(ArgCount, ArgVars)};
-    DoComparisonTest(FromCommandLine, CheckableValues());
-    return EXIT_SUCCESS;
+    const Mezzanine::SizeType NonCommandLineTestCount{3u + // StaticString
+                                                      2u   // Trace
+                                                      };   // When updating tests, adjust this count
+    const Mezzanine::SizeType TestCount{FromCommandLine.size()+NonCommandLineTestCount};
+    StartJunitXml(TestCount);
+
+    MEZZ_TRACE("Checking outputs.")
+    Success = DoComparisonTest(FromCommandLine, CheckableValues()) && Success;
+
+    MEZZ_TRACE("Testing Tracing.")
+    Success = DoTraceTest() && Success;
+
+    MEZZ_TRACE("Checking Static String.")
+    Success = CheckStaticString() && Success;
+
+    CloseJunitXml();
+    std::cout << std::endl;
+
+    if(Success)
+        { return EXIT_SUCCESS; }
+    return EXIT_FAILURE;
 }
 
 void CheckUsage(int ArgCount, char** ArgVars)
@@ -91,7 +125,7 @@ String Usage(String ExecutableName)
     return String("Usage:\n  ") + ExecutableName +
            " Name:Value [Name2:Value2 [Name3:Value3 [...]]\n\n" +
            "Currently Known Names and Values:\n" +
-           Stringify(CheckableValues())+ "\n";
+           Stringify(CheckableValues()) + "\n";
 }
 
 SAVE_WARNING_STATE
@@ -117,6 +151,9 @@ Mezzanine::NameValuePairMap CreateMapFromArgs(int ArgCount, char** ArgVars)
 }
 RESTORE_WARNING_STATE
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Test Functions
+
 NameValuePairMap CheckableValues()
 {
     NameValuePairMap Results;
@@ -124,6 +161,7 @@ NameValuePairMap CheckableValues()
     Results["MEZZ_BuildStaticLibraries"] = IntToString(Mezzanine::RuntimeStatic::BuildStaticLibraries());
     Results["MEZZ_CodeCoverage"] = IntToString(Mezzanine::RuntimeStatic::CodeCoverage());
     Results["MEZZ_ForceGcc32Bit"] = IntToString(Mezzanine::RuntimeStatic::ForceGcc32Bit());
+    Results["MEZZ_Trace"] = IntToString(Mezzanine::RuntimeStatic::TroubleshootingTracing());
     Results["MEZZ_CpuKnown"] = IntToString(Mezzanine::RuntimeStatic::CpuKnown());
     Results["MEZZ_CpuX86"] = IntToString(Mezzanine::RuntimeStatic::CpuX86());
     Results["MEZZ_CpuAmd64"] = IntToString(Mezzanine::RuntimeStatic::CpuAmd64());
@@ -146,54 +184,6 @@ NameValuePairMap CheckableValues()
     return Results;
 }
 
-void DoComparisonTest(const Mezzanine::NameValuePairMap& Expected, const Mezzanine::NameValuePairMap& Compiled)
-{
-    cout << "Expected:\n" << Stringify(Expected)
-         << "\nCompiled in:\n" << Stringify(Compiled);
-
-    stringstream XmlContents;
-    XmlContents << "<testsuite tests=\"" << Expected.size() << "\">\n";
-
-    Boole failed = false;
-    String Other;
-    for(Mezzanine::NameValuePair pair : Expected)
-    {
-        SAVE_WARNING_STATE
-        SUPPRESS_VC_WARNING(4571)
-        try
-            { Other = Compiled.at(pair.first); }
-        catch(...)
-            { Other = "Not set"; failed=true; }
-        RESTORE_WARNING_STATE
-
-        cout << "\n" << pair.first << ": " << Other << " == " << pair.second;
-        if(Other == pair.second)
-        {
-            cout <<  " \t[PASS]";
-            XmlContents << "    <testcase classname=\"RuntimeStatic\" name=\"" << pair.first << "\"/>\n";
-        }
-        else
-        {
-            cout <<  " \t[FAIL]";
-            XmlContents << "    <testcase classname=\"RuntimeStatic\" name=\"" << pair.first << "\">\n"
-                        << "        <failure type=\"Mismatch\">"
-                            << "Expected " << Other << " actually " << pair.second  << "</failure>\n"
-                        << "    </testcase>\n";
-
-            failed=true;
-
-        }
-    }
-    XmlContents << "</testsuite>";
-    cout << endl;
-
-    std::ofstream JunitCompatibleXML("Mezz_StaticFoundationTests.xml");
-    JunitCompatibleXML << XmlContents.str() << endl;
-
-    if(failed)
-        { std::exit(EXIT_FAILURE); }
-}
-
 Mezzanine::String Stringify(const Mezzanine::NameValuePairMap& Mapping)
 {
     String Results;
@@ -202,14 +192,48 @@ Mezzanine::String Stringify(const Mezzanine::NameValuePairMap& Mapping)
     return Results;
 }
 
-String IntToString(Mezzanine::Int32 SomeInt)
+String IntToString(const Mezzanine::Int32 SomeInt)
 {
     stringstream Results;
     Results << SomeInt;
     return Results.str();
 }
 
-bool CheckStaticString()
+Boole DoComparisonTest(const Mezzanine::NameValuePairMap& Expected, const Mezzanine::NameValuePairMap& Compiled)
+{
+    cout << "Expected:\n" << Stringify(Expected)
+         << "\nCompiled in:\n" << Stringify(Compiled) << "\n";
+
+    Boole failed = false;
+    String Stored;
+    for(Mezzanine::NameValuePair pair : Expected)
+    {
+        SAVE_WARNING_STATE
+        SUPPRESS_VC_WARNING(4571)
+        try
+            { Stored = Compiled.at(pair.first); }
+        catch(...)
+            { Stored = "Not set"; }
+        RESTORE_WARNING_STATE
+
+        const String Message(pair.first + ": " + Stored + " == " + pair.second);
+        if(Stored == pair.second)
+        {
+            AddPass("RuntimeStatic", pair.first, Message);
+        }
+        else
+        {
+            AddFail("RuntimeStatic", pair.first, Message);
+            failed=true;
+
+        }
+    }
+
+    return !failed;
+}
+
+
+Boole CheckStaticString()
 {
     constexpr auto foo = MakeStaticString("foo");
 
@@ -243,15 +267,96 @@ bool CheckStaticString()
     static_assert(foo != lorem,    "Inequality Comparison operator failed to find inequal length. [StaticString]");
     static_assert(foo != bar,      "Inequality Comparison operator failed to find inqeual content. [StaticString]");
 
-    if(Mezzanine::String("foo") != foo.str())
-        { return false; }
-    if(Mezzanine::String("foo") != foo.c_str())
-        { return false; }
-
-    static_assert( foo+bar == "foobar", "Concatenation doesn't work as expected with just StaticString instances.");
+    static_assert(foo+bar == "foobar", "Concatenation doesn't work as expected with just StaticString instances.");
 
     // Perhaps someday.
     // static_assert( foo+"bar" == "foobar", "Concatenation doesn't work as expected with StaticStrings and literals.");
 
+    AddPass("StaticString", "Manipulation", "StaticStringManipulation");
+
+    if(Mezzanine::String("foo") == foo.str())
+        { AddPass("StaticString", "ConvertableToString", "StaticStringConvertableToString"); }
+    else
+        { AddFail("StaticString", "ConvertableToString", "StaticStringConvertableToString"); return false; }
+
+    if(Mezzanine::String("foo") == foo.c_str())
+        { AddPass("StaticString", "ConvertableToCString", "StaticStringConvertableToCString"); }
+    else
+        { AddFail("StaticString", "ConvertableToCString", "StaticStringConvertableToCString"); return false; }
+
     return true;
+}
+
+Boole DoTraceTest()
+{
+    Boole Passing = true;
+
+    // Put a testing buffer in clog
+    auto OrginalClogBuf = std::clog.rdbuf();
+    std::stringstream TestOutput;
+    std::clog.rdbuf(TestOutput.rdbuf());
+
+    // Use Trace a few ways
+    using Location = decltype(std::clog.tellp());
+    const Location Start{std::clog.tellp()};
+    MEZZ_TRACE("Test Tracing with macro.")
+    const Location PostMacro{std::clog.tellp()};
+    Mezzanine::StaticFoundation::Trace("Test Tracing with function.");
+    const Location PostFunction{std::clog.tellp()};
+
+    // Interpret what happened in test results.
+    if(Mezzanine::RuntimeStatic::TroubleshootingTracing())
+    {
+        if(Start==PostMacro)
+            { AddFail("Trace", "EnabledMacroWorks", "TracingShouldBeEnabled"); Passing=false; }
+        else
+            { AddPass("Trace", "EnabledMacroWorks", "TracingShouldBeEnabled"); }
+    }
+    else
+    {
+        if(Start==PostMacro)
+            { AddPass("Trace","DisabledMacroDoesNothing","TracingShouldBeDisabled"); }
+        else
+            { AddFail("Trace","DisabledMacroDoesNothing","TracingShouldBeDisabled"); Passing=false; }
+    }
+
+    if(PostMacro==PostFunction)
+        { AddFail("Trace", "FunctionDoesSomething", "TraceFunctionDoesSomething"); Passing=false; }
+    else
+        { AddPass("Trace", "FunctionDoesSomething", "TraceFunctionDoesSomething"); }
+
+    std::clog.rdbuf(OrginalClogBuf);
+    return Passing;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// XML Results
+
+void StartJunitXml(Mezzanine::SizeType Count)
+    { XmlContents << "<testsuite tests=\"" << Count << "\">\n"; }
+
+void AddPass(Mezzanine::StringView&& TestClass,
+             Mezzanine::StringView&& TestName,
+             Mezzanine::StringView&& Message)
+{
+    cout << Message <<  " \t" << TestClass << "::" << TestName << " [PASS]\n";
+    XmlContents << "    <testcase classname=\"" << TestClass << "\" name=\"" << TestName << "\"/>\n";
+}
+
+void AddFail(Mezzanine::StringView&& TestClass,
+             Mezzanine::StringView&& TestName,
+             Mezzanine::StringView&& Message)
+{
+    cout << Message <<  " \t" << TestClass << "::" << TestName << " [FAIL]\n";
+    XmlContents << "    <testcase classname=\"" << TestClass <<  "\" name=\"" << TestName << "\">\n"
+                << "        <failure type=\"Mismatch\">" << Message  << "</failure>\n"
+                << "    </testcase>\n";
+}
+
+void CloseJunitXml()
+{
+    XmlContents << "</testsuite>";
+
+    std::ofstream JunitCompatibleXML("Mezz_StaticFoundationTests.xml");
+    JunitCompatibleXML << XmlContents.str() << endl;
 }
