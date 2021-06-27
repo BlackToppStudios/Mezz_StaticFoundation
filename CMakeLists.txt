@@ -38,7 +38,7 @@
 #   John Blackwood - makoenergy02@gmail.com
 
 ########################################################################################################################
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.13)
 project(StaticFoundation)
 message(STATUS "${PROJECT_NAME} - Starting Configuration using CMake ${CMAKE_VERSION}.")
 
